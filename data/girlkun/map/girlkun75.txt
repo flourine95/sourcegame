@@ -1,0 +1,10 @@
+<<<<<<< HEAD
+item_bg_map_data: những file chứa dữ liệu item background của 1 map bao gồm: số lượng item background, id item background, vị trí x-y item background (loadmapinfo)
+tile_map_data: những file chứa dữ liệu tilemap để vẽ map
+tile_set_info: file chứa dữ liệu từng tilemap, tiletype
+=======
+item_bg_map_data: những file chứa dữ liệu item background của 1 map bao gồm: số lượng item background, id item background, vị trí x-y item background (loadmapinfo)
+tile_map_data: những file chứa dữ liệu tilemap để vẽ map
+tile_set_info: file chứa dữ liệu từng tilemap, tiletype
+>>>>>>> ab1c7b0bb8b3accbbb9c76cb0413c950af098c2d
+eff_map: chứa những file chứa dữ liệu effect trong mỗi map (id effect, vị trí effect x-y)

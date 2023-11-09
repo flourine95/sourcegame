@@ -1,0 +1,9 @@
+icon: chứa icon game (-67)
+effdata: chứa effect data (ngọn lửa cháy, cá nhảy...) (-66)
+item_bg_temp: chứa thông số và image từng item background (-32)
+map: chứa dữ liệu từng map
+icon: chứa icon game (-67)
+effdata: chứa effect data (ngọn lửa cháy, cá nhảy...) (-66)
+item_bg_temp: chứa thông số và image từng item background (-32)
+map: chứa dữ liệu từng map
+res: chứa tài nguyên download khi mới tải game

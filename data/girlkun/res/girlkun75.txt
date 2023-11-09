@@ -1,0 +1,66 @@
+<<<<<<< HEAD
+
+
+    public void imageSource(Session session) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Message msg;
+                try {
+                    for (final File fileEntry : new File(session.typeClient == 1 ? "data/resx1" : "data/resx2").listFiles()) {
+                        String original = fileEntry.getName();
+                        byte[] res = FileIO.readFile(fileEntry.getAbsolutePath());
+                        msg = new Message(-74);
+                        msg.writer().writeByte(2);
+                        msg.writer().writeUTF(original);
+                        msg.writer().writeInt(res.length);
+                        msg.writer().write(res);
+
+                        session.sendMessage(msg);
+                        msg.cleanup();
+                        Thread.sleep(1);
+                    }
+
+                    msg = new Message(-74);
+                    msg.writer().writeByte(3);
+                    msg.writer().writeInt(5714013);
+                    session.sendMessage(msg);
+                    msg.cleanup();
+                } catch (Exception e) {
+                }
+            }
+        }).start();
+=======
+
+
+    public void imageSource(Session session) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Message msg;
+                try {
+                    for (final File fileEntry : new File(session.typeClient == 1 ? "data/resx1" : "data/resx2").listFiles()) {
+                        String original = fileEntry.getName();
+                        byte[] res = FileIO.readFile(fileEntry.getAbsolutePath());
+                        msg = new Message(-74);
+                        msg.writer().writeByte(2);
+                        msg.writer().writeUTF(original);
+                        msg.writer().writeInt(res.length);
+                        msg.writer().write(res);
+
+                        session.sendMessage(msg);
+                        msg.cleanup();
+                        Thread.sleep(1);
+                    }
+
+                    msg = new Message(-74);
+                    msg.writer().writeByte(3);
+                    msg.writer().writeInt(5714013);
+                    session.sendMessage(msg);
+                    msg.cleanup();
+                } catch (Exception e) {
+                }
+            }
+        }).start();
+>>>>>>> ab1c7b0bb8b3accbbb9c76cb0413c950af098c2d
+    }
