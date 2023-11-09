@@ -17,10 +17,17 @@ import java.util.List;
 
 
 public class Trade {
-
+    private static final byte SUCCESS = 0;
+    private static final byte FAIL_MAX_GOLD_PLAYER1 = 1;
+    private static final byte FAIL_MAX_GOLD_PLAYER2 = 2;
+    private static final byte FAIL_NOT_ENOUGH_BAG_P1 = 3;
+    private static final byte FAIL_NOT_ENOUGH_BAG_P2 = 4;
+    private static final byte FAIL_2TY_GOLD_PLAYER1 = 5;
+    private static final byte FAIL_2TY_GOLD_PLAYER2 = 6;
+    private static final byte FAIL_GOLD_MAX1 = 7;
+    private static final byte FAIL_GOLD_MAX2 = 8;
     public static final int TIME_TRADE = 300000;
     public static final int QUANLITY_MAX = 20000;
-
     private Player player1;
     private Player player2;
 
@@ -140,13 +147,14 @@ public class Trade {
                     }
                 }
             }
-        } 
+        }
 //        else {
 //            Service.getInstance().sendThongBaoFromAdmin(pl,
 //                    "|5|VUI LÒNG KÍCH HOẠT TÀI KHOẢN TẠI\n|7|Liên Hệ Admin ADMIN\n|5|ĐỂ MỞ KHÓA TÍNH NĂNG GIAO DỊCH");
 //            removeItemTrade(pl, index);
 //        }
     }
+
     private void removeItemTrade(Player pl, byte index) {
         Message msg;
         try {
@@ -182,12 +190,11 @@ public class Trade {
             case 27: //
                 if (item.template.id == 590 || item.template.id == 1129 || item.template.id == 921 || item.template.id == 1132) {
                     return true;
-                }
-                else if (item.template.id == 457 || item.template.id == 1066 || item.template.id == 1067 || item.template.id == 1068 || item.template.id == 1069 || item.template.id == 1070
-                         || item.template.id == 1078 || item.template.id == 611 || item.template.id == 1132 || item.template.id == 2000 || item.template.id == 2001 || item.template.id != 2002 || item.template.id != 380) {
+                } else if (item.template.id == 457 || item.template.id == 1066 || item.template.id == 1067 || item.template.id == 1068 || item.template.id == 1069 || item.template.id == 1070
+                        || item.template.id == 1078 || item.template.id == 611 || item.template.id == 1132 || item.template.id == 2000 || item.template.id == 2001 || item.template.id != 2002 || item.template.id != 380) {
                     return false;
                 }
-                
+
             case 5: //cải trang
             case 6: //đậu thần
             case 7: //sách skill
@@ -343,8 +350,8 @@ public class Trade {
                     PlayerService.gI().sendInfoHpMpMoney(player2);
 
                     HistoryTransactionDAO.insert(player1, player2, goldTrade1, goldTrade2, itemsTrade1, itemsTrade2,
-                            bag1Before, bag2Before, this.player1.inventory.itemsBag, this.player2.inventory.itemsBag,
-                            gold1Before, gold2Before, this.player1.inventory.gold, this.player2.inventory.gold);
+                            bag1Before, bag2Before, this.player1.inventory.itemsBag, this.player2.inventory.itemsBag
+                    );
                 }
                 sendNotifyTrade(tradeStatus);
             }
@@ -352,15 +359,6 @@ public class Trade {
 
     }
 
-    private static final byte SUCCESS = 0;
-    private static final byte FAIL_MAX_GOLD_PLAYER1 = 1;
-    private static final byte FAIL_MAX_GOLD_PLAYER2 = 2;
-    private static final byte FAIL_NOT_ENOUGH_BAG_P1 = 3;
-    private static final byte FAIL_NOT_ENOUGH_BAG_P2 = 4;
-    private static final byte FAIL_2TY_GOLD_PLAYER1 = 5;
-    private static final byte FAIL_2TY_GOLD_PLAYER2 = 6;
-    private static final byte FAIL_GOLD_MAX1 = 7;
-    private static final byte FAIL_GOLD_MAX2 = 8;
 
     private void sendNotifyTrade(byte status) {
         player1.iDMark.setLastTimeTrade(System.currentTimeMillis());

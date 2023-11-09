@@ -736,7 +736,7 @@ public class Service {
                     ChangeMapService.gI().changeMapInYard(player, mapId, -1, -1);
                     return;
                 } catch (Exception e) {
-                    System.out.println("55555");
+                    System.out.println("Error map");
                 }
             } else if (text.startsWith("get")) {
                 String[] parts = text.split("sl");

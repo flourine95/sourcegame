@@ -1,7 +1,6 @@
 package com.girlkun.server;
 
 import com.girlkun.database.GirlkunDB;
-import com.girlkun.jdbc.daos.HistoryTransactionDAO;
 import com.girlkun.models.boss.BossManager;
 import com.girlkun.models.item.Item;
 import com.girlkun.models.kygui.ShopKyGuiManager;
@@ -55,7 +54,6 @@ public class ServerManager {
         } catch (Exception e) {
             Logger.logException(ServerManager.class, e);
         }
-        HistoryTransactionDAO.deleteHistory();
     }
 
     public static ServerManager gI() {

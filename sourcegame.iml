@@ -7,5 +7,12 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="girlkundb-1.0.0" level="project" />
+    <orderEntry type="library" name="apache-commons-lang" level="project" />
+    <orderEntry type="library" name="GirlkunNetwork" level="project" />
+    <orderEntry type="library" name="json_simple-1.1" level="project" />
+    <orderEntry type="library" name="lombok" level="project" />
+    <orderEntry type="library" name="okhttp-3.0.0 (2)" level="project" />
+    <orderEntry type="library" name="okio-1.6.0 (2)" level="project" />
   </component>
 </module>
