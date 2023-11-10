@@ -36,7 +36,6 @@ public class DataGame {
             short num = (short) (Short.parseShort(data[1]) + 30000);
             MAP_MOUNT_NUM.put(data[0], num);
         }
-        System.out.println(1);
     }
 
     private DataGame() {

@@ -71,7 +71,7 @@ public class ClanService {
     private Clan getClanById(int l, int r, int id) throws Exception {
         if (l <= r) {
             int m = (l + r) / 2;
-            Clan clan = null;
+            Clan clan;
             try {
                 clan = Manager.CLANS.get(m);
             } catch (Exception e) {
@@ -91,7 +91,7 @@ public class ClanService {
     }
 
     public List<Clan> getClans(String name) {
-        List<Clan> listClan = new ArrayList();
+        List<Clan> listClan = new ArrayList<>();
         if (Manager.CLANS.size() <= 20) {
             for (Clan clan : Manager.CLANS) {
                 if (clan.name.contains(name)) {
@@ -156,6 +156,7 @@ public class ClanService {
                     break;
             }
         } catch (Exception e) {
+            Logger.logException(ClanService.class,e);
         }
 
     }
@@ -196,6 +197,7 @@ public class ClanService {
                     }
                 }
             } catch (Exception e) {
+                Logger.logException(ClanService.class,e);
             }
         }
 
@@ -214,6 +216,7 @@ public class ClanService {
                     break;
             }
         } catch (Exception e) {
+            Logger.logException(ClanService.class,e);
         }
 
     }
@@ -238,6 +241,7 @@ public class ClanService {
             }
 
         } catch (Exception e) {
+            Logger.logException(ClanService.class,e);
         }
     }
 
@@ -253,11 +257,13 @@ public class ClanService {
                     break;
             }
         } catch (Exception e) {
+            Logger.logException(ClanService.class,e);
         }
 
     }
 
     //--------------------------------------------------------------------------
+
     /**
      * Mời vào bang
      */
@@ -273,6 +279,7 @@ public class ClanService {
                 pl.sendMessage(msg);
                 msg.cleanup();
             } catch (Exception e) {
+                Logger.logException(ClanService.class,e);
             }
         }
     }
@@ -462,7 +469,7 @@ public class ClanService {
      * Đổi thông tin clan (cờ, khẩu hiệu)
      */
     private void changeInfoClan(Player player, byte imgId, String slogan) {
-        if (!slogan.equals("")) {
+        if (!slogan.isEmpty()) {
             changeSlogan(player, slogan);
         } else {
             changeFlag(player, imgId);
@@ -537,7 +544,7 @@ public class ClanService {
             player.sendMessage(msg);
             msg.cleanup();
         } catch (Exception e) {
-
+            Logger.logException(ClanService.class,e);
         }
     }
 
@@ -551,7 +558,7 @@ public class ClanService {
                     msg = new Message(-50);
                     msg.writer().writeByte(clan.getCurrMembers());
                     for (ClanMember cm : clan.getMembers()) {
-                        msg.writer().writeInt((int) cm.id);
+                        msg.writer().writeInt(cm.id);
                         msg.writer().writeShort(cm.head);
                         msg.writer().writeShort(-1);
                         msg.writer().writeShort(cm.leg);
@@ -592,7 +599,7 @@ public class ClanService {
                 msg.writer().writeByte(player.clan.getCurrMembers());
                 msg.writer().writeByte(player.clan.maxMember);
                 msg.writer().writeByte(player.clan.getRole(player));
-                msg.writer().writeInt((int) player.clan.capsuleClan);
+                msg.writer().writeInt(player.clan.capsuleClan);
                 msg.writer().writeByte(player.clan.level);
                 for (ClanMember cm : player.clan.getMembers()) {
                     msg.writer().writeInt(cm.id);
@@ -652,6 +659,7 @@ public class ClanService {
             Service.getInstance().sendMessAllPlayerInMap(player, msg);
             msg.cleanup();
         } catch (Exception e) {
+            Logger.logException(ClanService.class,e);
         }
     }
 
@@ -730,7 +738,6 @@ public class ClanService {
                 ClanMessage cmg = new ClanMessage(clan);
                 cmg.type = 0;
                 cmg.role = clan.getRole(player);
-                cmg.color = ClanMessage.BLACK;
                 cmg.playerId = (int) player.id;
                 cmg.playerName = player.name;
                 cmg.text = player.name + " đã rời khỏi bang.";
@@ -786,9 +793,16 @@ public class ClanService {
     //Đuổi khỏi bang
     public void kickOut(Player player, int memberId) {
         Clan clan = player.clan;
+        if (clan == null) {
+            Logger.error("Clan null");
+            return;
+        }
         ClanMember cm = clan.getClanMember(memberId);
-        if (clan != null && cm != null
-                && (clan.isLeader(player) || clan.isDeputy(player) && cm.role == MEMBER)) {
+        if (cm == null) {
+            Logger.error("Clan member null");
+            return;
+        }
+        if (clan.isLeader(player) || clan.isDeputy(player) && cm.role == MEMBER) {
             Player plKicked = clan.getPlayerOnline(memberId);
             ClanMember cmKick = clan.getClanMember((int) player.id);
             ClanMessage cmg = new ClanMessage(clan);
@@ -823,18 +837,20 @@ public class ClanService {
 
     private void removeClanPlayer(int plId) {
         PreparedStatement ps = null;
-        try (Connection con = GirlkunDB.getConnection();) {
+        try (Connection con = GirlkunDB.getConnection()) {
             ps = con.prepareStatement("update player set clan_id_sv"
                     + Manager.server + " = -1 where id = " + plId);
             ps.executeUpdate();
             ps.close();
         } catch (Exception ex) {
             removeClanPlayer(plId);
-            return;
         } finally {
             try {
-                ps.close();
+                if (ps != null) {
+                    ps.close();
+                }
             } catch (Exception e) {
+                Logger.logException(ClanService.class, e);
             }
         }
     }
@@ -906,7 +922,6 @@ public class ClanService {
                 cmg.role = cm.role;
                 cmg.text = text;
                 cmg.color = 0;
-
                 clan.addClanMessage(cmg);
                 clan.sendMessageClan(cmg);
             }
@@ -917,62 +932,6 @@ public class ClanService {
         if (clan.getMembers().size() >= 2) {
             for (Player player : clan.membersInGame) {
                 TaskService.gI().checkDoneTaskJoinClan(player);
-            }
-        }
-    }
-
-    public void closes() {
-        PreparedStatement ps = null;
-        try (Connection con = GirlkunDB.getConnection();) {
-            ps = con.prepareStatement("update clan_sv" + Manager.server
-                    + " set slogan = ?, img_id = ?, power_point = ?, max_member = ?, clan_point = ?, "
-                    + "level = ?, members = ? , doanh_trai = ? where id = ? limit 1");
-            for (Clan clan : Manager.CLANS) {
-                JSONArray dataArray = new JSONArray();
-                JSONObject dataObject = new JSONObject();
-                for (ClanMember cm : clan.members) {
-                    dataObject.put("id", cm.id);
-                    dataObject.put("power", cm.powerPoint);
-                    dataObject.put("name", cm.name);
-                    dataObject.put("head", cm.head);
-                    dataObject.put("body", cm.body);
-                    dataObject.put("leg", cm.leg);
-                    dataObject.put("role", cm.role);
-                    dataObject.put("donate", cm.donate);
-                    dataObject.put("receive_donate", cm.receiveDonate);
-                    dataObject.put("member_point", cm.memberPoint);
-                    dataObject.put("clan_point", cm.clanPoint);
-                    dataObject.put("join_time", cm.joinTime);
-                    dataObject.put("ask_pea_time", cm.timeAskPea);
-                    dataArray.add(dataObject.toJSONString());
-                    dataObject.clear();
-                }
-                String member = dataArray.toJSONString();
-                ps.setString(1, clan.slogan);
-                ps.setInt(2, clan.imgId);
-                ps.setLong(3, clan.powerPoint);
-                ps.setByte(4, clan.maxMember);
-                ps.setInt(5, clan.capsuleClan);
-                ps.setInt(6, clan.level);
-                ps.setString(7, member);
-                ps.setInt(8, clan.id);
-
-                String doanhtrai = "[";
-                doanhtrai += clan.doanhTrai_lastTimeOpen + ",";
-                doanhtrai += "\"" + clan.doanhTrai_playerOpen + "\"]";
-                ps.setString(9, doanhtrai);
-
-                ps.addBatch();
-                Logger.error("SAVE CLAN: " + clan.name + " (" + clan.id + ")\n");
-            }
-            ps.executeBatch();
-            ps.close();
-        } catch (Exception e) {
-            Logger.logException(Clan.class, e, "Có lỗi khi update clan vào db");
-        } finally {
-            try {
-                ps.close();
-            } catch (Exception e) {
             }
         }
     }

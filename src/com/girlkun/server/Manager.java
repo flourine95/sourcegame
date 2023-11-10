@@ -187,29 +187,8 @@ public class Manager {
         this.initMap();
     }
 
-    public static List<TOP> realTopSieuHang(Connection con) {
-        List<TOP> tops = new ArrayList<>();
-        try {
-            PreparedStatement ps = con.prepareStatement("SELECT id, CAST( split_str(data_point,',',18) AS UNSIGNED) AS rank FROM player ORDER BY CAST( split_str(data_point,',',18) AS UNSIGNED) ASC LIMIT 100");
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                long rank = rs.getLong("rank");
-                if (rank > 0 && rank <= 100) {
-                    TOP top = TOP.builder().id_player(rs.getInt("id")).build();
-                    top.setInfo1("");
-                    top.setInfo2("");
-                    tops.add(top);
-                }
-            }
-        } catch (Exception e) {
-            Logger.logException(Manager.class, e);
-        }
-        return tops;
-    }
-
-
     private void initMap() {
-        int[][] tileTyleTop = readTileIndexTileType(ConstMap.TILE_TOP);
+        int[][] tileTyleTop = readTileIndexTileType();
         for (MapTemplate mapTemp : mapTemplates) {
             int[][] tileMap = readTileMap(mapTemp.id);
             int[] tileTop = tileTyleTop[mapTemp.tileId - 1];
@@ -234,13 +213,10 @@ public class Manager {
     }
 
     public static void loadPart() {
-        JSONValue jv = new JSONValue();
-        JSONArray dataArray = null;
-        JSONObject dataObject = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
+        JSONArray dataArray;
+        PreparedStatement ps;
+        ResultSet rs;
         try (Connection con = GirlkunDB.getConnection()) {
-            //load part
             ps = con.prepareStatement("select * from part");
             rs = ps.executeQuery();
             List<Part> parts = new ArrayList<>();
@@ -273,14 +249,13 @@ public class Manager {
             dos.close();
             Logger.success("Load part thành công (" + parts.size() + ")\n");
         } catch (Exception e) {
-            System.out.println("qwe");
+            Logger.logException(Manager.class, e);
         }
     }
 
     private void loadDatabase() {
         long st = System.currentTimeMillis();
-        JSONValue jv = new JSONValue();
-        JSONArray dataArray = null;
+        JSONArray dataArray;
         JSONObject dataObject = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -1093,7 +1068,7 @@ public class Manager {
     }
 
 
-    private int[][] readTileIndexTileType(int tileTypeFocus) {
+    private int[][] readTileIndexTileType() {
         int[][] tileIndexTileType = null;
         try {
             DataInputStream dis = new DataInputStream(new FileInputStream("data/girlkun/map/tile_set_info"));
@@ -1104,12 +1079,12 @@ public class Manager {
                 for (int j = 0; j < numTileOfMap; j++) {
                     int tileType = dis.readInt();
                     int numIndex = dis.readByte();
-                    if (tileType == tileTypeFocus) {
+                    if (tileType == ConstMap.TILE_TOP) {
                         tileIndexTileType[i] = new int[numIndex];
                     }
                     for (int k = 0; k < numIndex; k++) {
                         int typeIndex = dis.readByte();
-                        if (tileType == tileTypeFocus) {
+                        if (tileType == ConstMap.TILE_TOP) {
                             tileIndexTileType[i][k] = typeIndex;
                         }
                     }
@@ -1121,10 +1096,6 @@ public class Manager {
         return tileIndexTileType;
     }
 
-    /**
-     * @param mapId mapId
-     * @return tile map for paint
-     */
     private int[][] readTileMap(int mapId) {
         int[][] tileMap = null;
         try {

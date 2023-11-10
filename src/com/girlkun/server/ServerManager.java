@@ -24,22 +24,15 @@ import com.girlkun.utils.TimeUtil;
 import com.girlkun.utils.Util;
 
 import javax.swing.*;
-import java.net.ServerSocket;
 import java.util.*;
 import java.util.logging.Level;
 
 public class ServerManager {
-
     public static String timeStart;
-
-    public static final Map<String,Integer> CLIENTS = new HashMap<>();
-
+    public static final Map<String, Integer> CLIENTS = new HashMap<>();
     public static String NAME = "Girlkun75";
     public static int PORT = 14445;
-
     private static ServerManager instance;
-
-    public static ServerSocket listenSocket;
     public static boolean isRunning;
     public static long delaylogin;
 
@@ -70,10 +63,9 @@ public class ServerManager {
     }
 
     public void run() {
-        long delay = 500;
         delaylogin = System.currentTimeMillis();
         isRunning = true;
-        JFrame frame = new JFrame("Ngọc rồng Tabi");
+        JFrame frame = new JFrame("Ngọc rồng");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ImageIcon icon = new ImageIcon("C:\\Users\\vt220\\Desktop\\CBRO Potara\\data\\girlkun\\icon\\icon.png");
         frame.setIconImage(icon.getImage());
@@ -82,7 +74,6 @@ public class ServerManager {
         frame.pack();
         frame.setVisible(true);
         activeCommandLine();
-        activeGame();
         activeServerSocket();
         new Thread(DaiHoiVoThuat.gI(), "Thread DHVT").start();
         TaiXiu.gI().lastTimeEnd = System.currentTimeMillis() + 50000;
@@ -93,15 +84,14 @@ public class ServerManager {
         new Thread(() -> {
             while (isRunning) {
                 try {
-                    long start = System.currentTimeMillis();
-                    MartialCongressManager.gI().update();
-                    ShopKyGuiManager.gI().save();
-                    long timeUpdate = System.currentTimeMillis() - start;
-                    if (timeUpdate < delay) {
-                        Thread.sleep(delay - timeUpdate);
+                    long st = System.currentTimeMillis();
+                    synchronized (this) {
+                        wait(Math.max(1000 - (System.currentTimeMillis() - st), 0));
+                        MartialCongressManager.gI().update();
+                        ShopKyGuiManager.gI().save();
                     }
                 } catch (Exception e) {
-                    System.out.println("qwert");
+                    Logger.logException(ServerManager.class, e);
                 }
             }
         }, "Update dai hoi vo thuat").start();
@@ -112,7 +102,6 @@ public class ServerManager {
         } catch (InterruptedException ex) {
             java.util.logging.Logger.getLogger(BossManager.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     private void act() throws Exception {
@@ -129,7 +118,6 @@ public class ServerManager {
                                 .setKeyHandler(new MyKeyHandler())
                                 .startCollect();
                     }
-
                     @Override
                     public void sessionDisconnect(ISession session) {
                         Client.gI().kickSession((MySession) session);
@@ -193,9 +181,7 @@ public class ServerManager {
                 } else if (line.equals("nplayer")) {
                     Logger.error("Player in game: " + Client.gI().getPlayers().size() + "\n");
                 } else if (line.equals("admin")) {
-                    new Thread(() -> {
-                        Client.gI().close();
-                    }).start();
+                    new Thread(() -> Client.gI().close()).start();
                 } else if (line.startsWith("bang")) {
                     new Thread(() -> {
                         try {
@@ -209,8 +195,6 @@ public class ServerManager {
                     String a = line.replace("a ", "");
                     Service.getInstance().sendThongBaoAllPlayer(a);
                 } else if (line.startsWith("qua")) {
-//                    qua=1-1-1-1=1-1-1-1=
-//                     qua=playerId - soluong - itemId - so_saophale = optioneId - param=
                     try {
                         List<Item.ItemOption> ios = new ArrayList<>();
                         String[] pagram1 = line.split("=")[1].split("-");
@@ -241,12 +225,9 @@ public class ServerManager {
         }, "Active line").start();
     }
 
-    private void activeGame() {
-    }
 
-    public void close(long delay) {
+    public void close() {
         GirlkunServer.gI().stopConnect();
-
         isRunning = false;
         try {
             ClanService.gI().close();

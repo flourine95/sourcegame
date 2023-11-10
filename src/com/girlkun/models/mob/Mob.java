@@ -44,7 +44,6 @@ public class Mob {
     public long lastTimeDie;
     public int lvMob = 0;
     public int status = 5;
-
     public boolean isMobMe;
 
     public Mob(Mob mob) {
@@ -78,7 +77,6 @@ public class Mob {
     public static void initMopbbdkb(Mob mob, byte level) {
         mob.point.dame = (level * 3250 * mob.level * 4) * 5;
         mob.point.maxHp = (level * 12472 * mob.point.hp + level * 7263 * mob.tempId) / 2;
-        //code by Việt Nguyễn
     }
 
     public void setTiemNang() {
@@ -147,7 +145,7 @@ public class Mob {
                 if (this.id == 14) {
                     this.zone.isBulon14Alive = false;
                 }
-                if (plAtt != null && this.isQuaiBay() == true) {
+                if (plAtt != null && this.isQuaiBay()) {
                     if (plAtt.nhiemvuChienthan.tasknow == 5) {
                         plAtt.nhiemvuChienthan.dalamduoc++;
                     }
@@ -157,7 +155,7 @@ public class Mob {
                     plAtt.achievement.plusCount(7);
                 }
             } else {
-                this.sendMobStillAliveAffterAttacked(damage, plAtt != null ? plAtt.nPoint.isCrit : false);
+                this.sendMobStillAliveAffterAttacked(damage, plAtt != null && plAtt.nPoint.isCrit);
             }
             if (plAtt != null) {
                 Service.getInstance().addSMTN(plAtt, (byte) 2, getTiemNangForPlayer(plAtt, damage), true);
@@ -167,9 +165,7 @@ public class Mob {
 
     public boolean isMemInMap(Player me) {
         if (me.clan != null) {
-            if (me.zone.players.stream().allMatch(pl -> pl != null && !pl.isBoss && !pl.isNewPet && pl.zone.zoneId == me.zone.zoneId && pl.clan != null && pl.clan.id == me.clan.id)) {
-                return true;
-            }
+            return me.zone.players.stream().allMatch(pl -> pl != null && !pl.isBoss && !pl.isNewPet && pl.zone.zoneId == me.zone.zoneId && pl.clan != null && pl.clan.id == me.clan.id);
         }
         return false;
     }
@@ -179,9 +175,9 @@ public class Mob {
         int n = levelPlayer - this.level;
         long pDameHit = 0;
         if (point.getHpFull() >= 100000000) {
-            pDameHit = Util.DoubleGioihan(dame) * 500 / Util.DoubleGioihan(point.getHpFull());
+            pDameHit = Util.DoubleGioihan(dame) * 500L / Util.DoubleGioihan(point.getHpFull());
         } else {
-            pDameHit = Util.DoubleGioihan(dame) * 100 / Util.DoubleGioihan(point.getHpFull());
+            pDameHit = Util.DoubleGioihan(dame) * 100L / Util.DoubleGioihan(point.getHpFull());
         }
 
         long tiemNang = pDameHit * maxTiemNang / 100;
@@ -220,7 +216,7 @@ public class Mob {
         if (this.isDie() && !Maintenance.isRuning) {
             switch (zone.map.type) {
                 case ConstMap.MAP_DOANH_TRAI:
-                    if (this.zone.isTrungUyTrangAlive == true) {
+                    if (this.zone.isTrungUyTrangAlive) {
                         if (this.tempId == 22 && this.zone.map.mapId == 59) {
                             if (Util.canDoWithTime(lastTimeDie, 5000)) {
                                 if (this.id == 13) {
@@ -400,6 +396,7 @@ public class Mob {
                 player.sendMessage(msg);
                 msg.cleanup();
             } catch (IOException e) {
+                Logger.logException(Mob.class, e);
             }
         }
     }
@@ -440,6 +437,7 @@ public class Mob {
             Service.getInstance().sendMessAllPlayerInMap(this.zone, msg);
             msg.cleanup();
         } catch (IOException e) {
+            Logger.logException(Mob.class, e);
         }
     }
 
@@ -456,6 +454,7 @@ public class Mob {
             msg.cleanup();
             hutItem(plKill, items);
         } catch (IOException e) {
+            Logger.logException(Mob.class, e);
         }
     }
 
@@ -518,7 +517,7 @@ public class Mob {
 //        nplayer
         List<ItemMap> itemReward = new ArrayList<>();
         try {
-            if ((!player.isPet && player.setClothes.setDTS == 5) || (player.isPet && ((Pet) player).setClothes.setDTS == 5)) {
+            if ((!player.isPet && player.setClothes.setDTS == 5) || (player.isPet && player.setClothes.setDTS == 5)) {
                 if (Util.isTrue(30, 100)) {
                     byte random = 1;
                     if (Util.isTrue(2, 100)) {
@@ -670,7 +669,7 @@ public class Mob {
         }
         if (Util.isTrue(5, 100) && this.zone.map.mapId > 158 && this.zone.map.mapId < 160) {
             list.add(new ItemMap(zone, 934, 1, this.location.x, this.location.y, player.id));
-        }       
+        }
         if (Util.isTrue(5, 100) && this.zone.map.mapId == 155 && player.setClothes.setDHD == 5) {
             list.add(new ItemMap(zone, Manager.itemManh[randomVp1], 1, this.location.x, this.location.y, player.id));
         }
@@ -679,13 +678,13 @@ public class Mob {
         }
         if (Util.isTrue(1, 10000) && this.zone.map.mapId > 0 && this.zone.map.mapId < 203) {
             list.add(new ItemMap(zone, 17, 1, this.location.x, this.location.y, player.id));
-        } 
-        if (Util.isTrue(3,  10000) && this.zone.map.mapId > 0 && this.zone.map.mapId < 203) {
+        }
+        if (Util.isTrue(3, 10000) && this.zone.map.mapId > 0 && this.zone.map.mapId < 203) {
             list.add(new ItemMap(zone, 18, 1, this.location.x, this.location.y, player.id));
-        } 
+        }
         if (Util.isTrue(4, 10000) && this.zone.map.mapId > 0 && this.zone.map.mapId < 203) {
             list.add(new ItemMap(zone, 19, 1, this.location.x, this.location.y, player.id));
-        } 
+        }
         if (Util.isTrue(5, 10000) && this.zone.map.mapId > 0 && this.zone.map.mapId < 203) {
             list.add(new ItemMap(zone, 20, 1, this.location.x, this.location.y, player.id));
         }
@@ -742,10 +741,7 @@ public class Mob {
                 }
                 break;
         }
-        if (itemMap != null) {
-            return itemMap;
-        }
-        return null;
+        return itemMap;
     }
 
     private void sendMobStillAliveAffterAttacked(double dameHit, boolean crit) {
@@ -764,7 +760,3 @@ public class Mob {
     }
 }
 
-/**
- * Code được viết bởi Hoàng Việt Vui lòng không sao chép mã nguồn này dưới mọi
- * hình thức.
- */

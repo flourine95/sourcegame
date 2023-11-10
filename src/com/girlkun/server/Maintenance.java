@@ -43,7 +43,7 @@ public class Maintenance extends Thread {
             }
         }
         Logger.error("BEGIN MAINTENANCE...............................\n");
-        ServerManager.gI().close(100);
+        ServerManager.gI().close();
     }
 
 }
