@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class NhiemvuChienthan {
-
-
+public class WarGodMission {
     public Item trainArmor;
     public List<String> giftCode;
     public List<Item> itemsBody;
@@ -23,7 +21,7 @@ public class NhiemvuChienthan {
     public int maxtask;
     public int donechienthan;
 
-    public NhiemvuChienthan() {
+    public WarGodMission() {
         itemsBody = new ArrayList<>();
         itemsBag = new ArrayList<>();
         itemsBox = new ArrayList<>();

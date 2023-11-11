@@ -12,30 +12,15 @@ import com.girlkun.utils.Util;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
-  @author BTH     public static final int MAX_AVAILABLE = 50;
 
- *
- */
-public class BanDoKhoBau { 
+public class BanDoKhoBau {
     private static BanDoKhoBau i;
-
-    public static BanDoKhoBau gI() {
-        if (i == null) {
-        }
-        return i;
-    }
-
     public static final long POWER_CAN_GO_TO_BDKB = 2000000000;
-
     public static final List<BanDoKhoBau> BAN_DO_KHO_BAU;
     public static final int MAX_AVAILABLE = 50;
     public static final int N_PLAYER_CLAN = 5;
     public static final int N_PLAYER_MAP = 2;
     public static final int TIME_KHI_BAN_DO_KHO_BAU = 1800000;
-
-    private Player player;
 
     static {
         BAN_DO_KHO_BAU = new ArrayList<>();
@@ -43,14 +28,18 @@ public class BanDoKhoBau {
             BAN_DO_KHO_BAU.add(new BanDoKhoBau(i));
         }
     }
-
     public int id;
     public byte level;
     public final List<Zone> zones;
-
     public Clan clan;
     public boolean isOpened;
     private long lastTimeOpen;
+    //    public static BanDoKhoBau gI() {
+//        if (i == null) {
+//            i = new BanDoKhoBau();
+//        }
+//        return i;
+//    }
 
     public BanDoKhoBau(int id) {
         this.id = id;

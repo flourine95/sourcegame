@@ -46,8 +46,6 @@ public class Map implements Runnable {
     public List<Zone> zones;
     public List<WayPoint> wayPoints;
     public List<Npc> npcs;
-    public static int count = 0;
-    public static int countInLoop = 0;
 
     public Map(int mapId, String mapName, byte planetId,
                byte tileId, byte bgId, byte bgType, byte type, int[][] tileMap,
@@ -136,17 +134,12 @@ public class Map implements Runnable {
                     for (Zone zone : this.zones) {
                         if (!zone.getHumanoids().isEmpty()) {
                             zone.update();
-                            count++;
-                        } else {
-                            countInLoop++;
                         }
                     }
                 }
             } catch (Exception e) {
                 Logger.logException(Map.class, e, "Map error: " + mapName + "(" + mapId + ")");
             }
-            System.out.println("Count: " + count);
-            System.out.println("Count in loop: " + countInLoop);
         }
     }
 

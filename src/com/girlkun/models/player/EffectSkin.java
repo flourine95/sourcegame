@@ -12,8 +12,8 @@ import java.util.List;
 public class EffectSkin {
 
     private static final String[] textOdo = new String[]{
-        "Hôi quá", "Tránh ra đi thằng ở dơ", "Mùi gì kinh quá vậy?",
-        "Kinh tởm quá", "Biến đi thằng ở dơ", "Kính ngài ở dơ"
+            "Hôi quá", "Tránh ra đi thằng ở dơ", "Mùi gì kinh quá vậy?",
+            "Kinh tởm quá", "Biến đi thằng ở dơ", "Kính ngài ở dơ"
     };
 
     private Player player;
@@ -74,9 +74,10 @@ public class EffectSkin {
                     }
                 }
             } catch (Exception e) {
+                Logger.logException(EffectSkin.class, e);
             }
-            for (int i = 0; i < cts.length; i++) {
-                if (cts[i] != 0) {
+            for (int j : cts) {
+                if (j != 0) {
                     count++;
                 }
             }
@@ -151,11 +152,11 @@ public class EffectSkin {
                     for (Mob mob : this.player.zone.mobs) {
                         if (mob.point.gethp() > 1) {
                             if (Util.getDistance(this.player, mob) <= 200) {
-                                double subHp = Util.DoubleGioihan(mob.point.getHpFull()) * param / 100;
+                                double subHp = (double) (Util.DoubleGioihan(mob.point.getHpFull()) * param) / 100;
                                 if (subHp >= mob.point.gethp()) {
                                     subHp = mob.point.gethp() - 1;
                                 }
-                                hpHut += subHp;
+                                hpHut += (int) subHp;
                                 mob.injured(null, subHp, false);
                             }
                         }
@@ -169,8 +170,8 @@ public class EffectSkin {
                         if (subMp >= pl.nPoint.mp) {
                             subMp = Util.DoubleGioihan(pl.nPoint.mp - 1);
                         }
-                        hpHut += subHp;
-                        mpHut += subMp;
+                        hpHut += (int) subHp;
+                        mpHut += (int) subMp;
                         PlayerService.gI().sendInfoHpMpMoney(pl);
                         Service.getInstance().Send_Info_NV(pl);
                         pl.injured(null, subHp, true, false);
@@ -273,11 +274,7 @@ public class EffectSkin {
 
     private void updateVoHinh() {
         if (this.player.nPoint.wearingVoHinh) {
-            if (Util.canDoWithTime(lastTimeAttack, 5000)) {
-                isVoHinh = true;
-            } else {
-                isVoHinh = false;
-            }
+            isVoHinh = Util.canDoWithTime(lastTimeAttack, 5000);
         }
     }
 

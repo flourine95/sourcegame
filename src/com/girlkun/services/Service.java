@@ -15,7 +15,7 @@ import com.girlkun.models.mob.Mob;
 import com.girlkun.models.player.NewPet;
 import com.girlkun.models.player.Pet;
 import com.girlkun.models.player.Player;
-import com.girlkun.models.player.ThuTrieuHoi;
+import com.girlkun.models.player.SummonPet;
 import com.girlkun.models.shop.ItemShop;
 import com.girlkun.models.shop.Shop;
 import com.girlkun.models.skill.Skill;
@@ -476,7 +476,7 @@ public class Service {
             if (player.isPet) {
                 ((Pet) player).master.sendMessage(msg);
             } else if (player.isTrieuHoiPet) {
-                ((ThuTrieuHoi) player).masterr.sendMessage(msg);
+                ((SummonPet) player).master.sendMessage(msg);
             } else {
                 player.sendMessage(msg);
             }
@@ -1219,7 +1219,7 @@ public class Service {
         } else if (player.isTrieuHoiPet) {
             player.nPoint.powerUp(param);
             player.nPoint.tiemNangUp(param);
-            Player masterr = ((ThuTrieuHoi) player).masterr;
+            Player masterr = ((SummonPet) player).master;
 
             param = masterr.nPoint.calSubTNSM(param);
             masterr.nPoint.powerUp(param);
@@ -1423,7 +1423,7 @@ public class Service {
             } else if (pl.isPet) {
                 ((Pet) pl).lastTimeDie = System.currentTimeMillis();
             } else if (pl.isTrieuHoiPet) {
-                ((ThuTrieuHoi) pl).LasttimeHs = System.currentTimeMillis();
+                ((SummonPet) pl).lastTimeRevival = System.currentTimeMillis();
             } else if (pl.isNewPet) {
                 ((NewPet) pl).LasttimeHspet = System.currentTimeMillis();
             }

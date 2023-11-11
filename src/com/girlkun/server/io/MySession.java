@@ -31,11 +31,9 @@ public class MySession extends Session {
 
     public byte timeWait = 100;
 
-    public boolean connected;
     public boolean sentKey;
 
     public static final byte[] KEYS = {0};
-    public byte curR, curW;
 
     public String ipAddress;
     public boolean isAdmin;
@@ -49,7 +47,6 @@ public class MySession extends Session {
     public long lastTimeLogout;
     public boolean joinedGame;
 
-    public long lastTimeReadMessage;
 
     public boolean actived;
 
@@ -61,7 +58,6 @@ public class MySession extends Session {
 
     public int version;
     public int vnd;
-    public int Bar;
 
     public boolean isRIcon;
     public int getIdTask;
@@ -79,7 +75,7 @@ public class MySession extends Session {
             this.itemsReward = new ArrayList<>();
             String[] itemsRewardd = dataReward.split(";");
             for (String itemInfo : itemsRewardd) {
-                if (itemInfo == null || itemInfo.equals("")) {
+                if (itemInfo == null || itemInfo.isEmpty()) {
                     continue;
                 }
                 String[] subItemInfo = itemInfo.replaceAll("[{}\\[\\]]", "").split("\\|");
@@ -90,7 +86,7 @@ public class MySession extends Session {
                 if (subItemInfo.length == 2) {
                     String[] options = subItemInfo[1].split(",");
                     for (String opt : options) {
-                        if (opt == null || opt.equals("")) {
+                        if (opt == null || opt.isEmpty()) {
                             continue;
                         }
                         String[] optInfo = opt.split(":");
@@ -102,7 +98,7 @@ public class MySession extends Session {
                 this.itemsReward.add(item);
             }
         } catch (Exception e) {
-
+            Logger.logException(MySession.class,e);
         }
     }
 

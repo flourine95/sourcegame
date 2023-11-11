@@ -25,8 +25,11 @@ public class IDMark {
     private boolean goToGas;
     private long lastTimeGotoGas;
     /**
-     * loại tàu vận chuyển dùng ;0 - Không dùng ;1 - Tàu vũ trụ ;2 - Dịch chuyển
-     * tức thời ;3 - Tàu tenis
+     * loại tàu vận chuyển dùng ;
+     * 0 - Không dùng ;
+     * 1 - Tàu vũ trụ ;
+     * 2 - Dịch chuyển tức thời ;
+     * 3 - Tàu tenis
      */
     private byte idSpaceShip;
 
@@ -46,7 +49,8 @@ public class IDMark {
     private int tempIdNamecBallHold = -1;
     private boolean holdNamecBall;
 
-    private boolean loadedAllDataPlayer; //load thành công dữ liệu người chơi từ database
+    //load thành công dữ liệu người chơi từ database
+    private boolean loadedAllDataPlayer;
 
     private long lastTimeChangeFlag;
 
@@ -57,17 +61,17 @@ public class IDMark {
     private long lastTimeChangeZone;
     private long lastTimeChatGlobal;
     private long lastTimeChatPrivate;
-    
+
     private long lastTimePickItem;
-    
+
     private boolean goToBDKB;
     private long lastTimeGoToBDKB;
     private long lastTimeAnXienTrapBDKB;
 
     private Npc npcChose; //npc mở
-    
+
     private byte loaiThe; //loại thẻ nạp
-    
+
     public boolean isBaseMenu() {
         return this.indexMenu == ConstNpc.BASE_MENU;
     }

@@ -6,11 +6,7 @@ import com.girlkun.models.item.Item;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @Stole By Hoàng Việt  💖
- *
- */
+
 public class ItemShop {
     
     public TabShop tabShop;

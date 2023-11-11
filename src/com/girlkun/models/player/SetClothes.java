@@ -2,14 +2,9 @@ package com.girlkun.models.player;
 
 import com.girlkun.models.item.Item;
 
-
 public class SetClothes {
-
     private Player player;
 
-    public SetClothes(Player player) {
-        this.player = player;
-    }
 
     public byte songoku;
     public byte thienXinHang;
@@ -34,10 +29,11 @@ public class SetClothes {
     public boolean godClothes;
     public int ctHaiTac = -1;
 
+    public SetClothes(Player player) {
+        this.player = player;
+    }
+
     public void setup() {
-//        if (!player.isPet){
-//        setupGOGETA();
-//        }
         setDefault();
         setupSKT();
         setupAN();
@@ -60,18 +56,7 @@ public class SetClothes {
         Item ct = this.player.inventory.itemsBody.get(5);
         if (ct.isNotNullItem()) {
             switch (ct.template.id) {
-                case 618:
-                case 619:
-                case 620:
-                case 621:
-                case 622:
-                case 623:
-                case 624:
-                case 626:
-                case 627:
-                    this.ctHaiTac = ct.template.id;
-                    break;
-
+                case 618, 619, 620, 621, 622, 623, 624, 626, 627 -> this.ctHaiTac = ct.template.id;
             }
         }
     }
@@ -83,53 +68,43 @@ public class SetClothes {
                 boolean isActSet = false;
                 for (Item.ItemOption io : item.itemOptions) {
                     switch (io.optionTemplate.id) {
-                        case 129:
-                        case 141:
+                        case 129, 141 -> {
                             isActSet = true;
                             songoku++;
-                            break;
-                        case 127:
-                        case 139:
+                        }
+                        case 127, 139 -> {
                             isActSet = true;
                             thienXinHang++;
-                            break;
-                        case 128:
-                        case 140:
+                        }
+                        case 128, 140 -> {
                             isActSet = true;
                             kirin++;
-                            break;
-                        case 131:
-                        case 143:
+                        }
+                        case 131, 143 -> {
                             isActSet = true;
                             ocTieu++;
-                            break;
-                        case 132:
-                        case 144:
+                        }
+                        case 132, 144 -> {
                             isActSet = true;
                             pikkoroDaimao++;
-                            break;
-                        case 130:
-                        case 142:
+                        }
+                        case 130, 142 -> {
                             isActSet = true;
                             picolo++;
-                            break;
-                        case 135:
-                        case 138:
+                        }
+                        case 135, 138 -> {
                             isActSet = true;
                             nappa++;
-                            break;
-                        case 133:
-                        case 136:
+                        }
+                        case 133, 136 -> {
                             isActSet = true;
                             kakarot++;
-                            break;
-                        case 134:
-                        case 137:
+                        }
+                        case 134, 137 -> {
                             isActSet = true;
                             cadic++;
-                            break;
+                        }
                     }
-
                     if (isActSet) {
                         break;
                     }
@@ -139,6 +114,7 @@ public class SetClothes {
             }
         }
     }
+
     private void setupAN() {
         for (int i = 0; i < 5; i++) {
             Item item = this.player.inventory.itemsBody.get(i);
@@ -146,18 +122,18 @@ public class SetClothes {
                 boolean isActSett = false;
                 for (Item.ItemOption io : item.itemOptions) {
                     switch (io.optionTemplate.id) {
-                        case 34:
+                        case 34 -> {
                             isActSett = true;
                             tinhan++;
-                            break;
-                        case 35:
+                        }
+                        case 35 -> {
                             isActSett = true;
                             nguyetan++;
-                            break;
-                        case 36:
+                        }
+                        case 36 -> {
                             isActSett = true;
                             nhatan++;
-                            break;
+                        }
                     }
                     if (isActSett) {
                         break;
@@ -169,92 +145,51 @@ public class SetClothes {
             }
         }
     }
-//    private void setupGOGETA() {
-//        for (int i = 5; i < 11; i++) {
-//            Item item = this.player.inventory.itemsBody.get(i);
-//            if (item.isNotNullItem()) {
-//                boolean isActSet = false;
-//                for (Item.ItemOption io : item.itemOptions) {
-//                    switch (io.optionTemplate.id) {
-//                        case 192:
-//                        case 193:
-//                            isActSet = true;
-//                            solomon++;
-//                            break;
-//                    }
-//                    if (isActSet) {
-//                        break;
-//                    }
-//
-//                }
-//            } else {
-//                break;
-//            }
-//        }
-//    }
+
     private void setupDTS() {
         for (int i = 0; i < 5; i++) {
             Item item = this.player.inventory.itemsBody.get(i);
             if (item.isNotNullItem()) {
-                boolean isActSet = false;
                 for (Item.ItemOption io : item.itemOptions) {
-                    switch (io.optionTemplate.id) {
-                        case 21:
-                            if (io.param == 120) {
-                                setDTS++;
-                            }
-                            break;
+                    if (io.optionTemplate.id == 21) {
+                        if (io.param == 120) {
+                            setDTS++;
+                        }
                     }
-                    if (isActSet) {
-                        break;
-                    }
-
                 }
             } else {
                 break;
             }
         }
     }
+
     private void setupDHD() {
         for (int i = 0; i < 5; i++) {
             Item item = this.player.inventory.itemsBody.get(i);
             if (item.isNotNullItem()) {
-                boolean isActSet = false;
                 for (Item.ItemOption io : item.itemOptions) {
-                    switch (io.optionTemplate.id) {
-                        case 21:
-                            if (io.param == 80) {
-                                setDHD++;
-                            }
-                            break;
+                    if (io.optionTemplate.id == 21) {
+                        if (io.param == 80) {
+                            setDHD++;
+                        }
                     }
-                    if (isActSet) {
-                        break;
-                    }
-
                 }
             } else {
                 break;
             }
         }
     }
+
     private void setupDTL() {
         for (int i = 0; i < 5; i++) {
             Item item = this.player.inventory.itemsBody.get(i);
             if (item.isNotNullItem()) {
-                boolean isActSet = false;
                 for (Item.ItemOption io : item.itemOptions) {
-                    switch (io.optionTemplate.id) {
-                        case 21:
-                            if (io.param == 15) {
-                                setDTL++;
-                            }
-                            break;
+                    if (io.optionTemplate.id == 21) {
+                        if (io.param == 15) {
+                            setDTL++;
+                        }
                     }
-                    if (isActSet) {
-                        break;
-                    }
-
                 }
             } else {
                 break;

@@ -31,7 +31,7 @@ import com.girlkun.models.matches.pvp.DaiHoiVoThuat;
 import com.girlkun.models.matches.pvp.DaiHoiVoThuatService;
 import com.girlkun.models.mob.Mob;
 import com.girlkun.models.player.Player;
-import com.girlkun.models.player.ThuTrieuHoi;
+import com.girlkun.models.player.SummonPet;
 import com.girlkun.models.shop.ShopServiceNew;
 import com.girlkun.models.skill.Skill;
 import com.girlkun.network.io.Message;
@@ -2979,7 +2979,7 @@ public class NpcFactory {
             @Override
             public void openBaseMenu(Player player) {
                 if (canOpenNpc(player)) {
-                    if (this.mapId == 52) {
+                    if (this.mapId == 52 || this.mapId ==5) {
                         this.createOtherMenu(player, ConstNpc.BASE_MENU, "Đề đến khu săn Đệ tử Super Broly Huyền thoại bạn cần Đạt các điều kiện:\n|7|1.Mang Cải trang DCTT\n2.Sức mạnh trên 300ty\n3.Có Đệ tử Berus\n4.Đã qua nhiệm vụ 24", "Di chuyển");
                     }
                 }
@@ -5006,24 +5006,24 @@ public class NpcFactory {
                                     break;
                                 case 2:
                                     if (player.thuTrieuHoi != null) {
-                                        player.thuTrieuHoi.changeStatus(ThuTrieuHoi.FOLLOW);
+                                        player.thuTrieuHoi.changeStatus(SummonPet.FOLLOW);
                                     }
                                     break;
                                 case 3:
                                     if (player.thuTrieuHoi != null) {
-                                        player.thuTrieuHoi.changeStatus(ThuTrieuHoi.ATTACK_PLAYER);
+                                        player.thuTrieuHoi.changeStatus(SummonPet.ATTACK_PLAYER);
                                         player.thuTrieuHoi.effectSkill.removeSkillEffectWhenDie();
                                         Service.gI().sendThongBao(player, "|2|Đã xóa trạng thái bất lợi cho Chiến Thần");
                                     }
                                     break;
                                 case 4:
                                     if (player.thuTrieuHoi != null) {
-                                        player.thuTrieuHoi.changeStatus(ThuTrieuHoi.ATTACK_MOB);
+                                        player.thuTrieuHoi.changeStatus(SummonPet.ATTACK_MOB);
                                     }
                                     break;
                                 case 5:
                                     if (player.thuTrieuHoi != null) {
-                                        player.thuTrieuHoi.changeStatus(ThuTrieuHoi.GOHOME);
+                                        player.thuTrieuHoi.changeStatus(SummonPet.GOHOME);
                                     }
                                     break;
                                 case 6:

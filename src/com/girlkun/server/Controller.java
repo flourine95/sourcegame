@@ -732,6 +732,10 @@ public class Controller implements IMessageHandler {
 
     public void sendInfo(MySession session) {
         Player player = session.player;
+        if (player == null) {
+            Logger.error("Player null");
+            return;
+        }
 
         // -82 set tile map
         DataGame.sendTileSetInfo(session);

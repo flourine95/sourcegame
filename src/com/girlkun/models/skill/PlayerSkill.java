@@ -62,20 +62,11 @@ public class PlayerSkill {
     public long lastTimePrepareLaze;
 
     public byte getIndexSkillSelect() {
-        switch (skillSelect.template.id) {
-            case Skill.DRAGON:
-            case Skill.DEMON:
-            case Skill.GALICK:
-            case Skill.KAIOKEN:
-            case Skill.LIEN_HOAN:
-                return 1;
-            case Skill.KAMEJOKO:
-            case Skill.ANTOMIC:
-            case Skill.MASENKO:
-                return 2;
-            default:
-                return 3;
-        }
+        return switch (skillSelect.template.id) {
+            case Skill.DRAGON, Skill.DEMON, Skill.GALICK, Skill.KAIOKEN, Skill.LIEN_HOAN -> 1;
+            case Skill.KAMEJOKO, Skill.ANTOMIC, Skill.MASENKO -> 2;
+            default -> 3;
+        };
     }
 
     public byte getSizeSkill() {

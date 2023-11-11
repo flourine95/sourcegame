@@ -7,7 +7,6 @@ import com.girlkun.models.matches.pvp.DaiHoiVoThuat;
 import com.girlkun.models.matches.pvp.DaiHoiVoThuatService;
 import com.girlkun.models.player.Player;
 import com.girlkun.network.server.GirlkunSessionManager;
-import com.girlkun.network.session.ISession;
 import com.girlkun.server.io.MySession;
 import com.girlkun.services.NgocRongNamecService;
 import com.girlkun.services.Service;
@@ -16,6 +15,7 @@ import com.girlkun.services.func.GoiRongXuong;
 import com.girlkun.services.func.SummonDragon;
 import com.girlkun.services.func.TransactionService;
 import com.girlkun.utils.Logger;
+import lombok.Getter;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -23,27 +23,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.girlkun.models.player.TimeReset.CLOSE_RESET;
-import static com.girlkun.models.player.TimeReset.TIME_RESET;
-
 
 public class Client implements Runnable {
 
     private static Client i;
 
-    private final Map<Long, Player> players_id = new HashMap<Long, Player>();
-    private final Map<Integer, Player> players_userId = new HashMap<Integer, Player>();
-    private final Map<String, Player> players_name = new HashMap<String, Player>();
+    private final Map<Long, Player> players_id = new HashMap<>();
+    private final Map<Integer, Player> players_userId = new HashMap<>();
+    private final Map<String, Player> players_name = new HashMap<>();
+    @Getter
     private final List<Player> players = new ArrayList<>();
-
-    private boolean running = true;
 
     private Client() {
         new Thread(this).start();
-    }
-
-    public List<Player> getPlayers() {
-        return this.players;
     }
 
     public static Client gI() {
@@ -79,7 +71,7 @@ public class Client implements Runnable {
             try {
                 GirlkunDB.executeUpdate("update account set last_time_logout = ? where id = ?", new Timestamp(System.currentTimeMillis()), session.userId);
             } catch (Exception e) {
-                System.out.println("bbbbb");
+                Logger.logException(Client.class, e);
             }
         }
         ServerManager.gI().disconnect(session);
@@ -91,11 +83,11 @@ public class Client implements Runnable {
         this.players_userId.remove(player.getSession().userId);
         this.players.remove(player);
         if (!player.beforeDispose) {
-            DaiHoiVoThuatService.gI(DaiHoiVoThuat.gI().getDaiHoiNow()).removePlayerWait(player);  
-            DaiHoiVoThuatService.gI(DaiHoiVoThuat.gI().getDaiHoiNow()).removePlayer(player); 
+            DaiHoiVoThuatService.gI(DaiHoiVoThuat.gI().getDaiHoiNow()).removePlayerWait(player);
+            DaiHoiVoThuatService.gI(DaiHoiVoThuat.gI().getDaiHoiNow()).removePlayer(player);
             player.beforeDispose = true;
             player.mapIdBeforeLogout = player.zone.map.mapId;
-            if(player.idNRNM != -1){
+            if (player.idNRNM != -1) {
                 ItemMap itemMap = new ItemMap(player.zone, player.idNRNM, 1, player.location.x, player.location.y, -1);
                 Service.getInstance().dropItemMap(player.zone, itemMap);
                 NgocRongNamecService.gI().pNrNamec[player.idNRNM - 353] = "";
@@ -154,7 +146,6 @@ public class Client implements Runnable {
         if (session != null) {
             this.remove(session);
             session.disconnect();
-//            System.out.println("     kick seesion     " + session.id);
         }
     }
 
@@ -171,15 +162,11 @@ public class Client implements Runnable {
     }
 
     public void close() {
-        Logger.error("BEGIN KICK OUT SESSION.............................." + players.size() + "\n");
-//        while(!GirlkunSessionManager.gI().getSessions().isEmpty()){
-//            Logger.error("LEFT PLAYER: " + this.players.size() + ".........................\n");
-//            this.kickSession((MySession) GirlkunSessionManager.gI().getSessions().remove(0));
-//        }
+        Logger.error("BEGIN KICK OUT SESSION" + players.size() + "\n");
         while (!players.isEmpty()) {
             this.kickSession(players.remove(0).getSession());
         }
-        Logger.error("...........................................SUCCESSFUL\n");
+        Logger.error("SUCCESSFUL\n");
     }
 
     public void cloneMySessionNotConnect() {
@@ -193,37 +180,7 @@ public class Client implements Runnable {
                 }
             }
         }
-        Logger.error("..........................................................SUCCESSFUL\n");
-    }
-
-    private void update() {
-        for (ISession s : GirlkunSessionManager.gI().getSessions()) {
-            MySession session = (MySession) s;
-            if (session.timeWait > 0) {
-                session.timeWait--;
-                if (session.timeWait == 0) {
-                    kickSession(session);
-                }
-            }
-        }
-    }
-
-    @Override
-    public void run() {
-        while (ServerManager.isRunning) {
-            try {
-                long st = System.currentTimeMillis();
-                update();
-                if ((st > TIME_RESET && st < CLOSE_RESET)) {
-                    GirlkunDB.executeUpdate("UPDATE player SET Tai_xiu = JSON_REPLACE(JSON_REPLACE(JSON_REPLACE(Tai_xiu, '$[0]', 0), '$[4]', 0), '$[5]', 0)");
-                    System.out.println("==================RESET DAY THANH CONG===============");
-                    Thread.sleep(800);
-                }
-                Thread.sleep(800 - (System.currentTimeMillis() - st));
-            } catch (Exception e) {
-//                System.out.println("      loi run Client");
-            }
-        }
+        Logger.success("SUCCESSFUL\n");
     }
 
     public void show(Player player) {
@@ -233,6 +190,10 @@ public class Client implements Runnable {
         txt += "players_userId: " + players_userId.size() + "\n";
         txt += "players_name: " + players_name.size() + "\n";
         txt += "players: " + players.size() + "\n";
-        Service.getInstance().sendThongBao(player, txt);
+        Service.getInstance().sendThongBaoOK(player, txt);
+    }
+
+    @Override
+    public void run() {
     }
 }

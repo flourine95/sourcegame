@@ -16,17 +16,12 @@ import java.util.List;
 
 import static com.girlkun.models.map.bdkb.BanDoKhoBau.TIME_KHI_BAN_DO_KHO_BAU;
 
-/**
- *
- * @author BTH
- *
- */
 public class BanDoKhoBauService {
-    
+
     public int timeoutmap;
 
     public long timeoutmapwait;
-    
+
     private static BanDoKhoBauService i;
 
     private BanDoKhoBauService() {
@@ -39,34 +34,36 @@ public class BanDoKhoBauService {
         }
         return i;
     }
-    
-    public void update(Player player){
+
+    public void update(Player player) {
         if (player.zone == null || !MapService.gI().isMapBanDoKhoBau(player.zone.map.mapId)) {
             return;
         }
-        if (player.isPl() == true && player.clan.banDoKhoBau != null
-                && player.clan.timeOpenbdkb != 0){
-            if(Util.canDoWithTime(player.clan.timeOpenbdkb, TIME_KHI_BAN_DO_KHO_BAU)){
+        if (player.isPl() && player.clan.banDoKhoBau != null
+                && player.clan.timeOpenbdkb != 0) {
+            if (Util.canDoWithTime(player.clan.timeOpenbdkb, TIME_KHI_BAN_DO_KHO_BAU)) {
                 ketthucbdkb(player);
                 player.clan.banDoKhoBau = null;
             }
-            if (this.timeoutmap >0 && player.isPl() == true && player.clan.banDoKhoBau != null
-                && player.clan.timeOpenbdkb != 0){
-                    while (this.timeoutmap > 0) {
+            if (this.timeoutmap > 0 && player.isPl() && player.clan.banDoKhoBau != null
+                    && player.clan.timeOpenbdkb != 0) {
+                while (this.timeoutmap > 0) {
+                    try {
                         this.timeoutmap--;
                         Service.getInstance().sendThongBao(player, "Bản đồ kho báu sẽ kết thúc trong " + timeoutmap + " giây. Tàu vũ trụ sẽ đưa bạn về nhà");
-                        try {
-                            Thread.sleep(1000);
-                        } catch (Exception e) {
-                            System.out.println("loi ne bdkb 1 ");
+                        synchronized (this) {
+                            wait(1000);
                         }
+                    } catch (Exception e) {
+                        Logger.logException(BanDoKhoBauService.class, e);
                     }
-                    BanDoKhoBauService.gI().ketthucbdkb(player);
-                    player.clan.banDoKhoBau = null;
                 }
+                BanDoKhoBauService.gI().ketthucbdkb(player);
+                player.clan.banDoKhoBau = null;
+            }
         }
     }
-    
+
     public void joinBDKB(Player pl) {
         if (pl.clan == null) {
             Service.getInstance().sendThongBao(pl, "Không thể thực hiện");
@@ -86,8 +83,8 @@ public class BanDoKhoBauService {
             ItemTimeService.gI().sendTextBanDoKhoBau(pl);
         }
     }
-    
-     private void kickOutOfBDKB(Player player) {
+
+    private void kickOutOfBDKB(Player player) {
         if (MapService.gI().isMapBanDoKhoBau(player.zone.map.mapId)) {
             Service.gI().sendThongBao(player, "Trận đại chiến đã kết thúc, tàu vận chuyển sẽ đưa bạn về nhà");
             ChangeMapService.gI().changeMapBySpaceShip(player, player.gender + 21, -1, 250);
@@ -136,7 +133,7 @@ public class BanDoKhoBauService {
                             if (hp >= 2000000000L) {
                                 hp = 2000000000L;
                             }
-                            new TrungUyXanhLoBdkb(player.clan.banDoKhoBau.getMapById(137),level,(int) 1,(int) 1,BossID.TRUNG_UY_XANH_LO_BDKB);
+                            new TrungUyXanhLoBdkb(player.clan.banDoKhoBau.getMapById(137), level, 1, 1, BossID.TRUNG_UY_XANH_LO_BDKB);
                         } catch (Exception e) {
                             Logger.logException(BanDoKhoBauService.class, e, "Lỗi init boss");
                         }
@@ -150,7 +147,7 @@ public class BanDoKhoBauService {
                 Service.getInstance().sendThongBao(player, "Không thể thực hiện");
             }
         } else {
-            Service.getInstance().sendThongBao(player, "Không thể thực hiện");
+            Service.getInstance().sendThongBao(player, "Cấp độ phải thuộc khoảng từ 1-110");
         }
     }
 }

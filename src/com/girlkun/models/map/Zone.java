@@ -364,9 +364,9 @@ public class Zone {
                         infoPlayer(((Pet) player).master, player);
                     } else {
                         if (player.isTrieuHoiPet) {
-                            assert player instanceof ThuTrieuHoi;
-                            if (this.equals(((ThuTrieuHoi) player).masterr.zone)) {
-                                infoPlayer(((ThuTrieuHoi) player).masterr, player);
+                            assert player instanceof SummonPet;
+                            if (this.equals(((SummonPet) player).master.zone)) {
+                                infoPlayer(((SummonPet) player).master, player);
                             }
                         }
                     }

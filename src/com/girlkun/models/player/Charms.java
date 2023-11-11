@@ -18,66 +18,66 @@ public class Charms {
 
     public void addTimeCharms(int itemId, int min) {
         switch (itemId) {
-            case 213:
-                if(tdTriTue < System.currentTimeMillis()){
+            case 213 -> {
+                if (tdTriTue < System.currentTimeMillis()) {
                     tdTriTue = System.currentTimeMillis();
                 }
                 tdTriTue += min * 60 * 1000L;
-                break;
-            case 214:
-                if(tdManhMe < System.currentTimeMillis()){
+            }
+            case 214 -> {
+                if (tdManhMe < System.currentTimeMillis()) {
                     tdManhMe = System.currentTimeMillis();
                 }
                 tdManhMe += min * 60 * 1000L;
-                break;
-            case 215:
-                if(tdDaTrau < System.currentTimeMillis()){
+            }
+            case 215 -> {
+                if (tdDaTrau < System.currentTimeMillis()) {
                     tdDaTrau = System.currentTimeMillis();
                 }
                 tdDaTrau += min * 60 * 1000L;
-                break;
-            case 216:
-                if(tdOaiHung < System.currentTimeMillis()){
+            }
+            case 216 -> {
+                if (tdOaiHung < System.currentTimeMillis()) {
                     tdOaiHung = System.currentTimeMillis();
                 }
                 tdOaiHung += min * 60 * 1000L;
-                break;
-            case 217:
-                if(tdBatTu < System.currentTimeMillis()){
+            }
+            case 217 -> {
+                if (tdBatTu < System.currentTimeMillis()) {
                     tdBatTu = System.currentTimeMillis();
                 }
                 tdBatTu += min * 60 * 1000L;
-                break;
-            case 218:
-                if(tdDeoDai < System.currentTimeMillis()){
+            }
+            case 218 -> {
+                if (tdDeoDai < System.currentTimeMillis()) {
                     tdDeoDai = System.currentTimeMillis();
                 }
                 tdDeoDai += min * 60 * 1000L;
-                break;
-            case 219:
-                if(tdThuHut < System.currentTimeMillis()){
+            }
+            case 219 -> {
+                if (tdThuHut < System.currentTimeMillis()) {
                     tdThuHut = System.currentTimeMillis();
                 }
                 tdThuHut += min * 60 * 1000L;
-                break;
-            case 522:
-                if(tdDeTu < System.currentTimeMillis()){
+            }
+            case 522 -> {
+                if (tdDeTu < System.currentTimeMillis()) {
                     tdDeTu = System.currentTimeMillis();
                 }
                 tdDeTu += min * 60 * 1000L;
-                break;
-            case 671:
-                if(tdTriTue3 < System.currentTimeMillis()){
+            }
+            case 671 -> {
+                if (tdTriTue3 < System.currentTimeMillis()) {
                     tdTriTue3 = System.currentTimeMillis();
                 }
                 tdTriTue3 += min * 60 * 1000L;
-                break;
-            case 672:
-                if(tdTriTue4 < System.currentTimeMillis()){
+            }
+            case 672 -> {
+                if (tdTriTue4 < System.currentTimeMillis()) {
                     tdTriTue4 = System.currentTimeMillis();
                 }
                 tdTriTue4 += min * 60 * 1000L;
-                break;
+            }
         }
     }
     

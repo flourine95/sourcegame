@@ -7,9 +7,9 @@ public class FightMabu {
     public final byte POINT_MAX = 20;
 
     public int pointMabu = 0;
-    private Player player;
+    private final Player player;
 
-    public FightMabu(Player player){
+    public FightMabu(Player player) {
         this.player = player;
     }
 
@@ -23,6 +23,6 @@ public class FightMabu {
     }
 
     public void clear() {
-        this.pointMabu=0;
+        this.pointMabu = 0;
     }
 }

@@ -13,23 +13,14 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-/**
- *
- * @author Admin
- */
 public class SkillSpecial {
 
     public static final int TIME_GONG = 2000;
-    public static final int TIME_END_24_25 = 3000; 
+    public static final int TIME_END_24_25 = 3000;
     public static final int TIME_END_26 = 11000;
 
     private Player player;
 
-    public SkillSpecial(Player player) {
-        this.player = player;
-        this.playersTaget = new ArrayList<>();
-        this.mobsTaget = new ArrayList<>();
-    }
 
     public Skill skillSpecial;
 
@@ -53,8 +44,14 @@ public class SkillSpecial {
 
     public long lastTimeSkillSpecial;
 
+    public SkillSpecial(Player player) {
+        this.player = player;
+        this.playersTaget = new ArrayList<>();
+        this.mobsTaget = new ArrayList<>();
+    }
+
     private void update() {
-        if (this.isStartSkillSpecial = true) {
+        if (this.isStartSkillSpecial) {
             SkillService.gI().updateSkillSpecial(player);
         }
     }
@@ -104,7 +101,7 @@ public class SkillSpecial {
     }
 
     public void start(int leep) {
-        if (this.isActive == false) {
+        if (!this.isActive) {
             this.isActive = true;
             this.timer = new Timer();
             this.timerTask = new TimerTask() {

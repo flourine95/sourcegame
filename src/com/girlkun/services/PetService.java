@@ -4,7 +4,7 @@ import com.girlkun.consts.ConstPlayer;
 import com.girlkun.models.player.NewPet;
 import com.girlkun.models.player.Pet;
 import com.girlkun.models.player.Player;
-import com.girlkun.models.player.ThuTrieuHoi;
+import com.girlkun.models.player.SummonPet;
 import com.girlkun.services.func.ChangeMapService;
 import com.girlkun.utils.Logger;
 import com.girlkun.utils.SkillUtil;
@@ -356,7 +356,7 @@ public class PetService {
         if (pl.thuTrieuHoi != null) {
             pl.thuTrieuHoi.dispose();
         }
-        pl.thuTrieuHoi = new ThuTrieuHoi(pl);
+        pl.thuTrieuHoi = new SummonPet(pl);
         pl.thuTrieuHoi.name = "$" + "[" + pl.getNameThanThu(pl.TrieuHoiCapBac) + "] " + pl.TenThuTrieuHoi;
         pl.thuTrieuHoi.gender = pl.gender;
         pl.thuTrieuHoi.nPoint.tiemNang = 1;

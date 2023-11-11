@@ -2,12 +2,6 @@ package com.girlkun.models.shop;
 
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- *
- * @Stole By Hoàng Việt💖
- *
- */
 public class TabShop {
     
     public Shop shop;

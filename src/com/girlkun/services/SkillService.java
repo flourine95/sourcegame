@@ -496,32 +496,32 @@ public class SkillService {
     private void useSkillAttack(Player player, Player plTarget, Mob mobTarget) {
         try {
         if (!player.isBoss) {
-            if (player.isTrieuHoiPet && ((ThuTrieuHoi) player).masterr.TrieuHoiCapBac != -1
-                    && ((ThuTrieuHoi) player).masterr.thuTrieuHoi != null) {
-                if (((ThuTrieuHoi) player).masterr.TrieuHoiLevel < 100) {
-                    if (((ThuTrieuHoi) player).masterr.itemTimesieucap != null && ((ThuTrieuHoi) player).masterr.itemTimesieucap.isUseXiMuoi) { //x3 kinh ngiệm Chiến Thần khi xài Xí Muội
-                        ((ThuTrieuHoi) player).masterr.TrieuHoiExpThanThu += (Util.nextInt(10000, 50000) * 3);
+            if (player.isTrieuHoiPet && ((SummonPet) player).master.TrieuHoiCapBac != -1
+                    && ((SummonPet) player).master.thuTrieuHoi != null) {
+                if (((SummonPet) player).master.TrieuHoiLevel < 100) {
+                    if (((SummonPet) player).master.itemTimesieucap != null && ((SummonPet) player).master.itemTimesieucap.isUseXiMuoi) { //x3 kinh ngiệm Chiến Thần khi xài Xí Muội
+                        ((SummonPet) player).master.TrieuHoiExpThanThu += (Util.nextInt(10000, 50000) * 3);
                     } else {
-                        ((ThuTrieuHoi) player).masterr.TrieuHoiExpThanThu += Util.nextInt(10000, 50000);
+                        ((SummonPet) player).master.TrieuHoiExpThanThu += Util.nextInt(10000, 50000);
                     }
-                    if ((((ThuTrieuHoi) player).masterr.TrieuHoiExpThanThu >= 3000000L + ((ThuTrieuHoi) player).masterr.TrieuHoiLevel * 1500000L)
-                            && ((ThuTrieuHoi) player).masterr.TrieuHoiLevel < 100) {
-                        ((ThuTrieuHoi) player).masterr.TrieuHoiLevel++;
-                        ((ThuTrieuHoi) player).masterr.TrieuHoiExpThanThu = 0;
-                        ((ThuTrieuHoi) player).masterr.TrieuHoiDame += Util.GioiHannext(10000,
-                                10000L + ((((ThuTrieuHoi) player).masterr.TrieuHoiCapBac + 1) * 1000L));
-                        ((ThuTrieuHoi) player).masterr.TrieuHoiHP += Util.GioiHannext(50000,
-                                50000L + ((((ThuTrieuHoi) player).masterr.TrieuHoiCapBac + 1) * 5000L));
+                    if ((((SummonPet) player).master.TrieuHoiExpThanThu >= 3000000L + ((SummonPet) player).master.TrieuHoiLevel * 1500000L)
+                            && ((SummonPet) player).master.TrieuHoiLevel < 100) {
+                        ((SummonPet) player).master.TrieuHoiLevel++;
+                        ((SummonPet) player).master.TrieuHoiExpThanThu = 0;
+                        ((SummonPet) player).master.TrieuHoiDame += Util.GioiHannext(10000,
+                                10000L + ((((SummonPet) player).master.TrieuHoiCapBac + 1) * 1000L));
+                        ((SummonPet) player).master.TrieuHoiHP += Util.GioiHannext(50000,
+                                50000L + ((((SummonPet) player).master.TrieuHoiCapBac + 1) * 5000L));
                     }
                 }
-                if (((ThuTrieuHoi) player).masterr.TrieuHoiCapBac >= 8
-                        && ((ThuTrieuHoi) player).masterr.TrieuHoiCapBac <= 10) {
+                if (((SummonPet) player).master.TrieuHoiCapBac >= 8
+                        && ((SummonPet) player).master.TrieuHoiCapBac <= 10) {
                     if (Util.isTrue(10f, 100)) {
-                        int tnhan = (((ThuTrieuHoi) player).masterr.TrieuHoiLevel + 1) * 20;
-                        ((ThuTrieuHoi) player).masterr.inventory.ruby += tnhan;
-                        Service.gI().sendThongBao(((ThuTrieuHoi) player).masterr,
+                        int tnhan = (((SummonPet) player).master.TrieuHoiLevel + 1) * 20;
+                        ((SummonPet) player).master.inventory.ruby += tnhan;
+                        Service.gI().sendThongBao(((SummonPet) player).master,
                                 "Bạn vừa nhận " + tnhan + " Hồng ngọc, Do Chiến Thần tìm được");
-                        Service.gI().sendMoney(((ThuTrieuHoi) player).masterr);
+                        Service.gI().sendMoney(((SummonPet) player).master);
                     }
                 }
 //                if (((Thu_TrieuHoi) player).masterr.TrieuHoiCapBac == 7

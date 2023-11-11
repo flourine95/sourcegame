@@ -6,7 +6,7 @@ import com.girlkun.utils.Util;
 
 public class Fusion {
 
-    public static final int TIME_FUSION = 600000;
+    public static final int TIME_FUSION = 600_000;
 
     private Player player;
     public byte typeFusion;
@@ -21,8 +21,8 @@ public class Fusion {
             this.player.pet.unFusion();
         }
     }
-    
-    public void dispose(){
+
+    public void dispose() {
         this.player = null;
     }
 

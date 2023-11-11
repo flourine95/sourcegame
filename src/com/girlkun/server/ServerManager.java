@@ -132,7 +132,7 @@ public class ServerManager {
     }
 
     private void activeServerSocket() {
-        Logger.log(Logger.PURPLE, "Start server......... Current thread: " + Thread.activeCount() + "\n");
+        Logger.log(Logger.PURPLE, "Current thread: " + Thread.activeCount() + "\n");
         try {
             this.act();
         } catch (Exception e) {
@@ -232,11 +232,11 @@ public class ServerManager {
         try {
             ClanService.gI().close();
         } catch (Exception e) {
-            Logger.error("Lỗi save clan!...................................\n");
+            Logger.error("Lỗi save clan!\n");
         }
         ShopKyGuiManager.gI().save();
         Client.gI().close();
-        Logger.success("SUCCESSFULLY MAINTENANCE!...................................\n");
+        Logger.log(Logger.CYAN, "SUCCESSFULLY MAINTENANCE\n");
         System.exit(0);
     }
 }

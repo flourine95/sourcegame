@@ -100,8 +100,8 @@ public class Player {
     public List<Card> cards = new ArrayList<>();
     public Pet pet;
     public NewPet newpet;
-    public ThuTrieuHoi thuTrieuHoi;
-    public NhiemvuChienthan nhiemvuChienthan;
+    public SummonPet thuTrieuHoi;
+    public WarGodMission nhiemvuChienthan;
     public MobMe mobMe;
     public Location location;
     public SetClothes setClothes;
@@ -219,7 +219,7 @@ public class Player {
         effectSkin = new EffectSkin(this);
         skillSpecial = new SkillSpecial(this);
         achievement = new BoMong(this);
-        nhiemvuChienthan = new NhiemvuChienthan();
+        nhiemvuChienthan = new WarGodMission();
     }
 
     //--------------------------------------------------------------------------

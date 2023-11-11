@@ -9,7 +9,7 @@ import com.girlkun.models.map.Zone;
 import com.girlkun.models.player.Location;
 import com.girlkun.models.player.Pet;
 import com.girlkun.models.player.Player;
-import com.girlkun.models.player.ThuTrieuHoi;
+import com.girlkun.models.player.SummonPet;
 import com.girlkun.models.skill.PlayerSkill;
 import com.girlkun.models.skill.Skill;
 import com.girlkun.network.io.Message;
@@ -499,9 +499,9 @@ public class Mob {
                 }
             }
         } else if (player.isTrieuHoiPet) {
-            if (((ThuTrieuHoi) player).masterr.charms.tdThuHut > System.currentTimeMillis()) {
+            if (((SummonPet) player).master.charms.tdThuHut > System.currentTimeMillis()) {
                 for (ItemMap item : items) {
-                    ItemMapService.gI().pickItem(((ThuTrieuHoi) player).masterr, item.itemMapId, true);
+                    ItemMapService.gI().pickItem(((SummonPet) player).master, item.itemMapId, true);
                 }
             }
         } else {

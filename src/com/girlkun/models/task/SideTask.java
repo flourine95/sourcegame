@@ -60,20 +60,14 @@ public class SideTask {
     }
 
     public String getLevel() {
-        switch (this.level) {
-            case ConstTask.EASY:
-                return "dễ";
-            case ConstTask.NORMAL:
-                return "bình thường";
-            case ConstTask.HARD:
-                return "khó";
-            case ConstTask.VERY_HARD:
-                return "rất khó";
-            case ConstTask.HELL:
-                return "địa ngục";
-            default:
-                return "Arriety.org";
-        }
+        return switch (this.level) {
+            case ConstTask.EASY -> "dễ";
+            case ConstTask.NORMAL -> "bình thường";
+            case ConstTask.HARD -> "khó";
+            case ConstTask.VERY_HARD -> "rất khó";
+            case ConstTask.HELL -> "địa ngục";
+            default -> "...";
+        };
     }
 
     public int getPercentProcess() {
