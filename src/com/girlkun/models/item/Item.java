@@ -7,9 +7,7 @@ import com.girlkun.services.ItemService;
 import com.girlkun.utils.Util;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Item {
 
@@ -67,14 +65,27 @@ public class Item {
         }
         this.itemOptions = null;
     }
+    public int getIDBongTaiAfterUpLevel(int lvbt) {
+        return switch (lvbt) {
+            case 1 -> 921;
+            case 2 -> 1165;
+            case 3 -> 1129;
+            default -> 0;
+        };
+    }
+    public int getLevelBongTai() {
+        return switch (template.id) {
+            case 454 -> 1;
+            case 921 -> 2;
+            case 1165 -> 3;
+            case 1129 -> 4;
+            default -> 0;
+        };
+    }
 
 
     public static class ItemOption {
-
-        private static final Map<String, String> OPTION_STRING = new HashMap<>();
-
         public int param;
-
         public Template.ItemOptionTemplate optionTemplate;
 
         public ItemOption() {
@@ -111,15 +122,48 @@ public class Item {
                     + n + "param" + n + ":" + n + param + n
                     + "}";
         }
+
+        public boolean isOptionPhapSu() {
+            return
+                    isAddOptionPhapSu() ||
+                            isOptionCheckedPhapSu();
+        }
+
+        public boolean isAddOptionPhapSu() {
+            return
+                    this.optionTemplate.id == 194 ||
+                            this.optionTemplate.id == 195 ||
+                            this.optionTemplate.id == 196 ||
+                            this.optionTemplate.id == 197;
+        }
+
+        public boolean isOptionCheckedPhapSu() {
+            return this.optionTemplate.id == 198;
+        }
+    }
+
+    public boolean isPotara() {
+        return
+                template.id == 454 ||
+                        template.id == 921 ||
+                        template.id == 1165 ||
+                        template.id == 1129;
+    }
+
+    public boolean isMVBT() {
+        return template.id == 933;
+    }
+
+    public boolean isMHBT() {
+        return template.id == 934;
+    }
+
+    public boolean isDXL() {
+        return template.id == 935;
     }
 
     public boolean isSKH() {
-        for (ItemOption itemOption : itemOptions) {
-            if (itemOption.optionTemplate.id >= 127 && itemOption.optionTemplate.id <= 135) {
-                return true;
-            }
-        }
-        return false;
+        return itemOptions.stream().anyMatch(itemOption -> itemOption.optionTemplate.id >= 127 && itemOption.optionTemplate.id <= 135);
     }
 
     public boolean isDTS() {
@@ -154,54 +198,35 @@ public class Item {
     }
 
     public String typeName() {
-        switch (this.template.type) {
-            case 0:
-                return "Áo";
-            case 1:
-                return "Quần";
-            case 2:
-                return "Găng";
-            case 3:
-                return "Giày";
-            case 4:
-                return "Rada";
-            default:
-                return "";
-        }
+        return switch (this.template.type) {
+            case 0 -> "Áo";
+            case 1 -> "Quần";
+            case 2 -> "Găng";
+            case 3 -> "Giày";
+            case 4 -> "Rada";
+            default -> "";
+        };
     }
 
     public byte typeIdManh() {
-        if (!isManhTS()) return -1;
-        switch (this.template.id) {
-            case 1066:
-                return 0;
-            case 1067:
-                return 1;
-            case 1070:
-                return 2;
-            case 1068:
-                return 3;
-            case 1069:
-                return 4;
-            default:
-                return -1;
-        }
+        return switch (this.template.id) {
+            case 1066 -> 0;
+            case 1067 -> 1;
+            case 1070 -> 2;
+            case 1068 -> 3;
+            case 1069 -> 4;
+            default -> -1;
+        };
     }
 
     public String typeNameManh() {
-        switch (this.template.id) {
-            case 1066:
-                return "Áo";
-            case 1067:
-                return "Quần";
-            case 1070:
-                return "Găng";
-            case 1068:
-                return "Giày";
-            case 1069:
-                return "Nhẫn";
-            default:
-                return "";
-        }
+        return switch (this.template.id) {
+            case 1066 -> "Áo";
+            case 1067 -> "Quần";
+            case 1070 -> "Găng";
+            case 1068 -> "Giày";
+            case 1069 -> "Nhẫn";
+            default -> "";
+        };
     }
 }

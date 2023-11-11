@@ -26,8 +26,10 @@ public class ShopServiceNew {
     private static final byte COST_COUPON = 4;
     private static final byte COST_EVENT = 5;
 
-    private static final byte NORMAL_SHOP = 6;
-    private static final byte SPEC_SHOP = 7;
+    private static final byte NORMAL_SHOP = 0;
+    private static final byte SPEC_SHOP = 3;
+    private static final byte BOX = 4;
+
     private static ShopServiceNew I;
 
     public static ShopServiceNew gI() {
@@ -49,12 +51,17 @@ public class ShopServiceNew {
             Shop shop = this.getShop(tagName);
             shop = this.resolveShop(player, shop, allGender);
             switch (shop.typeShop) {
-                case NORMAL_SHOP -> openShopType0(player, shop);
-                case SPEC_SHOP -> openShopType3(player, shop);
+                case NORMAL_SHOP:
+                    openShopType0(player, shop);
+                    break;
+                case SPEC_SHOP:
+                    openShopType3(player, shop);
+                    break;
             }
-        } catch (Exception e) {
-            Logger.logException(ShopServiceNew.class, e);
-            Service.getInstance().sendThongBao(player, e.getMessage());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("loi ne   dsfsdf     ClassCastException ");
+            Service.getInstance().sendThongBao(player, ex.getMessage());
         }
     }
 
@@ -65,6 +72,10 @@ public class ShopServiceNew {
             }
         }
         throw new Exception("Shop " + tagName + " không tồn tại!");
+    }
+
+    private void _________________Xử_lý_cửa_hàng_trước_khi_gửi_______________() {
+        //**********************************************************************
     }
 
     private Shop resolveShop(Player player, Shop shop, boolean allGender) {
@@ -78,23 +89,42 @@ public class ShopServiceNew {
     private Shop resolveShopBua(Player player, Shop s) {
         for (TabShop tabShop : s.tabShops) {
             for (ItemShop item : tabShop.itemShops) {
-                long min = switch (item.temp.id) {
-                    case 213 -> {
+                long min = 0;
+                switch (item.temp.id) {
+                    case 213:
                         long timeTriTue = player.charms.tdTriTue;
                         long current = System.currentTimeMillis();
-                        yield (timeTriTue - current) / 60000;
-                    }
-                    case 214 -> (player.charms.tdManhMe - System.currentTimeMillis()) / 60000;
-                    case 215 -> (player.charms.tdDaTrau - System.currentTimeMillis()) / 60000;
-                    case 216 -> (player.charms.tdOaiHung - System.currentTimeMillis()) / 60000;
-                    case 217 -> (player.charms.tdBatTu - System.currentTimeMillis()) / 60000;
-                    case 218 -> (player.charms.tdDeoDai - System.currentTimeMillis()) / 60000;
-                    case 219 -> (player.charms.tdThuHut - System.currentTimeMillis()) / 60000;
-                    case 522 -> (player.charms.tdDeTu - System.currentTimeMillis()) / 60000;
-                    case 671 -> (player.charms.tdTriTue3 - System.currentTimeMillis()) / 60000;
-                    case 672 -> (player.charms.tdTriTue4 - System.currentTimeMillis()) / 60000;
-                    default -> 0;
-                };
+                        min = (timeTriTue - current) / 60000;
+
+                        break;
+                    case 214:
+                        min = (player.charms.tdManhMe - System.currentTimeMillis()) / 60000;
+                        break;
+                    case 215:
+                        min = (player.charms.tdDaTrau - System.currentTimeMillis()) / 60000;
+                        break;
+                    case 216:
+                        min = (player.charms.tdOaiHung - System.currentTimeMillis()) / 60000;
+                        break;
+                    case 217:
+                        min = (player.charms.tdBatTu - System.currentTimeMillis()) / 60000;
+                        break;
+                    case 218:
+                        min = (player.charms.tdDeoDai - System.currentTimeMillis()) / 60000;
+                        break;
+                    case 219:
+                        min = (player.charms.tdThuHut - System.currentTimeMillis()) / 60000;
+                        break;
+                    case 522:
+                        min = (player.charms.tdDeTu - System.currentTimeMillis()) / 60000;
+                        break;
+                    case 671:
+                        min = (player.charms.tdTriTue3 - System.currentTimeMillis()) / 60000;
+                        break;
+                    case 672:
+                        min = (player.charms.tdTriTue4 - System.currentTimeMillis()) / 60000;
+                        break;
+                }
                 if (min > 0) {
                     item.options.clear();
                     if (min >= 1440) {
@@ -110,10 +140,14 @@ public class ShopServiceNew {
         return s;
     }
 
+    private void _________________Gửi_cửa_hàng_cho_người_chơi________________() {
+        //**********************************************************************
+    }
+
     private void openShopType0(Player player, Shop shop) {
+        player.iDMark.setShopOpen(shop);
+        player.iDMark.setTagNameShop(shop.tagName);
         if (shop != null) {
-            player.iDMark.setShopOpen(shop);
-            player.iDMark.setTagNameShop(shop.tagName);
             Message msg;
             try {
                 msg = new Message(-44);
@@ -162,15 +196,13 @@ public class ShopServiceNew {
             } catch (Exception e) {
                 Logger.logException(ShopServiceNew.class, e);
             }
-        } else {
-            Logger.error("Shop null");
         }
     }
 
     private void openShopType3(Player player, Shop shop) {
+        player.iDMark.setShopOpen(shop);
+        player.iDMark.setTagNameShop(shop.tagName);
         if (shop != null) {
-            player.iDMark.setShopOpen(shop);
-            player.iDMark.setTagNameShop(shop.tagName);
             Message msg;
             try {
                 msg = new Message(-44);
@@ -205,8 +237,6 @@ public class ShopServiceNew {
             } catch (Exception e) {
                 Logger.logException(ShopServiceNew.class, e);
             }
-        } else {
-            Logger.error("Shop null");
         }
     }
 
@@ -252,33 +282,36 @@ public class ShopServiceNew {
         }
     }
 
+    private void _________________Mua_vật_phẩm______________________________() {
+        //**********************************************************************
+    }
+
     public boolean VatphamKoMuanhieu(Player player, int id) {
         Shop shop = player.iDMark.getShopOpen();
         ItemShop it = shop.getItemShop(id);
-        return it != null && it.temp.isUpToUp;
+        return it != null && it.temp.isUpToUp == true;
     }
 
     public void takeItem(Player player, byte type, int tempId) {
         String tagName = player.iDMark.getTagNameShop();
         player.idItemHighPurchase = tempId;
-        if (tagName == null || tagName.isEmpty()) {
+        if (tagName == null || tagName.length() <= 0) {
             return;
         }
         if (tagName.equals("ITEMS_LUCKY_ROUND")) {
             int index = -1;
-            for (Item ITEM : player.inventory.itemsBoxCrackBall) {
-                if (ITEM.template.id == tempId) {
+            for(Item ITEM : player.inventory.itemsBoxCrackBall){
+                if(ITEM.template.id == tempId){
                     index = player.inventory.itemsBoxCrackBall.indexOf(ITEM);
                 }
             }
-            if (index >= 0) {
+            if(index >= 0){
                 getItemSideBoxLuckyRound(player, player.inventory.itemsBoxCrackBall, type, index);
             } else {
                 Service.getInstance().sendThongBao(player, "Không tìm thấy item");
             }
             return;
-        }
-        if (tagName.equals("ITEMS_REWARD")) {
+        } else if (tagName.equals("ITEMS_REWARD")) {
             return;
         }
         if (player.iDMark.getShopOpen() == null) {
@@ -288,7 +321,7 @@ public class ShopServiceNew {
         if (tagName.equals("BUA_1H") || tagName.equals("BUA_8H") || tagName.equals("BUA_1M")) {
             buyItemBua(player, tempId);
         } else {
-            if (VatphamKoMuanhieu(player, tempId) && player.isHighPurchaseVolume) {
+            if (VatphamKoMuanhieu(player, tempId) && player.isHighPurchaseVolume == true) {
                 if (player.highPurchaseCount == 0 && player.idItemHighPurchase != -1) {
                     Input.gI().muanhieu(player);
                 }
@@ -306,11 +339,22 @@ public class ShopServiceNew {
         int coupon = 0;
         int event = 0;
         switch (is.typeSell) {
-            case COST_GOLD -> gold = is.cost;
-            case COST_GEM -> gem = is.cost;
-            case COST_RUBY -> ruby = is.cost;
-            case COST_COUPON -> coupon = is.cost;
-            case COST_EVENT -> event = is.cost;
+            case COST_GOLD:
+                gold = is.cost;
+                break;
+            case COST_GEM:
+                gem = is.cost;
+                break;
+            case COST_RUBY:
+                ruby = is.cost;
+                break;
+            case COST_COUPON:
+                coupon = is.cost;
+                break;
+            case COST_EVENT:
+                event = is.cost;
+                break;
+
         }
         if (player.inventory.gold < gold) {
             Service.getInstance().sendThongBao(player, "Bạn không có đủ vàng");
@@ -535,9 +579,9 @@ public class ShopServiceNew {
         if (item != null && item.isNotNullItem() && item.template.id == 457) {
             NpcService.gI().createMenuConMeo(pl, ConstNpc.BAN_NHIEU_THOI_VANG, 7710,
                     "|7|BÁN NHIỀU THỎI VÀNG\n"
-                            + "|-1|Theo nguyện vọng góp ý từ các chiến binh, ta được Admin Ngọc Rồng Tabi\n"
-                            + "giao cho trọng trách hỗ trợ Bán thỏi vàng số lượng nhiều\n"
-                            + "|0|Ngươi muốn bán số lượng bao nhiêu Thỏi vàng?",
+                    + "|-1|Theo nguyện vọng góp ý từ các chiến binh, ta được Admin Ngọc Rồng Tabi\n"
+                    + "giao cho trọng trách hỗ trợ Bán thỏi vàng số lượng nhiều\n"
+                    + "|0|Ngươi muốn bán số lượng bao nhiêu Thỏi vàng?",
                     "Bán X1\nThỏi vàng\n(500 Triệu)", "Bán X5\nThỏi vàng\n(2 Tỷ 5)", "Bán X10\nThỏi vàng\n(5 Tỷ)",
                     "Bán X100\nThỏi vàng\n(50 Tỷ)");
             return;
@@ -620,8 +664,12 @@ public class ShopServiceNew {
         }
     }
 
+    private void _________________Nhận_vật_phẩm_từ_rương_đặc_biệt___________() {
+        //**********************************************************************
+    }
+
     private void getItemSideBoxLuckyRound(Player player, List<Item> items, byte type, int index) {
-        if (items == null || items.isEmpty()) {
+        if (items == null || items.size() < 1) {
             return;
         }
         Item item = items.get(index);
@@ -663,3 +711,7 @@ public class ShopServiceNew {
     }
 }
 
+/**
+ * Vui lòng không sao chép mã nguồn này dưới mọi hình thức. Hãy tôn trọng tác
+ * giả của mã nguồn này. Xin cảm ơn! - Girl Béo
+ */

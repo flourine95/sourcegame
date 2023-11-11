@@ -2010,9 +2010,12 @@ public class NpcFactory {
                         this.createOtherMenu(player, ConstNpc.BASE_MENU, "Ngươi tìm ta có việc gì?", "Ép sao\ntrang bị", "Pha lê\nhóa\ntrang bị", "Tinh ấn\ntrang bị", "Pháp sư hoá\ntrang bị", "Tẩy\npháp sư", "Chân mệnh", "Chuyển hóa\nđồ Hủy diệt", "Chuyển hóa\nSKH", "Gia Hạn\nvật phẩm");
                     } else if (this.mapId == 121) {
                         this.createOtherMenu(player, ConstNpc.BASE_MENU, "Ngươi tìm ta có việc gì?", "Về đảo\nrùa");
-
                     } else {
-                        this.createOtherMenu(player, ConstNpc.BASE_MENU, "Ngươi tìm ta có việc gì?", "Cửa hàng\nBùa", "Nâng cấp\nVật phẩm", "Nhập\nNgọc Rồng", "Nâng cấp\nBông tai\nPorata", "Mở chỉ số\n bông tai 2", "Mở chỉ số\n bông tai 3", "Mở chỉ số\n bông tai 4");
+                        this.createOtherMenu(player, ConstNpc.BASE_MENU, "Ngươi tìm ta có việc gì?", "Cửa hàng\nBùa", "Nâng cấp\nVật phẩm",
+                                "Nhập\nNgọc Rồng",
+                                "Nâng cấp\nBông tai\nPorata",
+                                "Mở chỉ số\n bông tai"
+                        );
                     }
                 }
             }
@@ -2023,33 +2026,21 @@ public class NpcFactory {
                     if (this.mapId == 5 || this.mapId == 13) {
                         if (player.iDMark.isBaseMenu()) {
                             switch (select) {
-                                case 0:
-                                    CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.EP_SAO_TRANG_BI);
-                                    break;
-                                case 1:
-                                    CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.PHA_LE_HOA_TRANG_BI);
-                                    break;
-                                case 2:
-                                    CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.AN_TRANG_BI);
-                                    break;
-                                case 3:
-                                    CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.PHAP_SU_HOA);
-                                    break;
-                                case 4:
-                                    CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.TAY_PHAP_SU);
-                                    break;
-                                case 5: //nâng cấp Chân mệnh
-                                    this.createOtherMenu(player, 5701, "|7|CHÂN MỆNH" + "\n\n|1|Bạn đang có: " + Util.format(player.inventory.event) + " Điểm Săn Boss" + "\n\n|5|Bạn Được Hiếu Tặng Free  Chân Mệnh cấp 1 Bú Nhanh" + "\n|3| Lưu ý: Chỉ được nhận Chân mệnh 1 lần (Hành trang chỉ tồn tại 1 Chân mệnh)" + "\nNếu đã có Chân mệnh. Ta sẽ giúp ngươi nâng cấp bậc lên với các dòng chỉ số cao hơn", "Nhận Chân mệnh", "Nâng cấp Chân mệnh", "Shop\nChân mệnh");
-                                    break;
-                                case 6:
-                                    CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.CHUYEN_HOA_DO_HUY_DIET);
-                                    break;
-                                case 7:
-                                    CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.RANDOM_SKH);
-                                    break;
-                                case 8:
-                                    CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.GIA_HAN_VAT_PHAM);
-                                    break;
+                                case 0 ->
+                                        CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.EP_SAO_TRANG_BI);
+                                case 1 ->
+                                        CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.PHA_LE_HOA_TRANG_BI);
+                                case 2 -> CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.TINH_AN);
+                                case 3 -> CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.PHAP_SU_HOA);
+                                case 4 -> CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.TAY_PHAP_SU);
+                                case 5 ->
+                                        this.createOtherMenu(player, 5701, "|7|CHÂN MỆNH" + "\n\n|1|Bạn đang có: " + Util.format(player.inventory.event) + " Điểm Săn Boss" + "\n\n|5|Bạn Được Hiếu Tặng Free  Chân Mệnh cấp 1 Bú Nhanh" + "\n|3| Lưu ý: Chỉ được nhận Chân mệnh 1 lần (Hành trang chỉ tồn tại 1 Chân mệnh)" + "\nNếu đã có Chân mệnh. Ta sẽ giúp ngươi nâng cấp bậc lên với các dòng chỉ số cao hơn", "Nhận Chân mệnh", "Nâng cấp Chân mệnh", "Shop\nChân mệnh");
+                                case 6 ->
+                                        CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.CHUYEN_HOA_DO_HUY_DIET);
+                                case 7 ->
+                                        CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.CHUYEN_HOA_SKH);
+                                case 8 ->
+                                        CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.GIA_HAN_VAT_PHAM);
                             }
                         } else if (player.iDMark.getIndexMenu() == 5701) {
                             switch (select) {
@@ -2078,7 +2069,7 @@ public class NpcFactory {
                                     }
                                     break;
                                 case 1:
-                                    CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.NANG_CAP_CHAN_MENH);
+                                    CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.CHAN_MENH);
                                     break;
                                 case 2:
                                     ShopServiceNew.gI().opendShop(player, "CHAN MENH", true);
@@ -2087,14 +2078,13 @@ public class NpcFactory {
                         } else if (player.iDMark.getIndexMenu() == ConstNpc.MENU_START_COMBINE) {
                             switch (player.combineNew.typeCombine) {
                                 case CombineServiceNew.EP_SAO_TRANG_BI:
-                                case CombineServiceNew.AN_TRANG_BI:
+                                case CombineServiceNew.TINH_AN:
                                 case CombineServiceNew.PHA_LE_HOA_TRANG_BI:
-                                case CombineServiceNew.CHUYEN_HOA_TRANG_BI:
                                 case CombineServiceNew.PHAP_SU_HOA:
                                 case CombineServiceNew.TAY_PHAP_SU:
-                                case CombineServiceNew.NANG_CAP_CHAN_MENH:
+                                case CombineServiceNew.CHAN_MENH:
                                 case CombineServiceNew.CHUYEN_HOA_DO_HUY_DIET:
-                                case CombineServiceNew.RANDOM_SKH:
+                                case CombineServiceNew.CHUYEN_HOA_SKH:
                                 case CombineServiceNew.GIA_HAN_VAT_PHAM:
                                     if (select == 0) {
                                         CombineServiceNew.gI().startCombine(player);
@@ -2119,27 +2109,16 @@ public class NpcFactory {
                     } else if (this.mapId == 42 || this.mapId == 43 || this.mapId == 44 || this.mapId == 84) {
                         if (player.iDMark.isBaseMenu()) {
                             switch (select) {
-                                case 0: //shop bùa
-                                    createOtherMenu(player, ConstNpc.MENU_OPTION_SHOP_BUA, "Bùa của ta rất lợi hại, nhìn ngươi yếu đuối thế này, chắc muốn mua bùa để " + "mạnh mẽ à, mua không ta bán cho, xài rồi lại thích cho mà xem.", "Bùa\n1 giờ", "Bùa\n8 giờ", "Bùa\n1 tháng", "Đóng");
-                                    break;
-                                case 1:
-                                    CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.NANG_CAP_VAT_PHAM);
-                                    break;
-                                case 2:
-                                    CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.NHAP_NGOC_RONG);
-                                    break;
-                                case 3: //nâng cấp bông tai
-                                    CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.NANG_CAP_BONG_TAI);
-                                    break;
-                                case 4: //làm phép nhập đá
-                                    CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.MO_CHI_SO_BONG_TAI_2);
-                                    break;
-                                case 5: //làm phép nhập đá
-                                    CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.MO_CHI_SO_BONG_TAI_3);
-                                    break;
-                                case 6: //làm phép nhập đá
-                                    CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.MO_CHI_SO_BONG_TAI_4);
-                                    break;
+                                case 0 ->
+                                        createOtherMenu(player, ConstNpc.MENU_OPTION_SHOP_BUA, "Bùa của ta rất lợi hại, nhìn ngươi yếu đuối thế này, chắc muốn mua bùa để " + "mạnh mẽ à, mua không ta bán cho, xài rồi lại thích cho mà xem.", "Bùa\n1 giờ", "Bùa\n8 giờ", "Bùa\n1 tháng", "Đóng");
+                                case 1 ->
+                                        CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.NANG_CAP_VAT_PHAM);
+                                case 2 ->
+                                        CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.NHAP_NGOC_RONG);
+                                case 3 ->
+                                        CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.NANG_CAP_BONG_TAI);
+                                case 4 ->
+                                        CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.MO_CHI_SO_BONG_TAI);
                             }
                         } else if (player.iDMark.getIndexMenu() == ConstNpc.MENU_OPTION_SHOP_BUA) {
                             switch (select) {
@@ -2156,14 +2135,9 @@ public class NpcFactory {
                         } else if (player.iDMark.getIndexMenu() == ConstNpc.MENU_START_COMBINE) {
                             switch (player.combineNew.typeCombine) {
                                 case CombineServiceNew.NANG_CAP_VAT_PHAM:
-                                case CombineServiceNew.NANG_CAP_BONG_TAI:
-                                case CombineServiceNew.LAM_PHEP_NHAP_DA:
                                 case CombineServiceNew.NHAP_NGOC_RONG:
-                                case CombineServiceNew.PHAN_RA_DO_THAN_LINH:
-                                case CombineServiceNew.NANG_CAP_SKH_VIP:
-                                case CombineServiceNew.MO_CHI_SO_BONG_TAI_2:
-                                case CombineServiceNew.MO_CHI_SO_BONG_TAI_3:
-                                case CombineServiceNew.MO_CHI_SO_BONG_TAI_4:
+                                case CombineServiceNew.NANG_CAP_BONG_TAI:
+                                case CombineServiceNew.MO_CHI_SO_BONG_TAI:
                                     if (select == 0) {
                                         CombineServiceNew.gI().startCombine(player);
                                     }
@@ -2979,7 +2953,7 @@ public class NpcFactory {
             @Override
             public void openBaseMenu(Player player) {
                 if (canOpenNpc(player)) {
-                    if (this.mapId == 52 || this.mapId ==5) {
+                    if (this.mapId == 52 || this.mapId == 5) {
                         this.createOtherMenu(player, ConstNpc.BASE_MENU, "Đề đến khu săn Đệ tử Super Broly Huyền thoại bạn cần Đạt các điều kiện:\n|7|1.Mang Cải trang DCTT\n2.Sức mạnh trên 300ty\n3.Có Đệ tử Berus\n4.Đã qua nhiệm vụ 24", "Di chuyển");
                     }
                 }

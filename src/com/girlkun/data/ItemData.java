@@ -103,5 +103,4 @@ public class ItemData {
             System.out.println("ddd");
         }
     }
-    //-------------------------------------------------------- end update client
 }

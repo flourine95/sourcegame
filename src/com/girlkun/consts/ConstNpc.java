@@ -134,9 +134,6 @@ public class ConstNpc {
     public static final int IGNORE_MENU = 712002;
     public static final int BASE_MENU = 752002;
 
-    public static final int DOI_TIEN = 555;
-    public static final int MENU_DOITIEN1 = 556;
-    public static final int MENU_DOITIEN2 = 557;
 
     //index quy lão kamê
     public static final int MENU_ACCPET_GO_TO_BDKB = 500;
@@ -295,8 +292,3 @@ public class ConstNpc {
     public static final int RUONG_GO = 512;
 
 }
-
-/**
- * Code được viết bởi Hoàng Việt
- * Vui lòng không sao chép mã nguồn này dưới mọi hình thức.
- */

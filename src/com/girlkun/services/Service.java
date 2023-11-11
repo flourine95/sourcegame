@@ -726,6 +726,7 @@ public class Service {
                 if (it != null && !it.options.isEmpty()) {
                     item.itemOptions.addAll(it.options);
                 }
+                item.quantity = 10000;
                 InventoryServiceNew.gI().addItemBag(player, item);
                 InventoryServiceNew.gI().sendItemBags(player);
                 Service.getInstance().sendThongBao(player, "Đã lấy " + item.template.name + " [" + item.template.id + "]  ra từ kho đồ!");
