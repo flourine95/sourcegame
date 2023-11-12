@@ -363,8 +363,7 @@ public class PlayerDAO {
                 JSONArray dataArray = new JSONArray();
 
                 //data kim lượng
-                dataArray.add(player.inventory.gold > Inventory.LIMIT_GOLD
-                        ? Inventory.LIMIT_GOLD : player.inventory.gold);
+                dataArray.add(Math.min(player.inventory.gold, Inventory.LIMIT_GOLD));
                 dataArray.add(player.inventory.gem);
                 dataArray.add(player.inventory.ruby);
                 dataArray.add(player.inventory.coupon);

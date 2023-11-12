@@ -563,10 +563,11 @@ public class Zone {
 //                msg.writer().writeShort(0);
             try {
                 byte[] bgItem = FileIO.readFile("data/girlkun/map/item_bg_map_data/" + this.map.mapId);
-                assert bgItem != null;
-                msg.writer().write(bgItem);
+                if (bgItem != null) {
+                    msg.writer().write(bgItem);
+                }
             } catch (Exception e) {
-                Logger.logException(Zone.class, e, "Error Zone player:" + pl.name + " " +map.mapId);
+                Logger.logException(Zone.class, e, "Error Zone player:" + pl.name + " " + map.mapId);
                 msg.writer().writeShort(0);
             }
 
@@ -577,7 +578,7 @@ public class Zone {
                 assert effItem != null;
                 msg.writer().write(effItem);
             } catch (Exception e) {
-                Logger.logException(Zone.class, e, "Error Zone player:" + pl.name + " " +map.mapId);
+                Logger.logException(Zone.class, e, "Error Zone player:" + pl.name + " " + map.mapId);
                 msg.writer().writeShort(0);
             }
 

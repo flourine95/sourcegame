@@ -1,6 +1,7 @@
 package com.girlkun.server;
 
 import com.girlkun.database.GirlkunDB;
+import com.girlkun.jdbc.daos.PlayerDAO;
 import com.girlkun.models.boss.BossManager;
 import com.girlkun.models.item.Item;
 import com.girlkun.models.kygui.ShopKyGuiManager;
@@ -75,10 +76,10 @@ public class ServerManager {
         frame.setVisible(true);
         activeCommandLine();
         activeServerSocket();
-        new Thread(DaiHoiVoThuat.gI(), "Thread DHVT").start();
         TaiXiu.gI().lastTimeEnd = System.currentTimeMillis() + 50000;
-        new Thread(TaiXiu.gI(), "Thread TaiXiu").start();
         NgocRongNamecService.gI().initNgocRongNamec((byte) 0);
+        new Thread(DaiHoiVoThuat.gI(), "Thread DHVT").start();
+        new Thread(TaiXiu.gI(), "Thread TaiXiu").start();
         new Thread(NgocRongNamecService.gI(), "Thread NRNM").start();
         new Thread(TopService.gI(), "Thread TOP").start();
         new Thread(() -> {
@@ -89,6 +90,7 @@ public class ServerManager {
                         wait(Math.max(1000 - (System.currentTimeMillis() - st), 0));
                         MartialCongressManager.gI().update();
                         ShopKyGuiManager.gI().save();
+                        Client.gI().getPlayers().forEach(PlayerDAO::updatePlayer);
                     }
                 } catch (Exception e) {
                     Logger.logException(ServerManager.class, e);

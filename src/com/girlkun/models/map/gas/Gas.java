@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class Gas { 
 
-    public static final long POWER_CAN_GO_TO_GAS = 2000000000;
+    public static final long POWER_CAN_GO_TO_GAS = 2_000_000_000;
 
     public static final List<Gas> KHI_GAS;
     public static final int MAX_AVAILABLE = 50;

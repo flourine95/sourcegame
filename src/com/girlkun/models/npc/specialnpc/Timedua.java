@@ -7,7 +7,7 @@ import com.girlkun.utils.Logger;
 
 public class Timedua {
 
-//    private static final long DEFAULT_TIME_DONE = 7776000000L;
+    //    private static final long DEFAULT_TIME_DONE = 7776000000L;
     private static final long DEFAULT_TIME_DON = 7200000;
 
     private Player player;
@@ -83,11 +83,11 @@ public class Timedua {
     }
 
     public void subTimeDone(int d, int h, int m, int s) {
-        this.timeDone -= ((d * 24 * 60 * 60 * 1000) + (h * 60 * 60 * 1000) + (m * 60 * 1000) + (s * 1000));
+        this.timeDone -= (((long) d * 24 * 60 * 60 * 1000) + ((long) h * 60 * 60 * 1000) + ((long) m * 60 * 1000) + (s * 1000L));
         this.sendTimedua();
     }
-    
-    public void dispose(){
+
+    public void dispose() {
         this.player = null;
     }
 }

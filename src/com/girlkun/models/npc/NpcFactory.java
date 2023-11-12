@@ -120,23 +120,21 @@ public class NpcFactory {
             @Override
             public void openBaseMenu(Player player) {
                 if (canOpenNpc(player)) {
-                    if (player.clanMember.getNumDateFromJoinTimeToToday() < 1 || !player.isAdmin()) {
-                        createOtherMenu(player, ConstNpc.IGNORE_MENU,
-                                "|7|KHÍ GAS\n|6|Map Khí Gas chỉ cho phép những người ở trong bang trên 1 ngày. Hẹn ngươi quay lại vào lúc khác",
-                                "OK",
-                                "Hướng\ndẫn\nthêm");
-                        return;
-                    }
-                    if (player.clan == null || !player.isAdmin()) {
-                        createOtherMenu(player, ConstNpc.IGNORE_MENU, "|7|KHÍ GAS\n|6|Map Khí Gas chỉ dành cho những người có bang hội",
-                                "OK",
-                                "Hướng\ndẫn\nthêm");
-                        return;
+                    if (!player.isAdmin()) {
+                        if (player.clan == null || player.clanMember == null) {
+                            createOtherMenu(player, ConstNpc.IGNORE_MENU, """
+                                            |7|KHÍ GAS
+                                            |6|Map Khí Gas chỉ dành cho những người có bang hội
+                                            và ở trong bang trên 1 ngày.
+                                            Hẹn ngươi quay lại vào lúc khác""",
+                                    "OK",
+                                    "Đóng");
+                            return;
+                        }
                     }
                     if (!TaskService.gI().checkDoneTaskTalkNpc(player, this)) {
                         if (!player.getSession().is_gift_box) {
                             this.createOtherMenu(player, ConstNpc.BASE_MENU, "|7|KHÍ GAS\n|6|Thượng đế vừa phát hiện 1 loại khí đang âm thầm\nhủy diệt mọi mầm sống trên Trái Đất,\nnó được gọi là Destron Gas.\nTa sẽ đưa các cậu đến nơi ấy, các cậu sẵn sàng chưa?",
-                                    "Thông Tin Chi Tiết",
                                     "OK",
                                     "Đóng");
                         }
@@ -148,15 +146,16 @@ public class NpcFactory {
             public void confirmMenu(Player player, int select) {
                 if (canOpenNpc(player)) {
                     if (player.iDMark.isBaseMenu()) {
-                        if (select == 1) {
-                            if (player.clan != null) {
-                                if (player.clan.khiGas != null) {
-                                    this.createOtherMenu(player, ConstNpc.MENU_OPENED_GAS, "|7|KHÍ GAS\n|6|Bang hội của con đang đi DesTroy Gas cấp độ " + player.clan.khiGas.level + "\nCon có muốn đi theo không?", "Đồng ý", "Từ chối");
-                                } else {
-                                    this.createOtherMenu(player, ConstNpc.MENU_OPEN_GAS, "|7|KHÍ GAS\n|6|Khí Gas Huỷ Diệt đã chuẩn bị tiếp nhận các đợt tấn công của quái vật\n" + "các con hãy giúp chúng ta tiêu diệt quái vật \n" + "Ở đây có ta lo\nNhớ chọn cấp độ vừa sức mình nhé", "Chọn\ncấp độ", "Từ chối");
-                                }
+                        if (select == 0) {
+                            if (player.clan.khiGas != null) {
+                                this.createOtherMenu(player, ConstNpc.MENU_OPENED_GAS, "|7|KHÍ GAS\n|6|Bang hội của con đang đi DesTroy Gas cấp độ " + player.clan.khiGas.level + "\nCon có muốn đi theo không?", "Đồng ý", "Đóng");
                             } else {
-                                this.npcChat(player, "Con phải có bang hội ta mới có thể cho con đi");
+                                this.createOtherMenu(player, ConstNpc.MENU_OPEN_GAS, """
+                                        |7|KHÍ GAS
+                                        |6|Khí Gas Huỷ Diệt đã chuẩn bị tiếp nhận các đợt tấn công của quái vật
+                                        các con hãy giúp chúng ta tiêu diệt quái vật
+                                        Ở đây có ta lo
+                                        Nhớ chọn cấp độ vừa sức mình nhé""", "Chọn\ncấp độ", "Đóng");
                             }
                         }
                     } else if (player.iDMark.getIndexMenu() == ConstNpc.MENU_OPENED_GAS) {
@@ -2006,12 +2005,23 @@ public class NpcFactory {
             @Override
             public void openBaseMenu(Player player) {
                 if (canOpenNpc(player)) {
-                    if (this.mapId == 5 || this.mapId == 13) {
-                        this.createOtherMenu(player, ConstNpc.BASE_MENU, "Ngươi tìm ta có việc gì?", "Ép sao\ntrang bị", "Pha lê\nhóa\ntrang bị", "Tinh ấn\ntrang bị", "Pháp sư hoá\ntrang bị", "Tẩy\npháp sư", "Chân mệnh", "Chuyển hóa\nđồ Hủy diệt", "Chuyển hóa\nSKH", "Gia Hạn\nvật phẩm");
-                    } else if (this.mapId == 121) {
-                        this.createOtherMenu(player, ConstNpc.BASE_MENU, "Ngươi tìm ta có việc gì?", "Về đảo\nrùa");
-                    } else {
-                        this.createOtherMenu(player, ConstNpc.BASE_MENU, "Ngươi tìm ta có việc gì?", "Cửa hàng\nBùa", "Nâng cấp\nVật phẩm",
+                    switch (this.mapId) {
+                        case 5 -> this.createOtherMenu(player, ConstNpc.BASE_MENU, "Ngươi tìm ta có việc gì?",
+                                "Ép sao\ntrang bị",
+                                "Pha lê\nhóa\ntrang bị",
+                                "Auto pha lê\n hóatrang bị",
+                                "Tinh ấn\ntrang bị",
+                                "Pháp sư hoá\ntrang bị",
+                                "Tẩy\npháp sư",
+                                "Chân mệnh",
+                                "Chuyển hóa\nđồ Hủy diệt",
+                                "Chuyển hóa\nSKH",
+                                "Gia Hạn\nvật phẩm");
+                        case 121 -> this.createOtherMenu(player, ConstNpc.BASE_MENU, "Ngươi tìm ta có việc gì?",
+                                "Về đảo\nrùa");
+                        default -> this.createOtherMenu(player, ConstNpc.BASE_MENU, "Ngươi tìm ta có việc gì?",
+                                "Cửa hàng\nBùa",
+                                "Nâng cấp\nVật phẩm",
                                 "Nhập\nNgọc Rồng",
                                 "Nâng cấp\nBông tai\nPorata",
                                 "Mở chỉ số\n bông tai"
@@ -2023,14 +2033,15 @@ public class NpcFactory {
             @Override
             public void confirmMenu(Player player, int select) {
                 if (canOpenNpc(player)) {
-                    if (this.mapId == 5 || this.mapId == 13) {
+                    if (this.mapId == 5) {
                         if (player.iDMark.isBaseMenu()) {
                             switch (select) {
                                 case 0 ->
                                         CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.EP_SAO_TRANG_BI);
                                 case 1 ->
                                         CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.PHA_LE_HOA_TRANG_BI);
-                                case 2 -> CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.TINH_AN);
+                                case 2 ->
+                                        CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.AUTO_PHA_LE_HOA_TRANG_BI);
                                 case 3 -> CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.PHAP_SU_HOA);
                                 case 4 -> CombineServiceNew.gI().openTabCombine(player, CombineServiceNew.TAY_PHAP_SU);
                                 case 5 ->
@@ -2077,19 +2088,24 @@ public class NpcFactory {
                             }
                         } else if (player.iDMark.getIndexMenu() == ConstNpc.MENU_START_COMBINE) {
                             switch (player.combineNew.typeCombine) {
-                                case CombineServiceNew.EP_SAO_TRANG_BI:
-                                case CombineServiceNew.TINH_AN:
-                                case CombineServiceNew.PHA_LE_HOA_TRANG_BI:
-                                case CombineServiceNew.PHAP_SU_HOA:
-                                case CombineServiceNew.TAY_PHAP_SU:
-                                case CombineServiceNew.CHAN_MENH:
-                                case CombineServiceNew.CHUYEN_HOA_DO_HUY_DIET:
-                                case CombineServiceNew.CHUYEN_HOA_SKH:
-                                case CombineServiceNew.GIA_HAN_VAT_PHAM:
+                                case CombineServiceNew.EP_SAO_TRANG_BI,
+                                        CombineServiceNew.PHA_LE_HOA_TRANG_BI,
+                                        CombineServiceNew.TINH_AN,
+                                        CombineServiceNew.PHAP_SU_HOA,
+                                        CombineServiceNew.TAY_PHAP_SU,
+                                        CombineServiceNew.CHAN_MENH,
+                                        CombineServiceNew.CHUYEN_HOA_DO_HUY_DIET,
+                                        CombineServiceNew.CHUYEN_HOA_SKH,
+                                        CombineServiceNew.GIA_HAN_VAT_PHAM -> {
                                     if (select == 0) {
                                         CombineServiceNew.gI().startCombine(player);
                                     }
-                                    break;
+                                }
+                                case CombineServiceNew.AUTO_PHA_LE_HOA_TRANG_BI -> {
+                                    if (select >= 0 && select <= 3) {
+                                        CombineServiceNew.gI().autoPhaLeHoaTrangBi(player, select);
+                                    }
+                                }
                             }
                         } else if (player.iDMark.getIndexMenu() == ConstNpc.MENU_CHUYEN_HOA_DO_HUY_DIET) {
                             if (select == 0) {

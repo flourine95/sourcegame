@@ -11,7 +11,7 @@ import com.girlkun.utils.Util;
 
 public class MabuEgg {
 
-//    private static final long DEFAULT_TIME_DONE = 7776000000L;
+    //    private static final long DEFAULT_TIME_DONE = 7776000000L;
     private static final long DEFAULT_TIME_DONE = 86400000L;
 
     private Player player;
@@ -53,7 +53,7 @@ public class MabuEgg {
 
     public int getSecondDone() {
         int seconds = (int) ((lastTimeCreate + timeDone - System.currentTimeMillis()) / 1000);
-        return seconds > 0 ? seconds : 0;
+        return Math.max(seconds, 0);
     }
 
     public void openEgg(int gender) {
@@ -86,12 +86,13 @@ public class MabuEgg {
             player.sendMessage(msg);
             msg.cleanup();
         } catch (Exception e) {
+            Logger.logException(this.getClass(), e);
         }
         this.player.mabuEgg = null;
     }
 
     public void subTimeDone(int d, int h, int m, int s) {
-        this.timeDone -= ((d * 24 * 60 * 60 * 1000) + (h * 60 * 60 * 1000) + (m * 60 * 1000) + (s * 1000));
+        this.timeDone -= (((long) d * 24 * 60 * 60 * 1000) + ((long) h * 60 * 60 * 1000) + ((long) m * 60 * 1000) + (s * 1000L));
         this.sendMabuEgg();
     }
 

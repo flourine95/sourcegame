@@ -1,5 +1,6 @@
 package com.girlkun.models.item;
 
+import com.girlkun.data.ItemData;
 import com.girlkun.models.Template;
 import com.girlkun.models.Template.ItemTemplate;
 import com.girlkun.services.InventoryServiceNew;
@@ -65,6 +66,7 @@ public class Item {
         }
         this.itemOptions = null;
     }
+
     public int getIDBongTaiAfterUpLevel(int lvbt) {
         return switch (lvbt) {
             case 1 -> 921;
@@ -73,6 +75,7 @@ public class Item {
             default -> 0;
         };
     }
+
     public int getLevelBongTai() {
         return switch (template.id) {
             case 454 -> 1;
@@ -142,48 +145,124 @@ public class Item {
         }
     }
 
+    public boolean isDaPhaLe() {
+        if (isNotNullItem()) {
+            return template.type == 30 || template.id >= 14 && template.id <= 20 || template.id >= 1185 && template.id <= 1191;
+        }
+        return false;
+    }
+
+    public boolean isBuaTayPhapSu() {
+        if (isNotNullItem()) {
+            return template.id == 1236;
+        }
+        return false;
+    }
+
+    public boolean isManhTinhAn() {
+        if (isNotNullItem()) {
+            return template.id >= 1232 && template.id <= 1234;
+        }
+        return false;
+    }
+
+    public boolean isDaPhapSu() {
+        if (isNotNullItem()) {
+            return template.id == 1235;
+        }
+        return false;
+    }
+
+
+    public boolean isItemPhaLeHoa() {
+        if (isNotNullItem()) {
+            return (template.type < 5 || template.type == 32) && !isTrangBiHSD();
+        }
+        return false;
+    }
+
+    public boolean isItemPhapSu() {
+        if (isNotNullItem()) {
+            return (template.type == 5 ||
+                    template.type == 11 ||
+                    ItemData.list_dapdo.contains((int) template.id)) &&
+                    !isTrangBiHSD();
+        }
+        return false;
+    }
+
     public boolean isPotara() {
-        return
-                template.id == 454 ||
-                        template.id == 921 ||
-                        template.id == 1165 ||
-                        template.id == 1129;
+        if (isNotNullItem()) {
+            return
+                    template.id == 454 ||
+                            template.id == 921 ||
+                            template.id == 1165 ||
+                            template.id == 1129;
+        }
+        return false;
     }
 
     public boolean isMVBT() {
-        return template.id == 933;
+        if (isNotNullItem()) {
+            return template.id == 933;
+        }
+        return false;
     }
 
     public boolean isMHBT() {
-        return template.id == 934;
+        if (isNotNullItem()) {
+            return template.id == 934;
+        }
+        return false;
     }
 
     public boolean isDXL() {
-        return template.id == 935;
+        if (isNotNullItem()) {
+            return template.id == 935;
+        }
+        return false;
     }
 
     public boolean isSKH() {
-        return itemOptions.stream().anyMatch(itemOption -> itemOption.optionTemplate.id >= 127 && itemOption.optionTemplate.id <= 135);
+        if (isNotNullItem()) {
+            return itemOptions.stream().anyMatch(itemOption -> itemOption.optionTemplate.id >= 127 && itemOption.optionTemplate.id <= 135);
+        }
+        return false;
     }
 
     public boolean isDTS() {
-        return this.template.id >= 1048 && this.template.id <= 1062;
+        if (isNotNullItem()) {
+            return this.template.id >= 1048 && this.template.id <= 1062;
+        }
+        return false;
     }
 
     public boolean isDTL() {
-        return this.template.id >= 555 && this.template.id <= 567;
+        if (isNotNullItem()) {
+            return this.template.id >= 555 && this.template.id <= 567;
+        }
+        return false;
     }
 
     public boolean isCongThuc() {
-        return this.template.id >= 1071 && this.template.id <= 1073;
+        if (isNotNullItem()) {
+            return this.template.id >= 1071 && this.template.id <= 1073;
+        }
+        return false;
     }
 
     public boolean isDHD() {
-        return this.template.id >= 650 && this.template.id <= 662;
+        if (isNotNullItem()) {
+            return this.template.id >= 650 && this.template.id <= 662;
+        }
+        return false;
     }
 
     public boolean isManhTS() {
-        return this.template.id >= 1066 && this.template.id <= 1070;
+        if (isNotNullItem()) {
+            return this.template.id >= 1066 && this.template.id <= 1070;
+        }
+        return false;
     }
 
     public boolean haveOption(int idOption) {

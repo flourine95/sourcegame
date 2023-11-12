@@ -740,5 +740,14 @@ public class Util {
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
         return decimalFormat.format(number);
     }
+
+    public static int checkTrueInRandom(int[] listRandom, float ratio, int typeRatio) {
+        for (int i = 0; i < listRandom.length; i++) {
+            if (listRandom[i] <= ratio / typeRatio) {
+                return i + 1;
+            }
+        }
+        return 0;
+    }
 }
 

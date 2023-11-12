@@ -14,12 +14,9 @@ import com.girlkun.utils.Util;
 
 
 public class MagicTree {
-
     public static final byte MAX_LEVEL = 10;
-
     public static final short[] PEA_TEMP = {13, 60, 61, 62, 63, 64, 65, 352, 523, 595};
     public static final int[] PEA_PARAM = {100, 500, 2, 4, 8, 16, 32, 64, 128, 256};
-
     private static final int[][][] POS_PEAS = {
         {{19, 22}, {-1, 16}, {3, 10}, {19, 8}, {9, 0}},
         {{-1, 27}, {22, 35}, {15, 24}, {0, 17}, {-1, 7}, {26, 5}, {5, 0}},
@@ -237,7 +234,7 @@ public class MagicTree {
         short secondPerPea = (short) getSecondPerPea();
         long timePeaRelease = lastTimeHarvest + secondPerPea * 1000;
         int secondLeft = (int) ((timePeaRelease - System.currentTimeMillis()) / 1000);
-        return secondLeft < 0 ? 0 : secondLeft;
+        return Math.max(secondLeft, 0);
     }
 
     private int getSecondUpgrade() {
