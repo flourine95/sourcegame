@@ -47,11 +47,11 @@ public class TrungUyTrang extends Boss {
         if (Util.isTrue(80, 100)) {
             ItemMap it = new ItemMap(this.zone, 15, 1, this.location.x, this.zone.map.yPhysicInTop(this.location.x,
                     this.location.y - 24), plKill.id);
-            Service.getInstance().dropItemMap(this.zone, it);
+            Service.gI().dropItemMap(this.zone, it);
         } else {
             ItemMap it = new ItemMap(this.zone, 14, 1, this.location.x, this.zone.map.yPhysicInTop(this.location.x,
                     this.location.y - 24), plKill.id);
-            Service.getInstance().dropItemMap(this.zone, it);
+            Service.gI().dropItemMap(this.zone, it);
         }
         this.zone.isTrungUyTrangAlive = false;
     }

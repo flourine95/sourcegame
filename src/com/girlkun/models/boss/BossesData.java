@@ -4,9 +4,6 @@ import com.girlkun.consts.ConstPlayer;
 import com.girlkun.models.skill.Skill;
 import com.girlkun.utils.Util;
 
-/**
- * @Stole By Hoàng Việt❤
- */
 public class BossesData {
 
     /**
@@ -1460,8 +1457,8 @@ public class BossesData {
             "Mabư",
             ConstPlayer.XAYDA,
             new short[]{297, 298, 299, -1, -1, -1},
-            1000000,
-            new double[]{80000000000L},
+            500000,
+            new double[]{2_000_000_000L},
             new int[]{120},
             new int[][]{
 //                {Skill.TU_SAT, 7, 100000},
@@ -1476,11 +1473,11 @@ public class BossesData {
             REST_20_S
     );
     public static final BossData DRABURA = new BossData(
-            "Ma Vương Dabura",
+            "Ma Vương Drabura",
             ConstPlayer.XAYDA,
             new short[]{418, 419, 420, -1, -1, -1},
             100000,
-            new double[]{1000000000L},
+            new double[]{50_000_000L},
             new int[]{114},
             new int[][]{
                 {Skill.LIEN_HOAN, 7, 1000},
@@ -1492,7 +1489,7 @@ public class BossesData {
             REST_1_M
     );
     public static final BossData DRABURA_2 = new BossData(
-            "Ma Vương Dabura",
+            "Ma Vương Drabura",
             ConstPlayer.XAYDA,
             new short[]{418, 419, 420, -1, -1, -1},
             200000,
@@ -1512,7 +1509,7 @@ public class BossesData {
             ConstPlayer.XAYDA,
             new short[]{451, 452, 453, -1, -1, -1},
             200000,
-            new double[]{7000000000L},
+            new double[]{150_000_000L},
             new int[]{117},
             new int[][]{
                 {Skill.LIEN_HOAN, 7, 1000},
@@ -1529,7 +1526,7 @@ public class BossesData {
             ConstPlayer.XAYDA,
             new short[]{451, 452, 453, -1, -1, -1},
             200000,
-            new double[]{8000000000L},
+            new double[]{200_000_000L},
             new int[]{118},
             new int[][]{
                 {Skill.LIEN_HOAN, 7, 1000},
@@ -1545,7 +1542,7 @@ public class BossesData {
             ConstPlayer.XAYDA,
             new short[]{415, 416, 417, -1, -1, -1},
             200000,
-            new double[]{8000000000L},
+            new double[]{250_000_000L},
             new int[]{119},
             new int[][]{
                 {Skill.DEMON, 7, 100}},

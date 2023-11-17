@@ -31,32 +31,32 @@ public class Boss1S1 extends Boss {
     @Override
     public void reward(Player plKill) {
         plKill.inventory.event++;
-        Service.getInstance().sendThongBao(plKill, "Bạn đã nhận được 1 điểm săn Boss");
+        Service.gI().sendThongBao(plKill, "Bạn đã nhận được 1 điểm săn Boss");
         byte randomDo = (byte) new Random().nextInt(Manager.itemIds_TL.length - 1);
         if (Util.isTrue(50, 100)) {
             ItemMap it = new ItemMap(this.zone, 1236, 1, this.location.x, this.zone.map.yPhysicInTop(this.location.x,
                     this.location.y - 24), plKill.id);
             it.options.add(new Item.ItemOption(30, 1));
-            Service.getInstance().dropItemMap(this.zone, it);
+            Service.gI().dropItemMap(this.zone, it);
         } else if (Util.isTrue(40, 100)) {
             int a = 20;
             for (int i = 0; i < 2; i++) {
                 ItemMap it1 = new ItemMap(this.zone, 14, 1, this.location.x + a, this.zone.map.yPhysicInTop(this.location.x,
                         this.location.y - 24), plKill.id);
-                Service.getInstance().dropItemMap(this.zone, it1);
+                Service.gI().dropItemMap(this.zone, it1);
                 a += 10;
             }
             ItemMap it1 = new ItemMap(this.zone, 2030, 5, this.location.x - a, this.zone.map.yPhysicInTop(this.location.x,
                     this.location.y - 24), plKill.id);
-            Service.getInstance().dropItemMap(this.zone, it1);
+            Service.gI().dropItemMap(this.zone, it1);
         } else {
             ItemMap it1 = new ItemMap(this.zone, Manager.itemIds_TL[randomDo], 1, this.location.x, this.zone.map.yPhysicInTop(this.location.x,
                     this.location.y - 24), plKill.id);
             if (Util.isTrue(10, 100)) {
                 it1.options.add(new Item.ItemOption(87, 1));
-                Service.getInstance().sendThongBao(plKill, "|1|Bạn đã nhận " + it1.itemTemplate.name + " Ký gửi ngọc");
+                Service.gI().sendThongBao(plKill, "|1|Bạn đã nhận " + it1.itemTemplate.name + " Ký gửi ngọc");
             }
-            Service.getInstance().dropItemMap(this.zone, it1);
+            Service.gI().dropItemMap(this.zone, it1);
 
         }
     }

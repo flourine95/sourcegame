@@ -51,13 +51,13 @@ public class ItemTimeSieuCap {
         if (isEatMeal) {
             if (Util.canDoWithTime(lastTimeMeal, TIME_EAT_MEAL)) {
                 isEatMeal = false;
-                Service.getInstance().point(player);
+                Service.gI().point(player);
             }
         }
         if (isUseBoHuyet3) {
             if (Util.canDoWithTime(lastTimeBoHuyet3, TIME_ITEM3)) {
                 isUseBoHuyet3 = false;
-                Service.getInstance().point(player);
+                Service.gI().point(player);
 //                Service.getInstance().Send_Info_NV(this.player);
             }
         }
@@ -65,7 +65,7 @@ public class ItemTimeSieuCap {
         if (isUseBoKhi3) {
             if (Util.canDoWithTime(lastTimeBoKhi3, TIME_ITEM3)) {
                 isUseBoKhi3 = false;
-                Service.getInstance().point(player);
+                Service.gI().point(player);
             }
         }
        
@@ -77,7 +77,7 @@ public class ItemTimeSieuCap {
         if (isUseCuongNo3) {
             if (Util.canDoWithTime(lastTimeCuongNo3, TIME_ITEM3)) {
                 isUseCuongNo3 = false;
-                Service.getInstance().point(player);
+                Service.gI().point(player);
             }
         }
         if (isUseAnDanh3) {

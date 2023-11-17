@@ -77,12 +77,12 @@ public class ShopKyGuiService {
     public void buyItem(Player pl, int id) {
         ItemKyGui it = getItemBuy(id);
         if (it == null || it.isBuy) {
-            Service.getInstance().sendThongBao(pl, "Vật phẩm không tồn tại hoặc đã có người khác mua");
+            Service.gI().sendThongBao(pl, "Vật phẩm không tồn tại hoặc đã có người khác mua");
             openShopKyGui(pl);
             return;
         }
         if (it.player_sell == pl.id) {
-            Service.getInstance().sendThongBao(pl, "Không thể mua vật phẩm do chính bạn bán");
+            Service.gI().sendThongBao(pl, "Không thể mua vật phẩm do chính bạn bán");
             openShopKyGui(pl);
             return;
         }
@@ -92,7 +92,7 @@ public class ShopKyGuiService {
                 pl.inventory.gold -= it.goldSell;
                 isBuy = true;
             } else {
-                Service.getInstance().sendThongBao(pl, "Bạn không đủ vàng để mua vật phẩm này!");
+                Service.gI().sendThongBao(pl, "Bạn không đủ vàng để mua vật phẩm này!");
                 isBuy = false;
                 openShopKyGui(pl);
             }
@@ -101,12 +101,12 @@ public class ShopKyGuiService {
                 pl.inventory.ruby-= it.gemSell;
                 isBuy = true;
             } else {
-                Service.getInstance().sendThongBao(pl, "Bạn không đủ hồng ngọc để mua vật phẩm này!");
+                Service.gI().sendThongBao(pl, "Bạn không đủ hồng ngọc để mua vật phẩm này!");
                 isBuy = false;
                 openShopKyGui(pl);
             }
         }
-        Service.getInstance().sendMoney(pl);
+        Service.gI().sendMoney(pl);
         if (isBuy) {
             Item item = ItemService.gI().createNewItem(it.itemId);
             item.quantity = it.quantity;
@@ -115,7 +115,7 @@ public class ShopKyGuiService {
             if (it.isBuy) {
                 InventoryServiceNew.gI().addItemBag(pl, item);
                 InventoryServiceNew.gI().sendItemBags(pl);
-                Service.getInstance().sendThongBao(pl, "Bạn đã nhận được " + item.template.name);
+                Service.gI().sendThongBao(pl, "Bạn đã nhận được " + item.template.name);
                 openShopKyGui(pl);
             }
         }
@@ -195,12 +195,12 @@ public class ShopKyGuiService {
     public void upItemToTop(Player pl, int id) {
         ItemKyGui it = getItemBuy(id);
         if (it == null || it.isBuy) {
-            Service.getInstance().sendThongBao(pl, "Vật phẩm không tồn tại hoặc đã được người khác mua");
+            Service.gI().sendThongBao(pl, "Vật phẩm không tồn tại hoặc đã được người khác mua");
             openShopKyGui(pl);
             return;
         }
         if (it.player_sell != pl.id) {
-            Service.getInstance().sendThongBao(pl, "Vật phẩm không thuộc quyền sở hữu");
+            Service.gI().sendThongBao(pl, "Vật phẩm không thuộc quyền sở hữu");
             openShopKyGui(pl);
             return;
         }
@@ -214,12 +214,12 @@ public class ShopKyGuiService {
         switch (action) {
             case 1: // hủy vật phẩm
                 if (it == null || it.isBuy) {
-                    Service.getInstance().sendThongBao(pl, "Vật phẩm không tồn tại hoặc đã được bán");
+                    Service.gI().sendThongBao(pl, "Vật phẩm không tồn tại hoặc đã được bán");
                     openShopKyGui(pl);
                     return;
                 }
                 if (it.player_sell != pl.id) {
-                    Service.getInstance().sendThongBao(pl, "Vật phẩm không thuộc quyền sở hữu");
+                    Service.gI().sendThongBao(pl, "Vật phẩm không thuộc quyền sở hữu");
                     openShopKyGui(pl);
                     return;
                 }
@@ -229,19 +229,19 @@ public class ShopKyGuiService {
                 if (ShopKyGuiManager.gI().listItem.remove(it)) {
                     InventoryServiceNew.gI().addItemBag(pl, item);
                     InventoryServiceNew.gI().sendItemBags(pl);
-                    Service.getInstance().sendMoney(pl);
-                    Service.getInstance().sendThongBao(pl, "Hủy bán vật phẩm thành công");
+                    Service.gI().sendMoney(pl);
+                    Service.gI().sendThongBao(pl, "Hủy bán vật phẩm thành công");
                     openShopKyGui(pl);
                 }
                 break;
             case 2: // nhận tiền
                 if (it == null || !it.isBuy) {
-                    Service.getInstance().sendThongBao(pl, "Vật phẩm không tồn tại hoặc chưa được bán");
+                    Service.gI().sendThongBao(pl, "Vật phẩm không tồn tại hoặc chưa được bán");
                     openShopKyGui(pl);
                     return;
                 }
                 if (it.player_sell != pl.id) {
-                    Service.getInstance().sendThongBao(pl, "Vật phẩm không thuộc quyền sở hữu");
+                    Service.gI().sendThongBao(pl, "Vật phẩm không thuộc quyền sở hữu");
                     openShopKyGui(pl);
                     return;
                 }
@@ -251,8 +251,8 @@ public class ShopKyGuiService {
                     pl.inventory.ruby += it.gemSell - it.gemSell * 5 / 100;
                 }
                 if (ShopKyGuiManager.gI().listItem.remove(it)) {
-                    Service.getInstance().sendMoney(pl);
-                    Service.getInstance().sendThongBao(pl, "Bạn đã bán vật phẩm thành công");
+                    Service.gI().sendMoney(pl);
+                    Service.gI().sendThongBao(pl, "Bạn đã bán vật phẩm thành công");
                     openShopKyGui(pl);
                 }
                 break;
@@ -299,18 +299,18 @@ public class ShopKyGuiService {
     public void KiGui(Player pl, int id, int money, byte moneyType, int quantity) {
         try {
             if (pl.inventory.ruby < 5) {
-                Service.getInstance().sendThongBao(pl, "Bạn cần có ít nhất 5 hồng ngọc để làm phí ký gửi");
+                Service.gI().sendThongBao(pl, "Bạn cần có ít nhất 5 hồng ngọc để làm phí ký gửi");
                 openShopKyGui(pl);
                 return;
             }
             Item it = ItemService.gI().copyItem(pl.inventory.itemsBag.get(id));
             if (money <= 0 || quantity > it.quantity) {
-                Service.getInstance().sendThongBao(pl, "Có lỗi xảy ra");
+                Service.gI().sendThongBao(pl, "Có lỗi xảy ra");
                 openShopKyGui(pl);
                 return;
             }
             if (quantity < 1 || quantity > 999) {
-                Service.getInstance().sendThongBao(pl, "Ký gửi tối đa x999 vật phẩm");
+                Service.gI().sendThongBao(pl, "Ký gửi tối đa x999 vật phẩm");
                 openShopKyGui(pl);
                 return;
             }
@@ -321,19 +321,19 @@ public class ShopKyGuiService {
                     ShopKyGuiManager.gI().listItem.add(new ItemKyGui(getMaxId() + 1, it.template.id, (int) pl.id, getTabKiGui(it), money, -1, quantity, (byte) 0, it.itemOptions, false, System.currentTimeMillis()));
                     InventoryServiceNew.gI().sendItemBags(pl);
                     openShopKyGui(pl);
-                    Service.getInstance().sendMoney(pl);
-                    Service.getInstance().sendThongBao(pl, "Đăng bán thành công");
+                    Service.gI().sendMoney(pl);
+                    Service.gI().sendThongBao(pl, "Đăng bán thành công");
                     break;
                 case 1:// hồng ngọc
                     InventoryServiceNew.gI().subQuantityItemsBag(pl, pl.inventory.itemsBag.get(id), quantity);
                     ShopKyGuiManager.gI().listItem.add(new ItemKyGui(getMaxId() + 1, it.template.id, (int) pl.id, getTabKiGui(it), -1, money, quantity, (byte) 0, it.itemOptions, false, System.currentTimeMillis()));
                     InventoryServiceNew.gI().sendItemBags(pl);
                     openShopKyGui(pl);
-                    Service.getInstance().sendMoney(pl);
-                    Service.getInstance().sendThongBao(pl, "Đăng bán thành công");
+                    Service.gI().sendMoney(pl);
+                    Service.gI().sendThongBao(pl, "Đăng bán thành công");
                     break;
                 default:
-                    Service.getInstance().sendThongBao(pl, "Có lỗi xảy ra");
+                    Service.gI().sendThongBao(pl, "Có lỗi xảy ra");
                     openShopKyGui(pl);
                     break;
             }

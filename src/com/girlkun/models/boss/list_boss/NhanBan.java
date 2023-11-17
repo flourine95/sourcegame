@@ -27,7 +27,7 @@ public class NhanBan extends Boss {
         //vật phẩm rơi khi diệt boss nhân bản
         ItemMap it = new ItemMap(this.zone, Util.nextInt(1099, 1102), Util.nextInt(3, 4), this.location.x, this.zone.map.yPhysicInTop(this.location.x,
                 this.location.y - 24), plKill.id);
-        Service.getInstance().dropItemMap(this.zone, it);
+        Service.gI().dropItemMap(this.zone, it);
     }
 
     private long st;

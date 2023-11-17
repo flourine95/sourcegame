@@ -24,7 +24,6 @@ import com.girlkun.utils.Logger;
 import com.girlkun.utils.TimeUtil;
 import com.girlkun.utils.Util;
 
-import javax.swing.*;
 import java.util.*;
 import java.util.logging.Level;
 
@@ -66,14 +65,14 @@ public class ServerManager {
     public void run() {
         delaylogin = System.currentTimeMillis();
         isRunning = true;
-        JFrame frame = new JFrame("Ngọc rồng");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ImageIcon icon = new ImageIcon("C:\\Users\\vt220\\Desktop\\CBRO Potara\\data\\girlkun\\icon\\icon.png");
-        frame.setIconImage(icon.getImage());
-        JPanel panel = new panel();
-        frame.add(panel);
-        frame.pack();
-        frame.setVisible(true);
+//        JFrame frame = new JFrame("Ngọc rồng");
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        ImageIcon icon = new ImageIcon("C:\\Users\\vt220\\Desktop\\CBRO Potara\\data\\girlkun\\icon\\icon.png");
+//        frame.setIconImage(icon.getImage());
+//        JPanel panel = new Panel();
+//        frame.add(panel);
+//        frame.pack();
+//        frame.setVisible(true);
         activeCommandLine();
         activeServerSocket();
         TaiXiu.gI().lastTimeEnd = System.currentTimeMillis() + 50000;
@@ -195,7 +194,7 @@ public class ServerManager {
                     }).start();
                 } else if (line.startsWith("a")) {
                     String a = line.replace("a ", "");
-                    Service.getInstance().sendThongBaoAllPlayer(a);
+                    Service.gI().sendThongBaoAllPlayer(a);
                 } else if (line.startsWith("qua")) {
                     try {
                         List<Item.ItemOption> ios = new ArrayList<>();
@@ -211,7 +210,7 @@ public class ServerManager {
                                 i.quantity = Integer.parseInt(pagram1[1]);
                                 InventoryServiceNew.gI().addItemBag(p, i);
                                 InventoryServiceNew.gI().sendItemBags(p);
-                                Service.getInstance().sendThongBao(p, "Admin trả đồ. anh em thông cảm nhé...");
+                                Service.gI().sendThongBao(p, "Admin trả đồ. anh em thông cảm nhé...");
                             } else {
                                 System.out.println("Người chơi không online");
                             }

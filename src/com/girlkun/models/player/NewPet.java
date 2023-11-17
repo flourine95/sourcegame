@@ -7,7 +7,6 @@ import com.girlkun.utils.Util;
 
 
 public class NewPet extends Player {
-
     public Player master;
     public short body;
     public short leg;

@@ -63,9 +63,9 @@ public class TestDame extends Player {
     public void update() {
         active();
         if(this.isDie()){
-            Service.getInstance().sendMoney(this);
+            Service.gI().sendMoney(this);
             PlayerService.gI().hoiSinh(this);
-            Service.getInstance().hsChar(this, this.nPoint.hpMax, this.nPoint.mpMax);
+            Service.gI().hsChar(this, this.nPoint.hpMax, this.nPoint.mpMax);
             PlayerService.gI().sendInfoHpMp(this);
         }
     }

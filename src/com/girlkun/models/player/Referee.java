@@ -50,9 +50,9 @@ public class Referee extends Player {
     @Override
     public void update() {
         if (Util.canDoWithTime(lastTimeChat, 5000)) {
-            Service.getInstance().chat(this, "Đại Hội Võ Thuật lần thứ 23 đã chính thức khai mạc");
-            Service.getInstance().chat(this, "Còn chờ gì nữa mà không đăng kí tham gia để nhận nhiều phẩn quà hấp dẫn");
-            Service.getInstance().chat(this, "Nếu boss của bạn bay đi mất !!\b|7|Đổi vô lại khu: "+ this.zone.zoneId);
+            Service.gI().chat(this, "Đại Hội Võ Thuật lần thứ 23 đã chính thức khai mạc");
+            Service.gI().chat(this, "Còn chờ gì nữa mà không đăng kí tham gia để nhận nhiều phẩn quà hấp dẫn");
+            Service.gI().chat(this, "Nếu boss của bạn bay đi mất !!\b|7|Đổi vô lại khu: "+ this.zone.zoneId);
             lastTimeChat = System.currentTimeMillis();
         }
     }

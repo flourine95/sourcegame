@@ -78,13 +78,11 @@ public class Util {
         return Util.num.format(Math.floor(hp));
     }
 
-    public static long GioiHannext(double from, double to) {
-        //code by Việt
+    public static long limitDame(double from, double to) {
         return (long) (from + rand.nextInt((int) (to - from + 1)));
     }
 
-    public static double GioiHannextdame(double from, double to) {
-        //code by Việt
+    public static double limitNextDame(double from, double to) {
         return from + rand.nextInt((int) (to - from + 1));
     }
 

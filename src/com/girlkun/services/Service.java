@@ -55,13 +55,6 @@ public class Service {
         return instance;
     }
 
-    public static Service getInstance() {
-        if (instance == null) {
-            instance = new Service();
-        }
-        return instance;
-    }
-
     public void sendTitleRv(Player player, Player p2, int id) {
         Message me;
         try {
@@ -181,16 +174,16 @@ public class Service {
             this.sendMessAllPlayerInMap(player, me);
             me.cleanup();
             if (player.inventory.itemsBody.get(11).isNotNullItem()) {
-                Service.getInstance().sendFoot(player, player.inventory.itemsBody.get(11).template.id);
+                Service.gI().sendFoot(player, player.inventory.itemsBody.get(11).template.id);
             }
             if (player.isUseDanhHieu2 && player.lastTimeUseDanhHieu1 > 0) {
-                Service.getInstance().sendTitle(player, (short) 888);
+                Service.gI().sendTitle(player, (short) 888);
             }
             if (player.isUseDanhHieu3 && player.lastTimeUseDanhHieu2 > 0) {
-                Service.getInstance().sendTitle(player, (short) 889);
+                Service.gI().sendTitle(player, (short) 889);
             }
             if (player.isUseDanhHieu4 && player.lastTimeUseDanhHieu3 > 0) {
-                Service.getInstance().sendTitle(player, (short) 890);
+                Service.gI().sendTitle(player, (short) 890);
             }
         } catch (Exception e) {
             Logger.logException(Service.class, e);
@@ -549,7 +542,7 @@ public class Service {
     public void Send_Info_NV(Player pl) {
         Message msg;
         try {
-            msg = Service.getInstance().messageSubCommand((byte) 14);//Cập nhật máu
+            msg = Service.gI().messageSubCommand((byte) 14);//Cập nhật máu
             msg.writer().writeInt((int) pl.id);
             msg.writer().writeInt(Util.DoubleGioihan(pl.nPoint.hp));
             msg.writer().writeByte(0);//Hiệu ứng Ăn Đậu
@@ -564,7 +557,7 @@ public class Service {
     public void sendInfoPlayerEatPea(Player pl) {
         Message msg;
         try {
-            msg = Service.getInstance().messageSubCommand((byte) 14);
+            msg = Service.gI().messageSubCommand((byte) 14);
             msg.writer().writeInt((int) pl.id);
             msg.writer().writeInt(Util.DoubleGioihan(pl.nPoint.hp));
             msg.writer().writeByte(1);
@@ -625,12 +618,12 @@ public class Service {
                     Service.gI().sendThongBao(player, "done load part");
                     return;
                 }
-                case "rs" -> Service.getInstance().releaseCooldownSkill(player);
+                case "rs" -> Service.gI().releaseCooldownSkill(player);
                 case "xd" -> SkillService.gI().learSkillSpecial(player, Skill.LIEN_HOAN_CHUONG);
                 case "td" -> SkillService.gI().learSkillSpecial(player, Skill.SUPER_KAME);
                 case "nm" -> SkillService.gI().learSkillSpecial(player, Skill.MA_PHONG_BA);
                 case "logskill" ->
-                        Service.getInstance().sendThongBao(player, player.playerSkill.skillSelect.coolDown + "");
+                        Service.gI().sendThongBao(player, player.playerSkill.skillSelect.coolDown + "");
                 case "client" -> Client.gI().show(player);
                 case "boss" -> {
                     StringBuilder str = new StringBuilder();
@@ -671,12 +664,12 @@ public class Service {
                 case "rong" -> SummonDragon.gI().shenronLeave(SummonDragon.gI().playerSummonShenron, TIME_UP);
                 case "dongtaixiu" -> {
                     TaiXiu.gI().baotri = true;
-                    Service.getInstance().sendThongBao(player, "Đã ĐÓNG chức năng tham gia Tài Xĩu");
+                    Service.gI().sendThongBao(player, "Đã ĐÓNG chức năng tham gia Tài Xĩu");
                     return;
                 }
                 case "motaixiu" -> {
                     TaiXiu.gI().baotri = false;
-                    Service.getInstance().sendThongBao(player, "Đã MỞ chức năng tham gia Tài Xĩu");
+                    Service.gI().sendThongBao(player, "Đã MỞ chức năng tham gia Tài Xĩu");
                     return;
                 }
                 case "taixiu" -> {
@@ -729,7 +722,7 @@ public class Service {
                 item.quantity = 10000;
                 InventoryServiceNew.gI().addItemBag(player, item);
                 InventoryServiceNew.gI().sendItemBags(player);
-                Service.getInstance().sendThongBao(player, "Đã lấy " + item.template.name + " [" + item.template.id + "]  ra từ kho đồ!");
+                Service.gI().sendThongBao(player, "Đã lấy " + item.template.name + " [" + item.template.id + "]  ra từ kho đồ!");
                 return;
             } else if (text.startsWith("m")) {
                 try {
@@ -754,7 +747,7 @@ public class Service {
                     }
                     InventoryServiceNew.gI().sendItemBags(player);
                     Item item = ItemService.gI().createNewItem((short) itemId);
-                    Service.getInstance().sendThongBao(player, "NHẬN " + quantity + " " + item.template.name + " [" + item.template.id + "] THÀNH CÔNG!");
+                    Service.gI().sendThongBao(player, "NHẬN " + quantity + " " + item.template.name + " [" + item.template.id + "] THÀNH CÔNG!");
                     return;
                 }
             } else if (text.startsWith("i ")) {
@@ -766,7 +759,7 @@ public class Service {
                 }
                 InventoryServiceNew.gI().addItemBag(player, item);
                 InventoryServiceNew.gI().sendItemBags(player);
-                Service.getInstance().sendThongBao(player, "GET " + item.template.name + " [" + item.template.id + "] SUCCESS !");
+                Service.gI().sendThongBao(player, "GET " + item.template.name + " [" + item.template.id + "] SUCCESS !");
                 return;
             }
         } else if (text.startsWith("s")) {
@@ -840,13 +833,13 @@ public class Service {
         if (text.startsWith("ten con la ")) {
             PetService.gI().changeNamePet(player, text.replaceAll("ten con la ", ""));
         } else if (text.equals("hp")) {
-            Service.getInstance().sendThongBao(player, "HP bản thân:\b|7|" + Util.powerToStringnew(player.nPoint.hp) + "/" + Util.powerToStringnew(player.nPoint.hpMax)
+            Service.gI().sendThongBao(player, "HP bản thân:\b|7|" + Util.powerToStringnew(player.nPoint.hp) + "/" + Util.powerToStringnew(player.nPoint.hpMax)
                     + "\b|8|KI bản thân:\b|5|" + Util.powerToStringnew(player.nPoint.mp) + "/" + Util.powerToStringnew(player.nPoint.mpMax)
                     + "\b|8|Sức đánh:\b|4|" + Util.powerToStringnew(player.nPoint.dame)
                     + "\b|8|Giáp:\b|1|" + Util.powerToStringnew(player.nPoint.def)
                     + player.Hppl);
         } else if (text.equals("quai")) {
-            Service.getInstance().sendThongBao(player, player.HpQuai);
+            Service.gI().sendThongBao(player, player.HpQuai);
         } else if (text.equals("stop")) {
             Service.gI().sendThongBao(player, "|7|Đã dừng tất cả lệnh Auto");
             player.highPurchaseCount = 0;
@@ -1066,7 +1059,7 @@ public class Service {
             //   lastTimeShenronWait = System.currentTimeMillis();
             //   isShenronAppear = true;
 
-            Service.getInstance().sendMessAllPlayerInMap(pl, msg);
+            Service.gI().sendMessAllPlayerInMap(pl, msg);
         } catch (Exception e) {
             Logger.logException(Service.class, e);
         }
@@ -1430,12 +1423,12 @@ public class Service {
             }
             if (!pl.isPet && !pl.isBoss && pl.idNRNM != -1) {
                 ItemMap itemMap = new ItemMap(pl.zone, pl.idNRNM, 1, pl.location.x, pl.location.y, -1);
-                Service.getInstance().dropItemMap(pl.zone, itemMap);
+                Service.gI().dropItemMap(pl.zone, itemMap);
                 NgocRongNamecService.gI().pNrNamec[pl.idNRNM - 353] = "";
                 NgocRongNamecService.gI().idpNrNamec[pl.idNRNM - 353] = -1;
                 pl.idNRNM = -1;
                 PlayerService.gI().changeAndSendTypePK(pl, ConstPlayer.NON_PK);
-                Service.getInstance().sendFlagBag(pl);
+                Service.gI().sendFlagBag(pl);
             }
             if (pl.zone.map.mapId == 51) {
                 ChangeMapService.gI().changeMapBySpaceShip(pl, 21 + pl.gender, 0, -1);
@@ -1497,7 +1490,7 @@ public class Service {
             msg = new Message(-90);
             msg.writer().writeByte(-1);
             msg.writer().writeInt((int) player.id);
-            Service.getInstance().sendMessAllPlayerInMap(player, msg);
+            Service.gI().sendMessAllPlayerInMap(player, msg);
             msg.cleanup();
         } catch (Exception e) {
             Logger.logException(Service.class, e);
@@ -1762,14 +1755,14 @@ public class Service {
             msg.writer().writeByte(1);
             msg.writer().writeInt((int) pl.id);
             msg.writer().writeByte(index);
-            Service.getInstance().sendMessAllPlayerInMap(pl, msg);
+            Service.gI().sendMessAllPlayerInMap(pl, msg);
             msg.cleanup();
 
             msg = new Message(-103);
             msg.writer().writeByte(2);
             msg.writer().writeByte(index);
             msg.writer().writeShort(flagIconId[index]);
-            Service.getInstance().sendMessAllPlayerInMap(pl, msg);
+            Service.gI().sendMessAllPlayerInMap(pl, msg);
             msg.cleanup();
 
             if (pl.pet != null) {
@@ -1778,14 +1771,14 @@ public class Service {
                 msg.writer().writeByte(1);
                 msg.writer().writeInt((int) pl.pet.id);
                 msg.writer().writeByte(index);
-                Service.getInstance().sendMessAllPlayerInMap(pl.pet, msg);
+                Service.gI().sendMessAllPlayerInMap(pl.pet, msg);
                 msg.cleanup();
 
                 msg = new Message(-103);
                 msg.writer().writeByte(2);
                 msg.writer().writeByte(index);
                 msg.writer().writeShort(flagIconId[index]);
-                Service.getInstance().sendMessAllPlayerInMap(pl.pet, msg);
+                Service.gI().sendMessAllPlayerInMap(pl.pet, msg);
                 msg.cleanup();
             }
             if (pl.thuTrieuHoi != null) {
@@ -2001,7 +1994,7 @@ public class Service {
     public void sendSpeedPlayer(Player pl, int speed) {
         Message msg;
         try {
-            msg = Service.getInstance().messageSubCommand((byte) 8);
+            msg = Service.gI().messageSubCommand((byte) 8);
             msg.writer().writeInt((int) pl.id);
             msg.writer().writeByte(speed != -1 ? speed : pl.nPoint.speed);
             pl.sendMessage(msg);
@@ -2037,7 +2030,7 @@ public class Service {
             if (pl != null) {
                 msg.writer().writeInt(playerId);
                 msg.writer().writeLong(pl.nPoint.power);
-                msg.writer().writeUTF(Service.getInstance().getCurrStrLevel(pl));
+                msg.writer().writeUTF(Service.gI().getCurrStrLevel(pl));
                 player.sendMessage(msg);
             }
             msg.cleanup();
@@ -2095,19 +2088,19 @@ public class Service {
                     try {
                         GirlkunDB.executeUpdate("update account set password = ? where id = ? and username = ?",
                                 rePass, player.getSession().userId, player.getSession().uu);
-                        Service.getInstance().sendThongBao(player, "Đổi mật khẩu thành công!");
+                        Service.gI().sendThongBao(player, "Đổi mật khẩu thành công!");
                     } catch (Exception ex) {
-                        Service.getInstance().sendThongBao(player, "Đổi mật khẩu thất bại!");
+                        Service.gI().sendThongBao(player, "Đổi mật khẩu thất bại!");
                         Logger.logException(Service.class, ex);
                     }
                 } else {
-                    Service.getInstance().sendThongBao(player, "Mật khẩu nhập lại không đúng!");
+                    Service.gI().sendThongBao(player, "Mật khẩu nhập lại không đúng!");
                 }
             } else {
-                Service.getInstance().sendThongBao(player, "Mật khẩu ít nhất 6 ký tự!");
+                Service.gI().sendThongBao(player, "Mật khẩu ít nhất 6 ký tự!");
             }
         } else {
-            Service.getInstance().sendThongBao(player, "Mật khẩu cũ không đúng!");
+            Service.gI().sendThongBao(player, "Mật khẩu cũ không đúng!");
         }
     }
 

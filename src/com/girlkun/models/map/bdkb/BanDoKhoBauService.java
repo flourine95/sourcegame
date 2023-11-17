@@ -50,7 +50,7 @@ public class BanDoKhoBauService {
                 while (this.timeoutmap > 0) {
                     try {
                         this.timeoutmap--;
-                        Service.getInstance().sendThongBao(player, "Bản đồ kho báu sẽ kết thúc trong " + timeoutmap + " giây. Tàu vũ trụ sẽ đưa bạn về nhà");
+                        Service.gI().sendThongBao(player, "Bản đồ kho báu sẽ kết thúc trong " + timeoutmap + " giây. Tàu vũ trụ sẽ đưa bạn về nhà");
                         synchronized (this) {
                             wait(1000);
                         }
@@ -66,11 +66,11 @@ public class BanDoKhoBauService {
 
     public void joinBDKB(Player pl) {
         if (pl.clan == null) {
-            Service.getInstance().sendThongBao(pl, "Không thể thực hiện");
+            Service.gI().sendThongBao(pl, "Không thể thực hiện");
             return;
         }
         if (pl.bdkb_countPerDay >= 3) {
-            Service.getInstance().sendThongBao(pl, "Bạn đã đạt giới hạn lượt đi trong ngày");
+            Service.gI().sendThongBao(pl, "Bạn đã đạt giới hạn lượt đi trong ngày");
             return;
         }
         if (pl.clan.banDoKhoBau != null) {
@@ -138,16 +138,16 @@ public class BanDoKhoBauService {
                             Logger.logException(BanDoKhoBauService.class, e, "Lỗi init boss");
                         }
                     } else {
-                        Service.getInstance().sendThongBao(player, "Bản đồ kho báu đã đầy, vui lòng quay lại sau");
+                        Service.gI().sendThongBao(player, "Bản đồ kho báu đã đầy, vui lòng quay lại sau");
                     }
                 } else {
-                    Service.getInstance().sendThongBao(player, "Yêu cầu có bản đồ kho báu");
+                    Service.gI().sendThongBao(player, "Yêu cầu có bản đồ kho báu");
                 }
             } else {
-                Service.getInstance().sendThongBao(player, "Không thể thực hiện");
+                Service.gI().sendThongBao(player, "Không thể thực hiện");
             }
         } else {
-            Service.getInstance().sendThongBao(player, "Cấp độ phải thuộc khoảng từ 1-110");
+            Service.gI().sendThongBao(player, "Cấp độ phải thuộc khoảng từ 1-110");
         }
     }
 }

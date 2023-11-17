@@ -113,7 +113,7 @@ public class IntrinsicService {
         player.playerIntrinsic.intrinsic = new Intrinsic(listIntrinsic.get(Util.nextInt(1, listIntrinsic.size() - 1)));
         player.playerIntrinsic.intrinsic.param1 = (short) Util.nextInt(player.playerIntrinsic.intrinsic.paramFrom1, player.playerIntrinsic.intrinsic.paramTo1);
         player.playerIntrinsic.intrinsic.param2 = (short) Util.nextInt(player.playerIntrinsic.intrinsic.paramFrom2, player.playerIntrinsic.intrinsic.paramTo2);
-        Service.getInstance().sendThongBao(player, "Bạn nhận được Nội tại:\n" + player.playerIntrinsic.intrinsic.getName().substring(0, player.playerIntrinsic.intrinsic.getName().indexOf(" [")));
+        Service.gI().sendThongBao(player, "Bạn nhận được Nội tại:\n" + player.playerIntrinsic.intrinsic.getName().substring(0, player.playerIntrinsic.intrinsic.getName().indexOf(" [")));
         sendInfoIntrinsic(player);
     }
 
@@ -126,11 +126,11 @@ public class IntrinsicService {
                 changeIntrinsic(player);
                 player.playerIntrinsic.countOpen++;
             } else {
-                Service.getInstance().sendThongBao(player, "Bạn không đủ vàng, còn thiếu "
+                Service.gI().sendThongBao(player, "Bạn không đủ vàng, còn thiếu "
                         + Util.numberToMoney(goldRequire - player.inventory.gold) + " vàng nữa");
             }
         } else {
-            Service.getInstance().sendThongBao(player, "Yêu cầu sức mạnh tối thiểu 10 tỷ");
+            Service.gI().sendThongBao(player, "Yêu cầu sức mạnh tối thiểu 10 tỷ");
         }
     }
 
@@ -143,11 +143,11 @@ public class IntrinsicService {
                 changeIntrinsic(player);
                 player.playerIntrinsic.countOpen = 0;
             } else {
-                Service.getInstance().sendThongBao(player, "Bạn không có đủ ngọc, còn thiếu "
+                Service.gI().sendThongBao(player, "Bạn không có đủ ngọc, còn thiếu "
                         + (gemRequire - player.inventory.gem) + " ngọc nữa");
             }
         } else {
-            Service.getInstance().sendThongBao(player, "Yêu cầu sức mạnh tối thiểu 10 tỷ");
+            Service.gI().sendThongBao(player, "Yêu cầu sức mạnh tối thiểu 10 tỷ");
         }
     }
 

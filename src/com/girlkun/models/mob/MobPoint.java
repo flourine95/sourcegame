@@ -35,8 +35,8 @@ public class MobPoint {
     }
 
     public double getDameAttack() {
-        return this.dame != 0 ? this.dame + Util.GioiHannextdame(-(this.dame / 100d), (this.dame / 100d))
-                : this.getHpFull() * Util.GioiHannextdame(mob.pDame - 1, mob.pDame + 1) / 100d
-                + Util.GioiHannextdame(-(mob.level * 10d), mob.level * 10d);
+        return this.dame != 0 ? this.dame + Util.limitNextDame(-(this.dame / 100d), (this.dame / 100d))
+                : this.getHpFull() * Util.limitNextDame(mob.pDame - 1, mob.pDame + 1) / 100d
+                + Util.limitNextDame(-(mob.level * 10d), mob.level * 10d);
     }
 }

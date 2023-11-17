@@ -29,7 +29,7 @@ public class MartialCongressService {
         Zone zone = getMapChalllenge(129);
         if (zone != null) {
             player.inventory.ruby -= 200;
-            Service.getInstance().sendThongBao(player, "Bạn đã bị trừ 200 Hồng ngọc");
+            Service.gI().sendThongBao(player, "Bạn đã bị trừ 200 Hồng ngọc");
             PlayerService.gI().sendInfoHpMpMoney(player);
             ChangeMapService.gI().changeMap(player, zone, player.location.x, 360);
             Util.setTimeout(() -> {
@@ -38,10 +38,10 @@ public class MartialCongressService {
                 mc.setNpc(zone.getReferee());
                 mc.toTheNextRound();
                 MartialCongressManager.gI().add(mc);
-                Service.getInstance().sendThongBao(player, "Số thứ tự của ngươi là 1\n chuẩn bị thi đấu nhé");
+                Service.gI().sendThongBao(player, "Số thứ tự của ngươi là 1\n chuẩn bị thi đấu nhé");
             }, 500);
         } else {
-            Service.getInstance().sendThongBao(player, "Vui lòng thử lại !!!");
+            Service.gI().sendThongBao(player, "Vui lòng thử lại !!!");
         }
     }
 
@@ -63,7 +63,7 @@ public class MartialCongressService {
     public void sendTypePK(Player player, Player boss) {
         Message msg;
         try {
-            msg = Service.getInstance().messageSubCommand((byte) 35);
+            msg = Service.gI().messageSubCommand((byte) 35);
             msg.writer().writeInt((int) boss.id);
             msg.writer().writeByte(3);
             player.sendMessage(msg);

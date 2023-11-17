@@ -45,7 +45,7 @@ public class DataGame {
     public static void sendVersionGame(MySession session) {
         Message msg;
         try {
-            msg = Service.getInstance().messageNotMap((byte) 4);
+            msg = Service.gI().messageNotMap((byte) 4);
             msg.writer().writeByte(vsData);
             msg.writer().writeByte(vsMap);
             msg.writer().writeByte(vsSkill);
@@ -104,7 +104,7 @@ public class DataGame {
     public static void updateMap(MySession session) {
         Message msg;
         try {
-            msg = Service.getInstance().messageNotMap((byte) 6);
+            msg = Service.gI().messageNotMap((byte) 6);
             msg.writer().writeByte(vsMap);
             msg.writer().writeByte(Manager.mapTemplates.length);
             for (MapTemplate temp : Manager.mapTemplates) {

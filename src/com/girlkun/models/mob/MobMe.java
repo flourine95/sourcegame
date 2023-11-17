@@ -53,7 +53,7 @@ public final class MobMe extends Mob {
                     msg.writer().writeInt(1);
                     msg.writer().writeInt(Util.DoubleGioihan(pl.nPoint.hp));
 
-                    Service.getInstance().sendMessAllPlayerInMap(this.zone, msg);
+                    Service.gI().sendMessAllPlayerInMap(this.zone, msg);
                     msg.cleanup();
                 }
             }
@@ -91,9 +91,9 @@ public final class MobMe extends Mob {
                             msg.writer().writeInt(Util.DoubleGioihan(mob.point.gethp()));
                             msg.writer().writeInt((int) dame);
                         }
-                        Service.getInstance().sendMessAllPlayerInMap(this.zone, msg);
+                        Service.gI().sendMessAllPlayerInMap(this.zone, msg);
                         msg.cleanup();
-                        Service.getInstance().addSMTN(player, (byte) 2, tnsm, true);
+                        Service.gI().addSMTN(player, (byte) 2, tnsm, true);
                         if (mob.isDie()) {
                             mob.sendMobDieAfterMobMeAttacked(player, (int) dame);
                         }
@@ -113,7 +113,7 @@ public final class MobMe extends Mob {
             msg.writer().writeInt((int) player.id);
             msg.writer().writeShort(this.tempId);
             msg.writer().writeInt(Util.DoubleGioihan(this.point.hp));// hp mob
-            Service.getInstance().sendMessAllPlayerInMap(this.zone, msg);
+            Service.gI().sendMessAllPlayerInMap(this.zone, msg);
             msg.cleanup();
         } catch (Exception e) {
             System.out.println("loi ne mob me 2 ");
@@ -134,7 +134,7 @@ public final class MobMe extends Mob {
             msg = new Message(-95);
             msg.writer().writeByte(7);//type
             msg.writer().writeInt((int) player.id);
-            Service.getInstance().sendMessAllPlayerInMap(this.zone, msg);
+            Service.gI().sendMessAllPlayerInMap(this.zone, msg);
             msg.cleanup();
         } catch (Exception e) {
             System.out.println("loi ne mob me 3 ");
@@ -147,7 +147,7 @@ public final class MobMe extends Mob {
             msg = new Message(-95);
             msg.writer().writeByte(6);//type
             msg.writer().writeInt((int) player.id);
-            Service.getInstance().sendMessAllPlayerInMap(this.zone, msg);
+            Service.gI().sendMessAllPlayerInMap(this.zone, msg);
             msg.cleanup();
         } catch (Exception e) {
             System.out.println("loi ne mob me 4 ");

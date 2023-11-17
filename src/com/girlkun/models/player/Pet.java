@@ -44,10 +44,10 @@ public class Pet extends Player {
 
     public void changeStatus(byte status) {
         if (goingHome || master.fusion.typeFusion != 0 || (this.isDie() && status == FUSION)) {
-            Service.getInstance().sendThongBao(master, "Không thể thực hiện");
+            Service.gI().sendThongBao(master, "Không thể thực hiện");
             return;
         }
-        Service.getInstance().chatJustForMe(master, this, getTextStatus(status));
+        Service.gI().chatJustForMe(master, this, getTextStatus(status));
         if (status == GOHOME) {
             goHome();
         } else if (status == FUSION) {
@@ -95,7 +95,7 @@ public class Pet extends Player {
 
     public void fusion2(boolean porata) {
         if (this.isDie()) {
-            Service.getInstance().sendThongBao(master, "Không thể thực hiện");
+            Service.gI().sendThongBao(master, "Không thể thực hiện");
             return;
         }
         if (Util.canDoWithTime(lastTimeUnfusion, TIME_WAIT_AFTER_UNFUSION)) {
@@ -105,19 +105,19 @@ public class Pet extends Player {
             this.status = FUSION;
             ChangeMapService.gI().exitMap(this);
             fusionEffect(master.fusion.typeFusion);
-            Service.getInstance().Send_Caitrang(master);
+            Service.gI().Send_Caitrang(master);
             master.nPoint.calPoint();
             master.nPoint.setFullHpMp();
-            Service.getInstance().point(master);
+            Service.gI().point(master);
         } else {
-            Service.getInstance().sendThongBao(this.master, "Vui lòng đợi "
+            Service.gI().sendThongBao(this.master, "Vui lòng đợi "
                     + TimeUtil.getTimeLeft(lastTimeUnfusion, TIME_WAIT_AFTER_UNFUSION / 1000) + " nữa");
         }
     }
 
     public void fusion3(boolean porata) {
         if (this.isDie()) {
-            Service.getInstance().sendThongBao(master, "Không thể thực hiện");
+            Service.gI().sendThongBao(master, "Không thể thực hiện");
             return;
         }
         if (Util.canDoWithTime(lastTimeUnfusion, TIME_WAIT_AFTER_UNFUSION)) {
@@ -127,19 +127,19 @@ public class Pet extends Player {
             this.status = FUSION;
             ChangeMapService.gI().exitMap(this);
             fusionEffect(master.fusion.typeFusion);
-            Service.getInstance().Send_Caitrang(master);
+            Service.gI().Send_Caitrang(master);
             master.nPoint.calPoint();
             master.nPoint.setFullHpMp();
-            Service.getInstance().point(master);
+            Service.gI().point(master);
         } else {
-            Service.getInstance().sendThongBao(this.master, "Vui lòng đợi "
+            Service.gI().sendThongBao(this.master, "Vui lòng đợi "
                     + TimeUtil.getTimeLeft(lastTimeUnfusion, TIME_WAIT_AFTER_UNFUSION / 1000) + " nữa");
         }
     }
 
     public void fusion4(boolean porata) {
         if (this.isDie()) {
-            Service.getInstance().sendThongBao(master, "Không thể thực hiện");
+            Service.gI().sendThongBao(master, "Không thể thực hiện");
             return;
         }
         if (Util.canDoWithTime(lastTimeUnfusion, TIME_WAIT_AFTER_UNFUSION)) {
@@ -149,19 +149,19 @@ public class Pet extends Player {
             this.status = FUSION;
             ChangeMapService.gI().exitMap(this);
             fusionEffect(master.fusion.typeFusion);
-            Service.getInstance().Send_Caitrang(master);
+            Service.gI().Send_Caitrang(master);
             master.nPoint.calPoint();
             master.nPoint.setFullHpMp();
-            Service.getInstance().point(master);
+            Service.gI().point(master);
         } else {
-            Service.getInstance().sendThongBao(this.master, "Vui lòng đợi "
+            Service.gI().sendThongBao(this.master, "Vui lòng đợi "
                     + TimeUtil.getTimeLeft(lastTimeUnfusion, TIME_WAIT_AFTER_UNFUSION / 1000) + " nữa");
         }
     }
 
     public void fusion(boolean porata) {
         if (this.isDie()) {
-            Service.getInstance().sendThongBao(master, "Không thể thực hiện");
+            Service.gI().sendThongBao(master, "Không thể thực hiện");
             return;
         }
         if (Util.canDoWithTime(lastTimeUnfusion, TIME_WAIT_AFTER_UNFUSION)) {
@@ -175,12 +175,12 @@ public class Pet extends Player {
             this.status = FUSION;
             ChangeMapService.gI().exitMap(this);
             fusionEffect(master.fusion.typeFusion);
-            Service.getInstance().Send_Caitrang(master);
+            Service.gI().Send_Caitrang(master);
             master.nPoint.calPoint();
             master.nPoint.setFullHpMp();
-            Service.getInstance().point(master);
+            Service.gI().point(master);
         } else {
-            Service.getInstance().sendThongBao(this.master, "Vui lòng đợi "
+            Service.gI().sendThongBao(this.master, "Vui lòng đợi "
                     + TimeUtil.getTimeLeft(lastTimeUnfusion, TIME_WAIT_AFTER_UNFUSION / 1000) + " nữa");
         }
     }
@@ -188,11 +188,11 @@ public class Pet extends Player {
     public void unFusion() {
         master.fusion.typeFusion = 0;
         this.status = PROTECT;
-        Service.getInstance().point(master);
+        Service.gI().point(master);
         joinMapMaster();
         fusionEffect(master.fusion.typeFusion);
-        Service.getInstance().Send_Caitrang(master);
-        Service.getInstance().point(master);
+        Service.gI().Send_Caitrang(master);
+        Service.gI().point(master);
         this.lastTimeUnfusion = System.currentTimeMillis();
     }
 
@@ -202,7 +202,7 @@ public class Pet extends Player {
             msg = new Message(125);
             msg.writer().writeByte(type);
             msg.writer().writeInt((int) master.id);
-            Service.getInstance().sendMessAllPlayerInMap(master, msg);
+            Service.gI().sendMessAllPlayerInMap(master, msg);
             msg.cleanup();
         } catch (Exception e) {
 
@@ -238,14 +238,14 @@ public class Pet extends Player {
             updatePower(); //check mở skill...
             if (isDie()) {
                 if (System.currentTimeMillis() - lastTimeDie > 50000) {
-                    Service.getInstance().hsChar(this, nPoint.hpMax, nPoint.mpMax);
+                    Service.gI().hsChar(this, nPoint.hpMax, nPoint.mpMax);
                 } else {
                     return;
                 }
             }
 
             if (justRevived && this.zone == master.zone) {
-                Service.getInstance().chatJustForMe(master, this, "Sư phụ ơi, con đây nè!");
+                Service.gI().chatJustForMe(master, this, "Sư phụ ơi, con đây nè!");
                 justRevived = false;
             }
 
@@ -366,7 +366,7 @@ public class Pet extends Player {
                                     directAtHome = -1;
                                 }
                             }
-                            Service.getInstance().chatJustForMe(master, this, "H2O + C12H22O11 -> Uống ngọt lắm sư phụ ạ!");
+                            Service.gI().chatJustForMe(master, this, "H2O + C12H22O11 -> Uống ngọt lắm sư phụ ạ!");
                             lastTimeMoveAtHome = System.currentTimeMillis();
                         }
                     }
@@ -381,7 +381,7 @@ public class Pet extends Player {
 
     public void askPea() {
         if (Util.canDoWithTime(lastTimeAskPea, 10000)) {
-            Service.getInstance().chatJustForMe(master, this, "Sư phụ ơi cho con đậu thần đi, con đói sắp chết rồi !!");
+            Service.gI().chatJustForMe(master, this, "Sư phụ ơi cho con đậu thần đi, con đói sắp chết rồi !!");
             lastTimeAskPea = System.currentTimeMillis();
         }
     }
@@ -398,7 +398,7 @@ public class Pet extends Player {
                 case Skill.THAI_DUONG_HA_SAN -> {
                     if (SkillService.gI().canUseSkillWithCooldown(this) && SkillService.gI().canUseSkillWithMana(this)) {
                         SkillService.gI().useSkill(this, null, null, null);
-                        Service.getInstance().chatJustForMe(master, this, "Bất ngờ chưa ông già");
+                        Service.gI().chatJustForMe(master, this, "Bất ngờ chưa ông già");
                         return true;
                     }
                     return false;
@@ -739,18 +739,18 @@ public class Pet extends Player {
     public void transform() {
         if (this.typePet == 1) {
             this.isTransform = !this.isTransform;
-            Service.getInstance().Send_Caitrang(this);
-            Service.getInstance().chat(this, "Bố Mày Là Bư Nè !! Bư..Bư..Bư..Ma..Nhân..Bư....");
+            Service.gI().Send_Caitrang(this);
+            Service.gI().chat(this, "Bố Mày Là Bư Nè !! Bư..Bư..Bư..Ma..Nhân..Bư....");
         }
         if (this.typePet == 2) {
             this.isTransform = !this.isTransform;
-            Service.getInstance().Send_Caitrang(this);
-            Service.getInstance().chat(this, "Tao là thần");
+            Service.gI().Send_Caitrang(this);
+            Service.gI().chat(this, "Tao là thần");
         }
         if (this.typePet == 3) {
             this.isTransform = !this.isTransform;
-            Service.getInstance().Send_Caitrang(this);
-            Service.getInstance().chat(this, "Tao là thần");
+            Service.gI().Send_Caitrang(this);
+            Service.gI().chat(this, "Tao là thần");
         }
     }
 

@@ -27,18 +27,18 @@ public class DaiHoiVoThuatService {
         daihoi = dh;
     }
     
-    public void Update() {
+    public void update() {
         if(daihoi == null){
             return;
         }
         int countNull = 0;
         int maxZone = 0;
-        if(Util.contains(daihoi.Time, String.valueOf(DaiHoiVoThuat.gI().Hour)) && daihoi.round != 1 ){
+        if(Util.contains(daihoi.time, String.valueOf(DaiHoiVoThuat.gI().hour)) && daihoi.round != 1 ){
             Map map = Manager.MAPS.get(51);
             if(map != null){
                 maxZone = map.zones.size();
                 for(Zone zones : map.zones){
-                    if(zones != null && zones.getPlayers().size() <= 0){
+                    if(zones != null && zones.getPlayers().isEmpty()){
                         countNull++;
                     }
                 }
@@ -48,20 +48,20 @@ public class DaiHoiVoThuatService {
                 }
             }
         }
-        daihoi.listReg.stream().filter((me) -> (me != null && me.zone.map.mapId != 52 && me.zone.map.mapId != 51 && DaiHoiVoThuat.gI().Minutes >= daihoi.min_start_temp)).map((me) -> {
+        daihoi.listReg.stream().filter((me) -> (me != null && me.zone.map.mapId != 52 && me.zone.map.mapId != 51 && DaiHoiVoThuat.gI().minutes >= daihoi.minStartTemp)).map((me) -> {
             Service.gI().sendThongBao(me, "Bạn đã bị tước quyền thi đấu do không có mặt kịp giờ");
             return me;
         }).forEachOrdered((me) -> {
             daihoi.listReg.remove(me);
         });
-        if (DaiHoiVoThuat.gI().Second == 0 && DaiHoiVoThuat.gI().Minutes < daihoi.min_start_temp) {
+        if (DaiHoiVoThuat.gI().second == 0 && DaiHoiVoThuat.gI().minutes < daihoi.minStartTemp) {
             if (daihoi.listReg.size() > 1) {
-                Service.gI().sendThongBao(daihoi.listReg, "Vòng " + daihoi.round + " sẽ bắt đầu sau " + (daihoi.min_start_temp - DaiHoiVoThuat.gI().Minutes) + " phút nữa");
+                Service.gI().sendThongBao(daihoi.listReg, "Vòng " + daihoi.round + " sẽ bắt đầu sau " + (daihoi.minStartTemp - DaiHoiVoThuat.gI().minutes) + " phút nữa");
             }
-        } else if (DaiHoiVoThuat.gI().Minutes >= daihoi.min_start) {
+        } else if (DaiHoiVoThuat.gI().minutes >= daihoi.minStart) {
             if (daihoi.listReg.size() > 1) {
                 if (daihoi.listReg.size() % 2 == 0) {
-                    if(DaiHoiVoThuat.gI().Minutes >= daihoi.min_start_temp){
+                    if(DaiHoiVoThuat.gI().minutes >= daihoi.minStartTemp){
                         MatchDHVT();
                     }
                 } else {
@@ -74,11 +74,11 @@ public class DaiHoiVoThuatService {
                     MatchDHVT();
                 }
             }else if(daihoi.listReg.size() == 1 && daihoi.listPlayerWait.isEmpty() && countNull >= maxZone){
-                Service.gI().sendThongBao(daihoi.listReg.get(0), "Bạn đã vô địch giải " + daihoi.NameCup);
+                Service.gI().sendThongBao(daihoi.listReg.get(0), "Bạn đã vô địch giải " + daihoi.nameCup);
                 daihoi.round = 1;
                 daihoi.listReg.clear();
                 daihoi.listPlayerWait.clear();
-                daihoi.min_start_temp = daihoi.min_start;
+                daihoi.minStartTemp = daihoi.minStart;
             }
         }
     }
@@ -121,19 +121,19 @@ public class DaiHoiVoThuatService {
                 // đoạn này kéo 2 thằng lên sàn này
             }
             daihoi.round += 1;
-            daihoi.min_start_temp += 2;
+            daihoi.minStartTemp += 2;
         }
     }
     
     public boolean CanReg(Player pl) {
-        return daihoi != null &&pl.isPl()&& Util.contains(daihoi.Time, String.valueOf(DaiHoiVoThuat.gI().Hour)) && DaiHoiVoThuat.gI().Minutes <= daihoi.min_limit && !PlayerExits((int)pl.id);
+        return daihoi != null &&pl.isPl()&& Util.contains(daihoi.time, String.valueOf(DaiHoiVoThuat.gI().hour)) && DaiHoiVoThuat.gI().minutes <= daihoi.minLimit && !PlayerExits((int)pl.id);
     }
     
     public String Giai(Player pl) {
         if (daihoi != null && PlayerExits((int)pl.id)) {
-            return "Đại hội võ thuật sẽ bắt đầu sau "+(daihoi.min_start_temp - DaiHoiVoThuat.gI().Minutes)+" phút nữa";
-        } else if (daihoi != null && Util.contains(daihoi.Time, String.valueOf(DaiHoiVoThuat.gI().Hour)) && DaiHoiVoThuat.gI().Minutes <= daihoi.min_limit) {
-            return "Chào mừng bạn đến với đại hội võ thuật\nGiải " + daihoi.NameCup + " đang có " + daihoi.listReg.size() + " người đăng ký thi đấu";
+            return "Đại hội võ thuật sẽ bắt đầu sau "+(daihoi.minStartTemp - DaiHoiVoThuat.gI().minutes)+" phút nữa";
+        } else if (daihoi != null && Util.contains(daihoi.time, String.valueOf(DaiHoiVoThuat.gI().hour)) && DaiHoiVoThuat.gI().minutes <= daihoi.minLimit) {
+            return "Chào mừng bạn đến với đại hội võ thuật\nGiải " + daihoi.nameCup + " đang có " + daihoi.listReg.size() + " người đăng ký thi đấu";
         }
         return "Đã hết thời gian đăng ký vui lòng đợi đến giải đấu sau";
     }

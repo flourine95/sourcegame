@@ -131,7 +131,7 @@ public abstract class Npc implements IAtionNpc {
             msg.writer().writeShort(tempId);
             msg.writer().writeUTF(text);
             for (Zone zone : map.zones) {
-                Service.getInstance().sendMessAllPlayerInMap(zone, msg);
+                Service.gI().sendMessAllPlayerInMap(zone, msg);
             }
             msg.cleanup();
         } catch (Exception e) {
@@ -148,8 +148,8 @@ public abstract class Npc implements IAtionNpc {
                             || player.zone.map.mapId == 23) {
                         return true;
                     } else {
-                        Service.getInstance().hideWaitDialog(player);
-                        Service.getInstance().sendThongBao(player, "Không thể thực hiện");
+                        Service.gI().hideWaitDialog(player);
+                        Service.gI().sendThongBao(player, "Không thể thực hiện");
                         return false;
                     }
                 }
@@ -158,18 +158,18 @@ public abstract class Npc implements IAtionNpc {
                     player.iDMark.setNpcChose(this);
                     return true;
                 } else {
-                    Service.getInstance().hideWaitDialog(player);
-                    Service.getInstance().sendThongBao(player, "Không thể thực hiện khi đứng quá xa");
+                    Service.gI().hideWaitDialog(player);
+                    Service.gI().sendThongBao(player, "Không thể thực hiện khi đứng quá xa");
                     return false;
                 }
             } else {
-                Service.getInstance().hideWaitDialog(player);
-                Service.getInstance().sendThongBao(player, "|7|Không thể thực hiện khi đang Hộ tống");
+                Service.gI().hideWaitDialog(player);
+                Service.gI().sendThongBao(player, "|7|Không thể thực hiện khi đang Hộ tống");
                 return false;
             }
         } else {
-            Service.getInstance().hideWaitDialog(player);
-            Service.getInstance().sendThongBao(player, "|7|Không thể thực hiện khi đang Auto mua Vật phẩm");
+            Service.gI().hideWaitDialog(player);
+            Service.gI().sendThongBao(player, "|7|Không thể thực hiện khi đang Auto mua Vật phẩm");
             return false;
         }
     }

@@ -71,7 +71,6 @@ public class Mob {
     public static void initMopbKhiGas(Mob mob, byte level) {
         mob.point.dame = (level * 3250 * mob.level * 4) * 5;
         mob.point.maxHp = (level * 12472 * mob.point.hp + level * 7263 * mob.tempId) / 2;
-        //code by Việt Nguyễn
     }
 
     public static void initMopbbdkb(Mob mob, byte level) {
@@ -158,7 +157,7 @@ public class Mob {
                 this.sendMobStillAliveAffterAttacked(damage, plAtt != null && plAtt.nPoint.isCrit);
             }
             if (plAtt != null) {
-                Service.getInstance().addSMTN(plAtt, (byte) 2, getTiemNangForPlayer(plAtt, damage), true);
+                Service.gI().addSMTN(plAtt, (byte) 2, getTiemNangForPlayer(plAtt, damage), true);
             }
         }
     }
@@ -171,7 +170,7 @@ public class Mob {
     }
 
     public long getTiemNangForPlayer(Player pl, double dame) {
-        int levelPlayer = Service.getInstance().getCurrLevel(pl);
+        int levelPlayer = Service.gI().getCurrLevel(pl);
         int n = levelPlayer - this.level;
         long pDameHit = 0;
         if (point.getHpFull() >= 100000000) {
@@ -215,7 +214,7 @@ public class Mob {
     public void update() {
         if (this.isDie() && !Maintenance.isRuning) {
             switch (zone.map.type) {
-                case ConstMap.MAP_DOANH_TRAI:
+                case ConstMap.MAP_DOANH_TRAI -> {
                     if (this.zone.isTrungUyTrangAlive) {
                         if (this.tempId == 22 && this.zone.map.mapId == 59) {
                             if (Util.canDoWithTime(lastTimeDie, 5000)) {
@@ -230,29 +229,30 @@ public class Mob {
                             }
                         }
                     }
-                    break;
-                case ConstMap.MAP_BAN_DO_KHO_BAU:
+                }
+                case ConstMap.MAP_BAN_DO_KHO_BAU -> {
                     if (this.tempId == 72 || this.tempId == 71) {//ro bot bao ve
                         if (System.currentTimeMillis() - this.lastTimeDie > 3000) {
                             try {
                                 Message t = new Message(102);
                                 t.writer().writeByte((this.tempId == 71 ? 7 : 6));
-                                Service.getInstance().sendMessAllPlayerInMap(this.zone, t);
+                                Service.gI().sendMessAllPlayerInMap(this.zone, t);
                                 t.cleanup();
                             } catch (IOException e) {
                                 System.out.println("loi up date");
                             }
                         }
                     }
-                    break;
-                case ConstMap.MAP_KHI_GAS:
-                    break;
-                default:
+                }
+                case ConstMap.MAP_KHI_GAS -> {
+                }
+                default -> {
                     if (Util.canDoWithTime(lastTimeDie, 5000)) {
                         this.randomSieuQuai();
                         this.hoiSinh();
                         this.sendMobHoiSinh();
                     }
+                }
             }
         }
         effectSkill.update();
@@ -275,7 +275,7 @@ public class Mob {
                                 t.writer().writeByte(5);
                                 t.writer().writeByte(plA.location.x);
                                 this.location.x = plA.location.x;
-                                Service.getInstance().sendMessAllPlayerInMap(this.zone, t);
+                                Service.gI().sendMessAllPlayerInMap(this.zone, t);
                                 t.cleanup();
                             } catch (IOException e) {
                             }
@@ -309,7 +309,7 @@ public class Mob {
                     t.writer().writeInt((int) players.get(i).id);
                     t.writer().writeInt((int) players.get(i).injured(null, (int) dame, false, true));
                 }
-                Service.getInstance().sendMessAllPlayerInMap(this.zone, t);
+                Service.gI().sendMessAllPlayerInMap(this.zone, t);
                 t.cleanup();
             } catch (IOException e) {
             }
@@ -322,7 +322,7 @@ public class Mob {
                     t.writer().writeInt((int) players.get(i).id);
                     t.writer().writeInt((int) players.get(i).injured(null, (int) dame, false, true));
                 }
-                Service.getInstance().sendMessAllPlayerInMap(this.zone, t);
+                Service.gI().sendMessAllPlayerInMap(this.zone, t);
                 t.cleanup();
             } catch (IOException e) {
             }
@@ -408,7 +408,7 @@ public class Mob {
             msg.writer().writeByte(this.id);
             msg.writer().writeInt((int) player.id);
             msg.writer().writeInt(Util.DoubleGioihan(player.nPoint.hp));
-            Service.getInstance().sendMessAnotherNotMeInMap(player, msg);
+            Service.gI().sendMessAnotherNotMeInMap(player, msg);
             msg.cleanup();
         } catch (IOException e) {
         }
@@ -434,7 +434,7 @@ public class Mob {
             msg.writer().writeByte(this.tempId);
             msg.writer().writeByte(lvMob);
             msg.writer().writeInt(Util.DoubleGioihan(this.point.hp));
-            Service.getInstance().sendMessAllPlayerInMap(this.zone, msg);
+            Service.gI().sendMessAllPlayerInMap(this.zone, msg);
             msg.cleanup();
         } catch (IOException e) {
             Logger.logException(Mob.class, e);
@@ -450,7 +450,7 @@ public class Mob {
             msg.writer().writeInt(Util.DoubleGioihan(dameHit));
             msg.writer().writeBoolean(plKill.nPoint.isCrit); // crit
             List<ItemMap> items = mobReward(plKill, this.dropItemTask(plKill), msg);
-            Service.getInstance().sendMessAllPlayerInMap(this.zone, msg);
+            Service.gI().sendMessAllPlayerInMap(this.zone, msg);
             msg.cleanup();
             hutItem(plKill, items);
         } catch (IOException e) {
@@ -474,7 +474,7 @@ public class Mob {
             msg.writer().writeBoolean(false); // crit
 
             List<ItemMap> items = mobReward(plKill, this.dropItemTask(plKill), msg);
-            Service.getInstance().sendMessAllPlayerInMap(this.zone, msg);
+            Service.gI().sendMessAllPlayerInMap(this.zone, msg);
             msg.cleanup();
             hutItem(plKill, items);
         } catch (IOException e) {
@@ -527,7 +527,7 @@ public class Mob {
                     i.quantity = random;
                     InventoryServiceNew.gI().addItemBag(player, i);
                     InventoryServiceNew.gI().sendItemBags(player);
-                    Service.getInstance().sendThongBao(player, "Bạn vừa nhận được " + random + " hồng ngọc");
+                    Service.gI().sendThongBao(player, "Bạn vừa nhận được " + random + " hồng ngọc");
                 }
             }
 
@@ -699,7 +699,7 @@ public class Mob {
             int slhn = Util.nextInt(1, 3) * (levell / 10);
             if (Util.nextInt(0, 100) < 70) {
                 list.add(new ItemMap(zone, 861, slhn, x, player.location.y, player.id));
-                Service.getInstance().sendThongBao(player, "Bạn vừa nhận được " + slhn + " hồng ngọc");
+                Service.gI().sendThongBao(player, "Bạn vừa nhận được " + slhn + " hồng ngọc");
             }
         }
         if (Util.isTrue(30, 100) && this.tempId > 76 && this.tempId < 78) {
@@ -711,7 +711,7 @@ public class Mob {
             i.quantity = random;
             InventoryServiceNew.gI().addItemBag(player, i);
             InventoryServiceNew.gI().sendItemBags(player);
-            Service.getInstance().sendThongBao(player, "Bạn vừa nhận được " + random + " hồng ngọc");
+            Service.gI().sendThongBao(player, "Bạn vừa nhận được " + random + " hồng ngọc");
         }
         if (Manager.suKien == 1 && Util.isTrue(5, 100)) {
             if (this.isQuaiBay()) {
@@ -753,7 +753,7 @@ public class Mob {
             msg.writer().writeInt(Util.DoubleGioihan(dameHit));
             msg.writer().writeBoolean(crit); // chí mạng
             msg.writer().writeInt(-1);
-            Service.getInstance().sendMessAllPlayerInMap(this.zone, msg);
+            Service.gI().sendMessAllPlayerInMap(this.zone, msg);
             msg.cleanup();
         } catch (IOException e) {
         }

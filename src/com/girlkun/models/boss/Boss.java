@@ -162,10 +162,8 @@ public class Boss extends Player implements IBossNew, IBossOutfit {
 
     public Zone getMapJoin() {
         int mapId = this.data[this.currentLevel].getMapJoin()[Util.nextInt(0, this.data[this.currentLevel].getMapJoin().length - 1)];
-        Zone map = MapService.gI().getMapWithRandZone(mapId);
         //to do: check boss in map
-
-        return map;
+        return MapService.gI().getMapWithRandZone(mapId);
     }
 
     @Override
@@ -209,54 +207,48 @@ public class Boss extends Player implements IBossNew, IBossOutfit {
 
     @Override
     public void update() {
-        super.update();
-        this.nPoint.mp = this.nPoint.mpg;
-        if (this.effectSkill.isHaveEffectSkill()) {
-            return;
-        }
-        switch (this.bossStatus) {
-            case REST:
-                this.rest();
-                break;
-            case RESPAWN:
-                this.respawn();
-                this.changeStatus(BossStatus.JOIN_MAP);
-                break;
-            case JOIN_MAP:
-                this.joinMap();
-                this.changeStatus(BossStatus.CHAT_S);
-                break;
-            case CHAT_S:
-                if (chatS()) {
-                    this.doneChatS();
-                    this.lastTimeChatM = System.currentTimeMillis();
-                    this.timeChatM = 5000;
-                    this.changeStatus(BossStatus.ACTIVE);
+            super.update();
+            this.nPoint.mp = this.nPoint.mpg;
+            if (this.effectSkill.isHaveEffectSkill()) {
+                return;
+            }
+            switch (this.bossStatus) {
+                case REST -> this.rest();
+                case RESPAWN -> {
+                    this.respawn();
+                    this.changeStatus(BossStatus.JOIN_MAP);
                 }
-                break;
-            case ACTIVE:
-                this.chatM();
-                if (this.effectSkill.isCharging && !Util.isTrue(1, 20) || this.effectSkill.useTroi) {
-                    return;
+                case JOIN_MAP -> {
+                    this.joinMap();
+                    this.changeStatus(BossStatus.CHAT_S);
                 }
-                this.active();
-                break;
-            case DIE:
-                this.changeStatus(BossStatus.CHAT_E);
-                break;
-            case CHAT_E:
-                if (chatE()) {
-                    this.doneChatE();
-                    this.changeStatus(BossStatus.LEAVE_MAP);
+                case CHAT_S -> {
+                    if (chatS()) {
+                        this.doneChatS();
+                        this.lastTimeChatM = System.currentTimeMillis();
+                        this.timeChatM = 5000;
+                        this.changeStatus(BossStatus.ACTIVE);
+                    }
                 }
-                break;
-            case LEAVE_MAP:
-                this.leaveMap();
-                break;
-        }
+                case ACTIVE -> {
+                    this.chatM();
+                    if (this.effectSkill.isCharging && !Util.isTrue(1, 20) || this.effectSkill.useTroi) {
+                        return;
+                    }
+                    this.active();
+                }
+                case DIE -> this.changeStatus(BossStatus.CHAT_E);
+                case CHAT_E -> {
+                    if (chatE()) {
+                        this.doneChatE();
+                        this.changeStatus(BossStatus.LEAVE_MAP);
+                    }
+                }
+                case LEAVE_MAP -> this.leaveMap();
+            }
+
     }
 
-    //loop
     @Override
     public void rest() {
         if (this.data == null) {
@@ -313,7 +305,7 @@ public class Boss extends Player implements IBossNew, IBossOutfit {
             } else {
                 ChangeMapService.gI().changeMap(this, this.zone, this.location.x, this.location.y);
             }
-            Service.getInstance().sendFlagBag(this);
+            Service.gI().sendFlagBag(this);
             this.notifyJoinMap();
         }
     }
@@ -431,7 +423,6 @@ public class Boss extends Player implements IBossNew, IBossOutfit {
                     }
                 }
             } catch (Exception ex) {
-                ex.printStackTrace();
                 System.out.println("loi ne    22    ClassCastException ");
             }
         }
@@ -581,7 +572,7 @@ public class Boss extends Player implements IBossNew, IBossOutfit {
     }
 
     public void chat(String text) {
-        Service.getInstance().chat(this, text);
+        Service.gI().chat(this, text);
     }
 
     protected boolean chat(int prefix, String textChat) {
@@ -593,7 +584,7 @@ public class Boss extends Player implements IBossNew, IBossOutfit {
             }
             Player plMap = this.zone.getRandomPlayerInMap();
             if (plMap != null && !plMap.isDie() && Util.getDistance(this, plMap) <= 600) {
-                Service.getInstance().chat(plMap, textChat);
+                Service.gI().chat(plMap, textChat);
             } else {
                 return false;
             }
@@ -620,16 +611,6 @@ public class Boss extends Player implements IBossNew, IBossOutfit {
 
     @Override
     public void wakeupAnotherBossWhenAppear() {
-//        if (!(this instanceof AnTrom)
-//                && !(this instanceof MiNuong)) {
-//            System.out.println(this.name + ":" + this.zone.map.mapName + " khu vực " + this.zone.zoneId + "(" + this.zone.map.mapId + ")");
-//        }
-        if (!MapService.gI().isMapMaBu(this.zone.map.mapId)
-                && !MapService.gI().isMapBlackBallWar(this.zone.map.mapId)
-                && !(this instanceof AnTrom)
-                && !(this instanceof MiNuong)) {
-            System.out.println("BOSS  " + this.name + "  :  " + this.zone.map.mapName + " khu vực " + this.zone.zoneId + "(" + this.zone.map.mapId + ")");
-        }
         if (this.bossAppearTogether == null || this.bossAppearTogether[this.currentLevel] == null) {
             return;
         }
@@ -660,7 +641,3 @@ public class Boss extends Player implements IBossNew, IBossOutfit {
 
 }
 
-/**
- * Code được viết bởi Hoàng Việt Vui lòng không sao chép mã nguồn này dưới mọi
- * hình thức.
- */

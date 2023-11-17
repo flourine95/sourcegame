@@ -52,7 +52,7 @@ public class EffectSkin {
         }
         if (xHPKI != 1 && Util.canDoWithTime(lastTimeXHPKI, 1800000)) {
             xHPKI = 1;
-            Service.getInstance().point(player);
+            Service.gI().point(player);
         }
         updateCTHaiTac();
     }
@@ -108,7 +108,7 @@ public class EffectSkin {
                     double hpHoi = this.player.nPoint.hpMax * param / 100;
                     this.player.nPoint.addHp(hpHoi);
                     PlayerService.gI().sendInfoHpMpMoney(this.player);
-                    Service.getInstance().Send_Info_NV(this.player);
+                    Service.gI().Send_Info_NV(this.player);
                     this.lastTimeHP30s = System.currentTimeMillis();
                 }
             }
@@ -125,7 +125,7 @@ public class EffectSkin {
                     double mpHoi = this.player.nPoint.mpMax * param / 100;
                     this.player.nPoint.addMp(mpHoi);
                     PlayerService.gI().sendInfoHpMpMoney(this.player);
-                    Service.getInstance().Send_Info_NV(this.player);
+                    Service.gI().Send_Info_NV(this.player);
                     this.lastTimeMP30s = System.currentTimeMillis();
                 }
             }
@@ -173,13 +173,13 @@ public class EffectSkin {
                         hpHut += (int) subHp;
                         mpHut += (int) subMp;
                         PlayerService.gI().sendInfoHpMpMoney(pl);
-                        Service.getInstance().Send_Info_NV(pl);
+                        Service.gI().Send_Info_NV(pl);
                         pl.injured(null, subHp, true, false);
                     }
                     this.player.nPoint.addHp(hpHut);
                     this.player.nPoint.addMp(mpHut);
                     PlayerService.gI().sendInfoHpMpMoney(this.player);
-                    Service.getInstance().Send_Info_NV(this.player);
+                    Service.gI().Send_Info_NV(this.player);
                     this.lastTimeXenHutHpKi = System.currentTimeMillis();
                 }
             }
@@ -206,9 +206,9 @@ public class EffectSkin {
                         if (subHp >= pl.nPoint.hp) {
                             subHp = Util.DoubleGioihan(pl.nPoint.hp - 1);
                         }
-                        Service.getInstance().chat(pl, textOdo[Util.nextInt(0, textOdo.length - 1)]);
+                        Service.gI().chat(pl, textOdo[Util.nextInt(0, textOdo.length - 1)]);
                         PlayerService.gI().sendInfoHpMpMoney(pl);
-                        Service.getInstance().Send_Info_NV(pl);
+                        Service.gI().Send_Info_NV(pl);
                         pl.injured(null, subHp, true, false);
                     }
                     this.lastTimeOdo = System.currentTimeMillis();
@@ -268,7 +268,7 @@ public class EffectSkin {
             }
             this.lastTimeSubTimeTrainArmor = System.currentTimeMillis();
             InventoryServiceNew.gI().sendItemBags(player);
-            Service.getInstance().point(this.player);
+            Service.gI().point(this.player);
         }
     }
 

@@ -93,7 +93,7 @@ public class Controller implements IMessageHandler {
                             idItem = _msg.reader().readShort();
                             ShopKyGuiService.gI().upItemToTop(player, idItem);
                         }
-                        default -> Service.getInstance().sendThongBao(player, "Không thể thực hiện");
+                        default -> Service.gI().sendThongBao(player, "Không thể thực hiện");
                     }
                     break;
 
@@ -109,7 +109,7 @@ public class Controller implements IMessageHandler {
                     }
                     break;
                 case 42:
-                    Service.getInstance().regisAccount(_session, _msg);
+                    Service.gI().regisAccount(_session, _msg);
                     break;
                 case 127:
                     if (player != null) {
@@ -210,7 +210,7 @@ public class Controller implements IMessageHandler {
                     break;
                 case -107:
                     if (player != null) {
-                        Service.getInstance().showInfoPet(player);
+                        Service.gI().showInfoPet(player);
                     }
                     break;
                 case -108:
@@ -256,7 +256,7 @@ public class Controller implements IMessageHandler {
                     break;
                 case -79:
                     if (player != null) {
-                        Service.getInstance().getPlayerMenu(player, _msg.reader().readInt());
+                        Service.gI().getPlayerMenu(player, _msg.reader().readInt());
                     }
                     break;
                 case -76:
@@ -291,10 +291,10 @@ public class Controller implements IMessageHandler {
                                         InventoryServiceNew.gI().subQuantityItemsBag(player, maydo, 1);
                                         InventoryServiceNew.gI().sendItemBags(player);
                                     } else {
-                                        Service.getInstance().sendThongBao(player, "|7|Không thể thực hiện khi đang Hộ tống");
+                                        Service.gI().sendThongBao(player, "|7|Không thể thực hiện khi đang Hộ tống");
                                     }
                                 } else {
-                                    Service.getInstance().sendThongBao(player, "|7|Yêu cầu có Máy dò Boss");
+                                    Service.gI().sendThongBao(player, "|7|Yêu cầu có Máy dò Boss");
                                 }
                                 break;
                             }
@@ -305,9 +305,9 @@ public class Controller implements IMessageHandler {
                     if (player != null) {
                         byte act = _msg.reader().readByte();
                         if (act == 0) {
-                            Service.getInstance().openFlagUI(player);
+                            Service.gI().openFlagUI(player);
                         } else if (act == 1) {
-                            Service.getInstance().chooseFlag(player, _msg.reader().readByte());
+                            Service.gI().chooseFlag(player, _msg.reader().readByte());
                         }
                     }
                     break;
@@ -396,7 +396,7 @@ public class Controller implements IMessageHandler {
                 case -23:
                     if (player != null) {
                         ChangeMapService.gI().changeMapWaypoint(player);
-                        Service.getInstance().hideWaitDialog(player);
+                        Service.gI().hideWaitDialog(player);
                     }
                     break;
                 case -45:
@@ -455,7 +455,7 @@ public class Controller implements IMessageHandler {
                     UseItem.gI().getItem(_session, _msg);
                     break;
                 case -41:
-                    Service.getInstance().sendCaption(_session, _msg.reader().readByte());
+                    Service.gI().sendCaption(_session, _msg.reader().readByte());
                     break;
                 case -43:
                     if (player != null) {
@@ -498,7 +498,7 @@ public class Controller implements IMessageHandler {
                     break;
                 case 44:
                     if (player != null) {
-                        Service.getInstance().chat(player, _msg.reader().readUTF());
+                        Service.gI().chat(player, _msg.reader().readUTF());
                     }
                     break;
                 case 32:
@@ -528,13 +528,13 @@ public class Controller implements IMessageHandler {
                     break;
                 case 54:
                     if (player != null) {
-                        Service.getInstance().attackMob(player, (_msg.reader().readByte()));
+                        Service.gI().attackMob(player, (_msg.reader().readByte()));
                     }
                     break;
                 case -60:
                     if (player != null) {
                         int playerId = _msg.reader().readInt();
-                        Service.getInstance().attackPlayer(player, playerId);
+                        Service.gI().attackPlayer(player, playerId);
                     }
                     break;
                 case -27:
@@ -598,7 +598,7 @@ public class Controller implements IMessageHandler {
                         }
                         break;
                     case 2:
-                        Service.getInstance().setClientType(session, msg);
+                        Service.gI().setClientType(session, msg);
                         break;
                     default:
                         break;
@@ -624,12 +624,12 @@ public class Controller implements IMessageHandler {
                     case 13 -> {
                         //client ok
                         if (player != null) {
-                            Service.getInstance().player(player);
-                            Service.getInstance().Send_Caitrang(player);
+                            Service.gI().player(player);
+                            Service.gI().Send_Caitrang(player);
                             player.zone.loadAnotherToMe(player);
 
                             // -64 my flag bag
-                            Service.getInstance().sendFlagBag(player);
+                            Service.gI().sendFlagBag(player);
                             ItemTimeService.gI().sendTextBanDoKhoBau(player);
                             ItemTimeService.gI().sendTextDoanhTrai(player);
                             ItemTimeService.gI().sendTextGas(player);
@@ -689,17 +689,17 @@ public class Controller implements IMessageHandler {
                 if (name.length() <= 10) {
                     rs = GirlkunDB.executeQuery("select * from player where name = ?", name);
                     if (rs.first()) {
-                        Service.getInstance().sendThongBaoOK(session, "Tên nhân vật đã tồn tại");
+                        Service.gI().sendThongBaoOK(session, "Tên nhân vật đã tồn tại");
                     } else {
                         if (Util.haveSpecialCharacter(name)) {
-                            Service.getInstance().sendThongBaoOK(session, "Tên nhân vật không được chứa ký tự đặc biệt");
+                            Service.gI().sendThongBaoOK(session, "Tên nhân vật không được chứa ký tự đặc biệt");
                         } else if (!Util.kituvip(name)) {
-                            Service.getInstance().sendThongBaoOK(session, "Tên nhân vật không được chứa ký tự VIP");
+                            Service.gI().sendThongBaoOK(session, "Tên nhân vật không được chứa ký tự VIP");
                         } else {
                             boolean isNotIgnoreName = true;
                             for (String n : ConstIgnoreName.IGNORE_NAME) {
                                 if (name.equals(n)) {
-                                    Service.getInstance().sendThongBaoOK(session, "Tên nhân vật đã tồn tại");
+                                    Service.gI().sendThongBaoOK(session, "Tên nhân vật đã tồn tại");
                                     isNotIgnoreName = false;
                                     break;
                                 }
@@ -710,7 +710,7 @@ public class Controller implements IMessageHandler {
                         }
                     }
                 } else {
-                    Service.getInstance().sendThongBaoOK(session, "Tên nhân vật tối đa 10 ký tự");
+                    Service.gI().sendThongBaoOK(session, "Tên nhân vật tối đa 10 ký tự");
                 }
             } catch (Exception e) {
                 Logger.logException(Controller.class, e);
@@ -726,7 +726,7 @@ public class Controller implements IMessageHandler {
     }
 
     public void login2(MySession session) {
-        Service.getInstance().switchToRegisterScr(session);
+        Service.gI().switchToRegisterScr(session);
 //        Service.getInstance().sendThongBaoOK(session, "Vui lòng đăng ký tài khoản tại trang chủ!");
     }
 
@@ -744,13 +744,13 @@ public class Controller implements IMessageHandler {
         IntrinsicService.gI().sendInfoIntrinsic(player);
 
         // -42 my point
-        Service.getInstance().point(player);
+        Service.gI().point(player);
 
         // 40 task
         TaskService.gI().sendTaskMain(player);
 
         // -22 reset all
-        Service.getInstance().clearMap(player);
+        Service.gI().clearMap(player);
 
         // -53 my clan
         ClanService.gI().sendMyClan(player);
@@ -763,10 +763,10 @@ public class Controller implements IMessageHandler {
 
         // -97 năng động
         // -107 have pet
-        Service.getInstance().sendHavePet(player);
+        Service.gI().sendHavePet(player);
 
         // -119 top rank
-        Service.getInstance().sendMessage(session, -119);
+        Service.gI().sendMessage(session, -119);
 
         // -50 thông tin bảng thông báo
         ServerNotify.gI().sendNotifyTab(player);
@@ -815,7 +815,7 @@ public class Controller implements IMessageHandler {
             new Thread(() -> {
                 try {
                     Thread.sleep(1000);
-                    Service.getInstance().sendFoot(player, player.inventory.itemsBody.get(11).template.id);
+                    Service.gI().sendFoot(player, player.inventory.itemsBody.get(11).template.id);
                 } catch (Exception e) {
                     Logger.logException(Controller.class, e, "Error: " + player.name);
 
@@ -823,12 +823,12 @@ public class Controller implements IMessageHandler {
             }).start();
         }
         //last time use skill
-        Service.getInstance().sendTimeSkill(player);
+        Service.gI().sendTimeSkill(player);
         if (player.inventory.itemsBody.get(10).isNotNullItem()) {
             new Thread(() -> {
                 try {
                     Thread.sleep(1000);
-                    Service.getInstance().sendPetFollow(player, (short) (player.inventory.itemsBody.get(10).template.iconID - 1));
+                    Service.gI().sendPetFollow(player, (short) (player.inventory.itemsBody.get(10).template.iconID - 1));
                 } catch (Exception e) {
                     Logger.logException(Controller.class, e, "Error: " + player.name);
                 }
@@ -847,7 +847,7 @@ public class Controller implements IMessageHandler {
             new Thread(() -> {
                 try {
                     Thread.sleep(1000);
-                    Service.getInstance().sendTitle(player, (short) 888);
+                    Service.gI().sendTitle(player, (short) 888);
                 } catch (Exception e) {
                     Logger.logException(Controller.class, e, "Error: " + player.name);
 
@@ -858,7 +858,7 @@ public class Controller implements IMessageHandler {
             new Thread(() -> {
                 try {
                     Thread.sleep(1000);
-                    Service.getInstance().sendTitle(player, (short) 889);
+                    Service.gI().sendTitle(player, (short) 889);
                 } catch (Exception e) {
                     Logger.logException(Controller.class, e, "Error: " + player.name);
 
@@ -869,7 +869,7 @@ public class Controller implements IMessageHandler {
             new Thread(() -> {
                 try {
                     Thread.sleep(1000);
-                    Service.getInstance().sendTitle(player, (short) 890);
+                    Service.gI().sendTitle(player, (short) 890);
                 } catch (Exception e) {
                     Logger.logException(Controller.class, e, "Error: " + player.name);
 
@@ -880,7 +880,7 @@ public class Controller implements IMessageHandler {
     }
 
     private void sendThongBaoServer(Player player) {
-        Service.getInstance().sendThongBaoFromAdmin(player, """
+        Service.gI().sendThongBaoFromAdmin(player, """
                 |6| Chào mừng bạn tham gia trò chơi
                 Server với nhiều tính năng phù hợp cho anh em cày cuốc lâu dài
                 |1| Chúc mọi người chơi game vui vẻ !!!""");

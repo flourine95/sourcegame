@@ -728,17 +728,17 @@ public class CombineServiceNew {
                         }
                     }
                     if (thegh == null) {
-                        Service.getInstance().sendThongBaoOK(player, "Cần 1 trang bị có hạn sử dụng và 1 phiếu Gia hạn");
+                        Service.gI().sendThongBaoOK(player, "Cần 1 trang bị có hạn sử dụng và 1 phiếu Gia hạn");
                         return;
                     }
                     if (itemGiahan == null) {
-                        Service.getInstance().sendThongBaoOK(player, "Cần 1 trang bị có hạn sử dụng và 1 phiếu Gia hạn");
+                        Service.gI().sendThongBaoOK(player, "Cần 1 trang bị có hạn sử dụng và 1 phiếu Gia hạn");
                         return;
                     }
                     for (ItemOption itopt : itemGiahan.itemOptions) {
                         if (itopt.optionTemplate.id == 93) {
                             if (itopt.param < 0) {
-                                Service.getInstance().sendThongBaoOK(player, "Trang bị này không phải trang bị có Hạn Sử Dụng");
+                                Service.gI().sendThongBaoOK(player, "Trang bị này không phải trang bị có Hạn Sử Dụng");
                                 return;
                             }
                         }
@@ -933,7 +933,7 @@ public class CombineServiceNew {
             InventoryServiceNew.gI().subQuantityItemsBag(player, item, 1);
             player.combineNew.itemsCombine.clear();
             InventoryServiceNew.gI().sendItemBags(player);
-            Service.getInstance().sendMoney(player);
+            Service.gI().sendMoney(player);
             reOpenItemCombine(player);
         }
     }
@@ -955,7 +955,7 @@ public class CombineServiceNew {
             player.combineNew.itemsCombine.clear();
             InventoryServiceNew.gI().addItemBag(player, phieu);
             InventoryServiceNew.gI().sendItemBags(player);
-            Service.getInstance().sendMoney(player);
+            Service.gI().sendMoney(player);
             reOpenItemCombine(player);
         }
     }
@@ -964,15 +964,15 @@ public class CombineServiceNew {
         //check sl đồ tl, đồ hd
         // new update 2 mon huy diet + 1 mon than linh(skh theo style) +  5 manh bat ki
         if (player.combineNew.itemsCombine.size() != 3) {
-            Service.getInstance().sendThongBao(player, "Thiếu đồ");
+            Service.gI().sendThongBao(player, "Thiếu đồ");
             return;
         }
         if (player.inventory.gold < COST) {
-            Service.getInstance().sendThongBao(player, "Ảo ít thôi con...");
+            Service.gI().sendThongBao(player, "Ảo ít thôi con...");
             return;
         }
         if (InventoryServiceNew.gI().getCountEmptyBag(player) < 1) {
-            Service.getInstance().sendThongBao(player, "Bạn phải có ít nhất 1 ô trống hành trang");
+            Service.gI().sendThongBao(player, "Bạn phải có ít nhất 1 ô trống hành trang");
             return;
         }
         Item itemTL = player.combineNew.itemsCombine.stream().filter(item -> item.isNotNullItem() && item.isCongThuc()).findFirst().get();
@@ -990,8 +990,8 @@ public class CombineServiceNew {
         InventoryServiceNew.gI().subQuantityItemsBag(player, itemManh, 999);
         InventoryServiceNew.gI().subQuantityItemsBag(player, itemHDs, 1);
         InventoryServiceNew.gI().sendItemBags(player);
-        Service.getInstance().sendMoney(player);
-        Service.getInstance().sendThongBao(player, "Bạn đã nhận được " + itemTS.template.name);
+        Service.gI().sendMoney(player);
+        Service.gI().sendThongBao(player, "Bạn đã nhận được " + itemTS.template.name);
         player.combineNew.itemsCombine.clear();
         reOpenItemCombine(player);
     }
@@ -999,29 +999,29 @@ public class CombineServiceNew {
     public void nangCapSKHVIP(Player player) {
         // 1 thiên sứ + 2 món kích hoạt -- món đầu kh làm gốc
         if (player.combineNew.itemsCombine.size() != 4) {
-            Service.getInstance().sendThongBao(player, "Thiếu nguyên liệu");
+            Service.gI().sendThongBao(player, "Thiếu nguyên liệu");
             return;
         }
         if (player.combineNew.itemsCombine.stream().filter(item -> item.isNotNullItem() && item.isDHD()).count() != 1) {
-            Service.getInstance().sendThongBao(player, "Thiếu đồ hủy diệt");
+            Service.gI().sendThongBao(player, "Thiếu đồ hủy diệt");
             return;
         }
         if (player.combineNew.itemsCombine.stream().filter(item -> item.isNotNullItem() && item.isSKH()).count() != 2) {
-            Service.getInstance().sendThongBao(player, "Thiếu đồ kích hoạt");
+            Service.gI().sendThongBao(player, "Thiếu đồ kích hoạt");
             return;
         }
         Item dangusac = player.combineNew.itemsCombine.get(3);
         if (dangusac == null && dangusac.template.id == 674 && dangusac.quantity < 1) {
-            Service.getInstance().sendThongBao(player, "Thiếu Đá ngũ sắc");
+            Service.gI().sendThongBao(player, "Thiếu Đá ngũ sắc");
             return;
         }
         if (InventoryServiceNew.gI().getCountEmptyBag(player) > 0) {
             if (player.inventory.gold < 1) {
-                Service.getInstance().sendThongBao(player, "Con cần thêm vàng để đổi...");
+                Service.gI().sendThongBao(player, "Con cần thêm vàng để đổi...");
                 return;
             }
             if (player.inventory.gold < 1) {
-                Service.getInstance().sendThongBao(player, "Con cần thêm vàng để đổi...");
+                Service.gI().sendThongBao(player, "Con cần thêm vàng để đổi...");
                 return;
             }
             player.inventory.gold -= COST;
@@ -1058,32 +1058,32 @@ public class CombineServiceNew {
             InventoryServiceNew.gI().subQuantityItemsBag(player, dangusac, 1);
             itemSKH.forEach(i -> InventoryServiceNew.gI().subQuantityItemsBag(player, i, 1));
             InventoryServiceNew.gI().sendItemBags(player);
-            Service.getInstance().sendMoney(player);
+            Service.gI().sendMoney(player);
             player.combineNew.itemsCombine.clear();
             reOpenItemCombine(player);
         } else {
-            Service.getInstance().sendThongBao(player, "Bạn phải có ít nhất 1 ô trống hành trang");
+            Service.gI().sendThongBao(player, "Bạn phải có ít nhất 1 ô trống hành trang");
         }
     }
 
     public void randomSKH(Player player) {
         // 1 thiên sứ + 2 món kích hoạt -- món đầu kh làm gốc
         if (player.combineNew.itemsCombine.size() != 3) {
-            Service.getInstance().sendThongBao(player, "Thiếu nguyên liệu");
+            Service.gI().sendThongBao(player, "Thiếu nguyên liệu");
             return;
         }
         if (player.combineNew.itemsCombine.stream().filter(item -> item.isNotNullItem() && item.isDTL()).count() != 3) {
-            Service.getInstance().sendThongBao(player, "Thiếu đồ Thần linh");
+            Service.gI().sendThongBao(player, "Thiếu đồ Thần linh");
             return;
         }
         Item montldau = player.combineNew.itemsCombine.get(0);
         if (InventoryServiceNew.gI().getCountEmptyBag(player) > 0) {
             if (player.inventory.gold < 1) {
-                Service.getInstance().sendThongBao(player, "Con cần thêm vàng để đổi...");
+                Service.gI().sendThongBao(player, "Con cần thêm vàng để đổi...");
                 return;
             }
             if (player.inventory.gold < 1) {
-                Service.getInstance().sendThongBao(player, "Con cần thêm vàng để đổi...");
+                Service.gI().sendThongBao(player, "Con cần thêm vàng để đổi...");
                 return;
             }
             player.inventory.gold -= COST;
@@ -1100,43 +1100,43 @@ public class CombineServiceNew {
             InventoryServiceNew.gI().addItemBag(player, item);
             itemDTL.forEach(i -> InventoryServiceNew.gI().subQuantityItemsBag(player, i, 1));
             InventoryServiceNew.gI().sendItemBags(player);
-            Service.getInstance().sendMoney(player);
+            Service.gI().sendMoney(player);
             player.combineNew.itemsCombine.clear();
             reOpenItemCombine(player);
         } else {
-            Service.getInstance().sendThongBao(player, "Bạn phải có ít nhất 1 ô trống hành trang");
+            Service.gI().sendThongBao(player, "Bạn phải có ít nhất 1 ô trống hành trang");
         }
     }
 
     private void giaHanTrangBi(Player player) {
         if (player.combineNew.itemsCombine.size() != 2) {
-            Service.getInstance().sendThongBao(player, "Thiếu nguyên liệu");
+            Service.gI().sendThongBao(player, "Thiếu nguyên liệu");
             return;
         }
         if (player.combineNew.itemsCombine.stream().filter(item -> item.isNotNullItem() && item.isTrangBiHSD()).count() != 1) {
-            Service.getInstance().sendThongBao(player, "Thiếu trang bị HSD");
+            Service.gI().sendThongBao(player, "Thiếu trang bị HSD");
             return;
         }
         if (player.combineNew.itemsCombine.stream().filter(item -> item.isNotNullItem() && item.template.id == 1346).count() != 1) {
-            Service.getInstance().sendThongBao(player, "Thiếu Bùa Gia Hạn");
+            Service.gI().sendThongBao(player, "Thiếu Bùa Gia Hạn");
             return;
         }
         if (InventoryServiceNew.gI().getCountEmptyBag(player) > 0) {
             Item thegh = player.combineNew.itemsCombine.stream().filter(item -> item.template.id == 1346).findFirst().get();
             Item tbiHSD = player.combineNew.itemsCombine.stream().filter(Item::isTrangBiHSD).findFirst().get();
             if (thegh == null) {
-                Service.getInstance().sendThongBao(player, "Thiếu Bùa Gia Hạn");
+                Service.gI().sendThongBao(player, "Thiếu Bùa Gia Hạn");
                 return;
             }
             if (tbiHSD == null) {
-                Service.getInstance().sendThongBao(player, "Thiếu trang bị HSD");
+                Service.gI().sendThongBao(player, "Thiếu trang bị HSD");
                 return;
             }
             if (tbiHSD != null) {
                 for (ItemOption itopt : tbiHSD.itemOptions) {
                     if (itopt.optionTemplate.id == 93) {
                         if (itopt.param < 0 || itopt == null) {
-                            Service.getInstance().sendThongBao(player, "Không Phải Trang Bị Có HSD");
+                            Service.gI().sendThongBao(player, "Không Phải Trang Bị Có HSD");
                             return;
                         }
                     }
@@ -1155,10 +1155,10 @@ public class CombineServiceNew {
             }
             InventoryServiceNew.gI().subQuantityItemsBag(player, thegh, 1);
             InventoryServiceNew.gI().sendItemBags(player);
-            Service.getInstance().sendMoney(player);
+            Service.gI().sendMoney(player);
             reOpenItemCombine(player);
         } else {
-            Service.getInstance().sendThongBao(player, "Bạn phải có ít nhất 1 ô trống hành trang");
+            Service.gI().sendThongBao(player, "Bạn phải có ít nhất 1 ô trống hành trang");
         }
     }
 
@@ -1166,7 +1166,7 @@ public class CombineServiceNew {
         if (player.combineNew.itemsCombine.size() == 2) {
             int gem = player.combineNew.gemCombine;
             if (player.inventory.gem < gem) {
-                Service.getInstance().sendThongBao(player, "Không đủ ngọc để thực hiện");
+                Service.gI().sendThongBao(player, "Không đủ ngọc để thực hiện");
                 return;
             }
             Item trangBi = null;
@@ -1216,7 +1216,7 @@ public class CombineServiceNew {
                     sendEffectSuccessCombine(player);
                 }
                 InventoryServiceNew.gI().sendItemBags(player);
-                Service.getInstance().sendMoney(player);
+                Service.gI().sendMoney(player);
                 reOpenItemCombine(player);
             }
         }
@@ -1227,10 +1227,10 @@ public class CombineServiceNew {
             int gold = player.combineNew.goldCombine;
             int gem = player.combineNew.gemCombine;
             if (player.inventory.gold < gold) {
-                Service.getInstance().sendThongBao(player, "Không đủ vàng để thực hiện");
+                Service.gI().sendThongBao(player, "Không đủ vàng để thực hiện");
                 return;
             } else if (player.inventory.gem < gem) {
-                Service.getInstance().sendThongBao(player, "Không đủ ngọc để thực hiện");
+                Service.gI().sendThongBao(player, "Không đủ ngọc để thực hiện");
                 return;
             }
             Item item = player.combineNew.itemsCombine.get(0);
@@ -1267,7 +1267,7 @@ public class CombineServiceNew {
                     }
                 }
                 InventoryServiceNew.gI().sendItemBags(player);
-                Service.getInstance().sendMoney(player);
+                Service.gI().sendMoney(player);
                 reOpenItemCombine(player);
             }
         }
@@ -1321,7 +1321,7 @@ public class CombineServiceNew {
                         reOpenItemCombine(player);
 //                    sendEffectCombineDB(player, item.template.iconID);
                     } else {
-                        Service.getInstance().sendThongBao(player, "Trang bị của bạn có ấn rồi mà !!!");
+                        Service.gI().sendThongBao(player, "Trang bị của bạn có ấn rồi mà !!!");
                     }
                 }
             }
@@ -1463,7 +1463,7 @@ public class CombineServiceNew {
                 int gold = player.combineNew.goldCombine;
                 short countDaBaoVe = player.combineNew.countDaBaoVe;
                 if (player.inventory.gold < gold) {
-                    Service.getInstance().sendThongBao(player, "Không đủ vàng để thực hiện");
+                    Service.gI().sendThongBao(player, "Không đủ vàng để thực hiện");
                     return;
                 }
 
@@ -1536,7 +1536,7 @@ public class CombineServiceNew {
                     }
                     InventoryServiceNew.gI().subQuantityItemsBag(player, itemDNC, player.combineNew.countDaNangCap);
                     InventoryServiceNew.gI().sendItemBags(player);
-                    Service.getInstance().sendMoney(player);
+                    Service.gI().sendMoney(player);
                     reOpenItemCombine(player);
                 }
             }
@@ -1597,10 +1597,10 @@ public class CombineServiceNew {
                             InventoryServiceNew.gI().sendItemBags(player);
                             reOpenItemCombine(player);
                         } else {
-                            Service.getInstance().sendThongBao(player, "Pháp sư hóa đã đạt cấp cao nhất !!!");
+                            Service.gI().sendThongBao(player, "Pháp sư hóa đã đạt cấp cao nhất !!!");
                         }
                     } else {
-                        Service.getInstance().sendThongBao(player, "Thiếu vật phẩm rồi !!!");
+                        Service.gI().sendThongBao(player, "Thiếu vật phẩm rồi !!!");
                     }
                 } else {
                     this.baHatMit.createOtherMenu(player, ConstNpc.IGNORE_MENU, "Chỉ bỏ vào 1 trang bị và đá pháp sư", "Đóng");
@@ -1630,7 +1630,7 @@ public class CombineServiceNew {
                 if (trangBi != null && buaTayPhapSu != null) {
                     optionStar = trangBi.itemOptions.stream().filter(ItemOption::isOptionPhapSu).findFirst().orElse(null);
                     if (optionStar == null) {
-                        Service.getInstance().sendThongBao(player, "Có gì đâu mà tẩy !!!");
+                        Service.gI().sendThongBao(player, "Có gì đâu mà tẩy !!!");
                         return;
                     }
                     if (trangBi.isNotNullItem() && buaTayPhapSu.isNotNullItem() && buaTayPhapSu.quantity >= 1) {
@@ -1642,7 +1642,7 @@ public class CombineServiceNew {
                         InventoryServiceNew.gI().sendItemBags(player);
                         reOpenItemCombine(player);
                     } else {
-                        Service.getInstance().sendThongBao(player, "Thiếu vật phẩm rồi !!!");
+                        Service.gI().sendThongBao(player, "Thiếu vật phẩm rồi !!!");
                     }
                 } else {
                     this.baHatMit.createOtherMenu(player, ConstNpc.IGNORE_MENU, "Chỉ bỏ vào 1 trang bị và bùa tẩy pháp sư", "Đóng");

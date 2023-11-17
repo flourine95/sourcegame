@@ -19,12 +19,12 @@ public class Xuka extends Boss {
     public void reward(Player plKill) {
         plKill.achievement.plusCount(3);
         plKill.inventory.event++;
-        Service.getInstance().sendThongBao(plKill, "Bạn đã nhận được 1 điểm săn Boss");
+        Service.gI().sendThongBao(plKill, "Bạn đã nhận được 1 điểm săn Boss");
          int a = 0;
         for (int i = 0; i < 20; i++) {
             ItemMap it = new ItemMap(this.zone, 861, 50, this.location.x + a, this.zone.map.yPhysicInTop(this.location.x,
                     this.location.y - 24), -1);
-            Service.getInstance().dropItemMap(this.zone, it);
+            Service.gI().dropItemMap(this.zone, it);
             a += 10;
             playerTarger.isAutoFlag = false;
         }

@@ -44,7 +44,7 @@ public class BoMong {
         listReceiveGem = new ArrayList<>(Manager.ACHIEVEMENTS.size());
     }
 
-    public void Show() {
+    public void show() {
         Message msg = null;
         try {
             msg = new Message(-76);
@@ -95,10 +95,10 @@ public class BoMong {
             }
             this.listReceiveGem.set(index, Boolean.TRUE);
             this.player.inventory.ruby += temp.getGem();
-            Service.getInstance().sendMoney(this.player);
-            Service.getInstance().sendThongBao(this.player, "Nhận thành công " + temp.getGem() + " hồng ngọc");
+            Service.gI().sendMoney(this.player);
+            Service.gI().sendThongBao(this.player, "Nhận thành công " + temp.getGem() + " hồng ngọc");
         } else {
-            Service.getInstance().sendThongBao(this.player, "Không có phần thưởng");
+            Service.gI().sendThongBao(this.player, "Không có phần thưởng");
         }
     }
 

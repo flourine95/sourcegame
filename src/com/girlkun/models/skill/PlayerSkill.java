@@ -35,13 +35,13 @@ public class PlayerSkill {
     public void sendSkillShortCut() {
         Message msg;
         try {
-            msg = Service.getInstance().messageSubCommand((byte) 61);
+            msg = Service.gI().messageSubCommand((byte) 61);
             msg.writer().writeUTF("KSkill");
             msg.writer().writeInt(skillShortCut.length);
             msg.writer().write(skillShortCut);
             player.sendMessage(msg);
             msg.cleanup();
-            msg = Service.getInstance().messageSubCommand((byte) 61);
+            msg = Service.gI().messageSubCommand((byte) 61);
             msg.writer().writeUTF("OSkill");
             msg.writer().writeInt(skillShortCut.length);
             msg.writer().write(skillShortCut);

@@ -667,8 +667,7 @@ public class NPoint {
         if (this.player.itemTimesieucap != null && this.player.itemTimesieucap.isUseTrungThu && this.player.itemTimesieucap.iconBanh == 4126) {
             this.hpMax += (this.hpMax * 50 / 100);
         }
-        if (this.player.zone != null && MapService.gI().isMapCold(this.player.zone.map)
-                && !this.isKhongLanh) {
+        if (this.player.zone != null && MapService.gI().isMapCold(this.player.zone.map) && !this.isKhongLanh) {
             this.hpMax /= 2;
         }
         //mèo mun
@@ -1274,7 +1273,7 @@ public class NPoint {
                 break;
             case Skill.DICH_CHUYEN_TUC_THOI:
                 dameAttack *= 2;
-                dameAttack = Util.GioiHannext(dameAttack - (dameAttack * 5 / 100),
+                dameAttack = Util.limitDame(dameAttack - (dameAttack * 5 / 100),
                         dameAttack + (dameAttack * 5 / 100));
                 return dameAttack;
             case Skill.MAKANKOSAPPO:
@@ -1317,13 +1316,13 @@ public class NPoint {
             }
         }
         dameAttack += dameAttack * percentXDame / 100;
-        dameAttack = Util.GioiHannext(dameAttack - (dameAttack * 5 / 100), dameAttack + (dameAttack * 5 / 100));
+        dameAttack = Util.limitDame(dameAttack - (dameAttack * 5 / 100), dameAttack + (dameAttack * 5 / 100));
         if (player.isPl()) {
             if (player.inventory.haveOption(player.inventory.itemsBody, 5, 159)) {
                 if (Util.canDoWithTime(player.lastTimeUseOption, 60000) && (player.playerSkill.skillSelect.template.id == Skill.KAMEJOKO || player.playerSkill.skillSelect.template.id == Skill.ANTOMIC || player.playerSkill.skillSelect.template.id == Skill.MASENKO)) {
                     dameAttack *= player.inventory.getParam(player.inventory.itemsBody.get(5), 159);
                     player.lastTimeUseOption = System.currentTimeMillis();
-                    Service.getInstance().sendThongBao(player, "|1|Bạn vừa gây ra x" + player.inventory.getParam(player.inventory.itemsBody.get(5), 159) + " Sát thương Chưởng");
+                    Service.gI().sendThongBao(player, "|1|Bạn vừa gây ra x" + player.inventory.getParam(player.inventory.itemsBody.get(5), 159) + " Sát thương Chưởng");
                 }
             }
         }
@@ -1715,7 +1714,7 @@ public class NPoint {
                     player.isAutoSD = false;
                     player.isAutoArmor = false;
                 }
-                Service.getInstance().sendThongBaoOK(player, "Vui lòng mở giới hạn sức mạnh");
+                Service.gI().sendThongBaoOK(player, "Vui lòng mở giới hạn sức mạnh");
                 return;
             }
         }
@@ -1735,7 +1734,7 @@ public class NPoint {
                     player.isAutoSD = false;
                     player.isAutoArmor = false;
                 }
-                Service.getInstance().sendThongBaoOK(player, "Vui lòng mở giới hạn sức mạnh");
+                Service.gI().sendThongBaoOK(player, "Vui lòng mở giới hạn sức mạnh");
                 return;
             }
         }
@@ -1754,7 +1753,7 @@ public class NPoint {
                     player.isAutoSD = false;
                     player.isAutoArmor = false;
                 }
-                Service.getInstance().sendThongBaoOK(player, "Vui lòng mở giới hạn sức mạnh");
+                Service.gI().sendThongBaoOK(player, "Vui lòng mở giới hạn sức mạnh");
                 return;
             }
         }
@@ -1773,7 +1772,7 @@ public class NPoint {
                     player.isAutoSD = false;
                     player.isAutoArmor = false;
                 }
-                Service.getInstance().sendThongBaoOK(player, "Vui lòng mở giới hạn sức mạnh");
+                Service.gI().sendThongBaoOK(player, "Vui lòng mở giới hạn sức mạnh");
                 return;
             }
         }
@@ -1787,7 +1786,7 @@ public class NPoint {
                     critg += point;
                 }
             } else {
-                Service.getInstance().sendThongBaoOK(player, "Vui lòng mở giới hạn sức mạnh");
+                Service.gI().sendThongBaoOK(player, "Vui lòng mở giới hạn sức mạnh");
                 return;
             }
         }
@@ -1796,10 +1795,10 @@ public class NPoint {
             if (player.nPoint.limitPower > NPoint.MAX_LIMIT) {
                 player.nPoint.limitPower = NPoint.MAX_LIMIT;
             }
-            Service.getInstance().sendThongBaoOK(player, "Vui lòng mở giới hạn sức mạnh");
+            Service.gI().sendThongBaoOK(player, "Vui lòng mở giới hạn sức mạnh");
             return;
         }
-        Service.getInstance().point(player);
+        Service.gI().point(player);
     }
 
     private boolean doUseTiemNang(double tiemNang) {
@@ -1812,7 +1811,7 @@ public class NPoint {
                 player.isAutoSD = false;
                 player.isAutoArmor = false;
             }
-            Service.getInstance().sendThongBaoOK(player, "Bạn không đủ tiềm năng");
+            Service.gI().sendThongBaoOK(player, "Bạn không đủ tiềm năng");
             return false;
         }
         if (this.tiemNang >= tiemNang && this.tiemNang - tiemNang >= 0) {
@@ -1832,7 +1831,7 @@ public class NPoint {
                     PlayerService.gI().hoiPhuc(player, hpMax / 100 * tiLeHoiPhuc,
                             mpMax / 100 * tiLeHoiPhuc);
                     if (player.effectSkill.countCharging % 3 == 0) {
-                        Service.getInstance().chat(player, "Phục hồi năng lượng " + getCurrPercentHP() + "%");
+                        Service.gI().chat(player, "Phục hồi năng lượng " + getCurrPercentHP() + "%");
                     }
                 } else {
                     EffectSkillService.gI().stopCharge(player);

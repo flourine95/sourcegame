@@ -26,17 +26,17 @@ public class Drabura2 extends Boss {
 
         if (Util.isTrue(1, 130)) {
             if (Util.isTrue(1, 5)) {
-                Service.getInstance().dropItemMap(this.zone, Util.ratiItem(zone, 561, 1, this.location.x, this.location.y, plKill.id));
+                Service.gI().dropItemMap(this.zone, Util.ratiItem(zone, 561, 1, this.location.x, this.location.y, plKill.id));
                 return;
             }
-            Service.getInstance().dropItemMap(this.zone, Util.ratiItem(zone, Manager.itemIds_TL[randomDo], 1, this.location.x, this.location.y, plKill.id));
+            Service.gI().dropItemMap(this.zone, Util.ratiItem(zone, Manager.itemIds_TL[randomDo], 1, this.location.x, this.location.y, plKill.id));
         } else
         if (Util.isTrue(20, 100)) {
-            Service.getInstance().dropItemMap(this.zone,new ItemMap (Util.RaitiDoc12(zone, Manager.itemDC12[randomc12], 1, this.location.x, this.location.y, plKill.id)));
+            Service.gI().dropItemMap(this.zone,new ItemMap (Util.RaitiDoc12(zone, Manager.itemDC12[randomc12], 1, this.location.x, this.location.y, plKill.id)));
             return;
         }
         else {
-            Service.getInstance().dropItemMap(this.zone, new ItemMap(zone, Manager.itemIds_NR_SB[randomNR], 1, this.location.x, this.location.y, plKill.id));
+            Service.gI().dropItemMap(this.zone, new ItemMap(zone, Manager.itemIds_NR_SB[randomNR], 1, this.location.x, this.location.y, plKill.id));
         }
         plKill.fightMabu.changePoint((byte) 20);
     }
@@ -55,9 +55,7 @@ public class Drabura2 extends Boss {
                 }
                 damage = 1;
             }
-            if (damage >= 1000000) {
-                damage = 1000000;
-            }
+
             this.nPoint.subHP(damage);
             if (isDie()) {
                 this.setDie(plAtt);

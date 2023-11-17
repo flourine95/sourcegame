@@ -55,7 +55,7 @@ public class TrungUyXanhLoBdkb extends Boss {
             for (int i = 0; i < 40; i++) {
                 ItemMap it = new ItemMap(this.zone, 861, 100, this.location.x, this.zone.map.yPhysicInTop(this.location.x,
                         this.location.y - 24), -1);
-                Service.getInstance().dropItemMap(this.zone, it);
+                Service.gI().dropItemMap(this.zone, it);
                 a += 10;
             }
         } else if (levell > 99 && levell < 110) {
@@ -63,7 +63,7 @@ public class TrungUyXanhLoBdkb extends Boss {
             for (int i = 0; i < 40; i++) {
                 ItemMap it = new ItemMap(this.zone, 861, 150, this.location.x, this.zone.map.yPhysicInTop(this.location.x,
                         this.location.y - 24), -1);
-                Service.getInstance().dropItemMap(this.zone, it);
+                Service.gI().dropItemMap(this.zone, it);
                 a += 10;
             }
         } else if (levell > 100) {
@@ -71,7 +71,7 @@ public class TrungUyXanhLoBdkb extends Boss {
             for (int i = 0; i < 40; i++) {
                 ItemMap it = new ItemMap(this.zone, 861, 250, this.location.x, this.zone.map.yPhysicInTop(this.location.x,
                         this.location.y - 24), -1);
-                Service.getInstance().dropItemMap(this.zone, it);
+                Service.gI().dropItemMap(this.zone, it);
                 a += 10;
             }
         }

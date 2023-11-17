@@ -64,8 +64,8 @@ public class PVPService {
             return;
         }
         if (pl.pvp != null || plMap.pvp != null) {
-            Service.getInstance().hideWaitDialog(pl);
-            Service.getInstance().sendThongBao(pl, "Không thể thực hiện");
+            Service.gI().hideWaitDialog(pl);
+            Service.gI().sendThongBao(pl, "Không thể thực hiện");
             return;
         }
         pl.iDMark.setIdPlayThachDau(plMap.id);
@@ -81,20 +81,20 @@ public class PVPService {
         }
         Player plMap = pl.zone.getPlayerInMap(pl.iDMark.getIdPlayThachDau());
         if (plMap == null) {
-            Service.getInstance().sendThongBao(pl, "Đối thủ đã rời khỏi map");
+            Service.gI().sendThongBao(pl, "Đối thủ đã rời khỏi map");
             return;
         }
         if (!plMap.getSession().actived) {
-            Service.getInstance().sendThongBao(pl, "Đối thủ chưa là thành viên của NRO");
+            Service.gI().sendThongBao(pl, "Đối thủ chưa là thành viên của NRO");
             return;
         }
         int goldThachDau = GOLD_CHALLENGE[selectGold];
         if (pl.inventory.gold < goldThachDau) {
-            Service.getInstance().sendThongBao(pl, "Bạn chỉ có " + pl.inventory.gold + " vàng, không đủ tiền cược");
+            Service.gI().sendThongBao(pl, "Bạn chỉ có " + pl.inventory.gold + " vàng, không đủ tiền cược");
             return;
         }
         if (plMap.inventory.gold < goldThachDau) {
-            Service.getInstance().sendThongBao(pl, "Đối thủ chỉ có " + plMap.inventory.gold + " vàng, không đủ tiền cược");
+            Service.gI().sendThongBao(pl, "Đối thủ chỉ có " + plMap.inventory.gold + " vàng, không đủ tiền cược");
             return;
         }
 
@@ -122,22 +122,22 @@ public class PVPService {
         }
         Player plMap = pl.zone.getPlayerInMap(pl.iDMark.getIdPlayThachDau());
         if (plMap == null) {
-            Service.getInstance().sendThongBao(pl, "Đối thủ đã rời khỏi map");
+            Service.gI().sendThongBao(pl, "Đối thủ đã rời khỏi map");
             return;
         }
         if (pl.pvp != null || plMap.pvp != null) {
-            Service.getInstance().hideWaitDialog(pl);
-            Service.getInstance().sendThongBao(pl, "Không thể thực hiện");
+            Service.gI().hideWaitDialog(pl);
+            Service.gI().sendThongBao(pl, "Không thể thực hiện");
             return;
         }
         int goldThachDau = pl.iDMark.getGoldThachDau();
 
         if (pl.inventory.gold < goldThachDau) {
-            Service.getInstance().sendThongBao(pl, "Không đủ vàng để thực hiện");
+            Service.gI().sendThongBao(pl, "Không đủ vàng để thực hiện");
             return;
         }
         if (plMap.inventory.gold < goldThachDau) {
-            Service.getInstance().sendThongBao(pl, "Đối thủ không đủ vàng để thực hiện");
+            Service.gI().sendThongBao(pl, "Đối thủ không đủ vàng để thực hiện");
             return;
         }
         ThachDau thachDau = new ThachDau(pl, plMap, goldThachDau);
@@ -147,7 +147,7 @@ public class PVPService {
     public void openSelectRevenge(Player pl, long idEnemy) {
         Player enemy = Client.gI().getPlayer(idEnemy);
         if (enemy == null) {
-            Service.getInstance().sendThongBao(pl, "Kẻ thù hiện đang offline");
+            Service.gI().sendThongBao(pl, "Kẻ thù hiện đang offline");
             return;
         }
 
@@ -159,17 +159,17 @@ public class PVPService {
     public void acceptRevenge(Player pl) {
         Player enemy = Client.gI().getPlayer(pl.iDMark.getIdEnemy());
         if (enemy == null) {
-            Service.getInstance().sendThongBao(pl, "Kẻ thù hiện đang offline");
+            Service.gI().sendThongBao(pl, "Kẻ thù hiện đang offline");
             return;
         }
         if (pl.pvp != null || enemy.pvp != null) {
-            Service.getInstance().hideWaitDialog(pl);
-            Service.getInstance().sendThongBao(pl, "Không thể thực hiện");
+            Service.gI().hideWaitDialog(pl);
+            Service.gI().sendThongBao(pl, "Không thể thực hiện");
             return;
         }
         Zone mapGo = enemy.zone;
         if ((mapGo = ChangeMapService.gI().checkMapCanJoin(pl, mapGo)) == null || mapGo.isFullPlayer()) {
-            Service.getInstance().sendThongBao(pl, "Không thể tới ngay lúc này, vui lòng đợi sau ít phút");
+            Service.gI().sendThongBao(pl, "Không thể tới ngay lúc này, vui lòng đợi sau ít phút");
             return;
         }
         TraThu traThu = new TraThu(pl, enemy);

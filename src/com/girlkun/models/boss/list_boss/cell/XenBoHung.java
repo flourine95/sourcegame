@@ -24,12 +24,12 @@ public class XenBoHung extends Boss {
     public void reward(Player plKill) {
         plKill.achievement.plusCount(3);
         plKill.inventory.event++;
-        Service.getInstance().sendThongBao(plKill, "Bạn đã nhận được 1 điểm săn Boss");
+        Service.gI().sendThongBao(plKill, "Bạn đã nhận được 1 điểm săn Boss");
         ItemMap it = new ItemMap(this.zone, 16, 1, this.location.x, this.location.y, plKill.id);
-        Service.getInstance().dropItemMap(this.zone, it);
+        Service.gI().dropItemMap(this.zone, it);
                 ItemMap it1 = new ItemMap(this.zone, 2030, 2, this.location.x - 10, this.zone.map.yPhysicInTop(this.location.x,
                     this.location.y - 24),  plKill.id);
-            Service.getInstance().dropItemMap(this.zone, it1);
+            Service.gI().dropItemMap(this.zone, it1);
         TaskService.gI().checkDoneTaskKillBoss(plKill, this);
     }
 

@@ -130,7 +130,7 @@ public class MySession extends Session {
             ANTILOGIN.put(this.ipAddress, al);
         }
         if (!al.canLogin()) {
-            Service.getInstance().sendThongBaoOK(this, al.getNotifyCannotLogin());
+            Service.gI().sendThongBaoOK(this, al.getNotifyCannotLogin());
             return;
         }
 //        if (!Util.canDoWithTime(ServerManager.delaylogin, 10000)) {
@@ -138,15 +138,15 @@ public class MySession extends Session {
 //            return;
 //        }
         if (Manager.local) {
-            Service.getInstance().sendThongBaoOK(this, "Server này chỉ để lưu dữ liệu\nVui lòng qua server khác");
+            Service.gI().sendThongBaoOK(this, "Server này chỉ để lưu dữ liệu\nVui lòng qua server khác");
             return;
         }
         if (Maintenance.isRuning) {
-            Service.getInstance().sendThongBaoOK(this, "Server đang trong thời gian bảo trì, vui lòng quay lại sau");
+            Service.gI().sendThongBaoOK(this, "Server đang trong thời gian bảo trì, vui lòng quay lại sau");
             return;
         }
         if (!this.isAdmin && Client.gI().getPlayers().size() >= Manager.maxPlayer) {
-            Service.getInstance().sendThongBaoOK(this, "Máy chủ hiện đang quá tải, "
+            Service.gI().sendThongBaoOK(this, "Máy chủ hiện đang quá tải, "
                     + "cư dân vui lòng di chuyển sang máy chủ khác.");
             return;
         }
@@ -164,7 +164,7 @@ public class MySession extends Session {
                     // -77 max small
                     DataGame.sendSmallVersion(this);
                     // -93 bgitem version
-                    Service.getInstance().sendMessage(this, -93);
+                    Service.gI().sendMessage(this, -93);
 
                     this.timeWait = 0;
                     this.joinedGame = true;
@@ -186,7 +186,7 @@ public class MySession extends Session {
                     DataGame.sendDataItemBG(this);
                     Controller.getInstance().sendInfo(this);
 //                    this.player.timeupdateplayer = System.currentTimeMillis();
-                    Service.getInstance().sendTimeSkill(player);
+                    Service.gI().sendTimeSkill(player);
                     PlayerService.gI().sendInfoHpMp(player);
 //                    if (player.playerSkill.getSkillbyId(player.gender == ConstPlayer.TRAI_DAT
 //                            ? Skill.SUPER_KAME : (player.gender == ConstPlayer.NAMEC ? Skill.MA_PHONG_BA : Skill.LIEN_HOAN_CHUONG)).point != 0){

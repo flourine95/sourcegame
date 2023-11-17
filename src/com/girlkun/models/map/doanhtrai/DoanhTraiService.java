@@ -122,7 +122,7 @@ public class DoanhTraiService {
     public void joinDoanhTrai(Player player) {
 
         if (player.clan == null) {
-            Service.getInstance().sendThongBao(player, "Không thể thực hiện");
+            Service.gI().sendThongBao(player, "Không thể thực hiện");
             return;
         }
         if (player.clan.doanhTrai != null) {
@@ -137,7 +137,7 @@ public class DoanhTraiService {
             }
         }
         if (doanhTrai == null) {
-            Service.getInstance().sendThongBao(player, "Doanh trại đã đầy, hãy quay lại vào lúc khác!");
+            Service.gI().sendThongBao(player, "Doanh trại đã đầy, hãy quay lại vào lúc khác!");
         } else {
             doanhTrai.openDoanhTrai(player);
         }

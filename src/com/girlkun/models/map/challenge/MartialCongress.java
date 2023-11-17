@@ -60,21 +60,21 @@ public class MartialCongress {
         if (timeWait > 0) {
             switch (timeWait) {
                 case 10:
-                    Service.getInstance().chat(npc, "Trận đấu giữa " + player.name + " VS " + boss.name + " sắp diễn ra");
+                    Service.gI().chat(npc, "Trận đấu giữa " + player.name + " VS " + boss.name + " sắp diễn ra");
                     ready();
                     break;
                 case 8:
-                    Service.getInstance().chat(npc, "Xin quý vị khán giả cho 1 tràng pháo tay để cổ vũ cho 2 đối thủ nào");
+                    Service.gI().chat(npc, "Xin quý vị khán giả cho 1 tràng pháo tay để cổ vũ cho 2 đối thủ nào");
                     break;
                 case 4:
-                    Service.getInstance().chat(npc, "Mọi người ngồi sau hãy ổn định chỗ ngồi,trận đấu sẽ bắt đầu sau 3 giây nữa");
+                    Service.gI().chat(npc, "Mọi người ngồi sau hãy ổn định chỗ ngồi,trận đấu sẽ bắt đầu sau 3 giây nữa");
                     break;
                 case 2:
-                    Service.getInstance().chat(npc, "Trận đấu bắt đầu");
+                    Service.gI().chat(npc, "Trận đấu bắt đầu");
                     break;
                 case 1:
-                    Service.getInstance().chat(player, "Ok");
-                    Service.getInstance().chat(boss, "Ok");
+                    Service.gI().chat(player, "Ok");
+                    Service.gI().chat(boss, "Ok");
                     break;
             }
             timeWait--;
@@ -162,26 +162,26 @@ public class MartialCongress {
     }
 
     private void die() {
-        Service.getInstance().sendThongBao(player, "Bạn bị xử thua vì chết queo");
+        Service.gI().sendThongBao(player, "Bạn bị xử thua vì chết queo");
         if (player.zone != null) {
             endChallenge();
         }
     }
 
     private void timeOut() {
-        Service.getInstance().sendThongBao(player, "Bạn bị xử thua vì hết thời gian");
+        Service.gI().sendThongBao(player, "Bạn bị xử thua vì hết thời gian");
         endChallenge();
     }
 
     private void champion() {
-        Service.getInstance().sendThongBao(player, "Chúc mừng " + player.name + " vừa đoạt giải vô địch");
+        Service.gI().sendThongBao(player, "Chúc mừng " + player.name + " vừa đoạt giải vô địch");
         endChallenge();
     }
 
     public void leave() {
         setTime(0);
         EffectSkillService.gI().removeStun(player);
-        Service.getInstance().sendThongBao(player, "Bạn bị xử thua vì rời khỏi võ đài");
+        Service.gI().sendThongBao(player, "Bạn bị xử thua vì rời khỏi võ đài");
         endChallenge();
     }
 

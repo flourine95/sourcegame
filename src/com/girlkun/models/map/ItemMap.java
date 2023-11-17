@@ -130,7 +130,7 @@ public class ItemMap {
 
     private void reAppearItem() {
         ItemMapService.gI().sendItemMapDisappear(this);
-        Service.getInstance().dropItemMap(this.zone, this);
+        Service.gI().dropItemMap(this.zone, this);
     }
 
     public void dispose() {

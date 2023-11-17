@@ -17,7 +17,7 @@ public class FightMabu {
         if (MapService.gI().isMapMaBu(player.zone.map.mapId)) {
             pointMabu += pointAdd;
             if (pointMabu >= POINT_MAX) {
-                Service.getInstance().sendThongBao(player, "Bạn đã đủ điểm lên tầng tiếp theo");
+                Service.gI().sendThongBao(player, "Bạn đã đủ điểm lên tầng tiếp theo");
             }
         }
     }

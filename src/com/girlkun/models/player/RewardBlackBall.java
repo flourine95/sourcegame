@@ -48,7 +48,7 @@ public class RewardBlackBall {
             quantilyBlackBall[star - 1]++;
         }
         this.timeOutOfDateReward[star - 1] = System.currentTimeMillis() + TIME_REWARD;
-        Service.getInstance().point(player);
+        Service.gI().point(player);
     }
 
     public void getRewardSelect(byte select) {
@@ -79,7 +79,7 @@ public class RewardBlackBall {
                     break;
             }
         } else {
-            Service.getInstance().sendThongBao(player, "Chưa thể nhận phần quà ngay lúc này, vui lòng đợi "
+            Service.gI().sendThongBao(player, "Chưa thể nhận phần quà ngay lúc này, vui lòng đợi "
                     + TimeUtil.diffDate(new Date(lastTimeGetReward[star - 1]), new Date(lastTimeGetReward[star - 1] + TIME_WAIT),
                     TimeUtil.MINUTE) + " phút nữa");
         }

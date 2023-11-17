@@ -25,11 +25,11 @@ public class BossDetuBerus extends Boss {
     @Override
     public void reward(Player plKill) {
         plKill.inventory.event++;
-        Service.getInstance().sendThongBao(plKill, "Bạn đã nhận được 1 điểm săn Boss");
+        Service.gI().sendThongBao(plKill, "Bạn đã nhận được 1 điểm săn Boss");
         ItemMap it = new ItemMap(this.zone, 1108, 1, this.location.x, this.zone.map.yPhysicInTop(this.location.x,
                 this.location.y - 24), plKill.id);
         it.options.add(new Item.ItemOption(30, 1));
-        Service.getInstance().dropItemMap(this.zone, it);
+        Service.gI().dropItemMap(this.zone, it);
     }
 
     @Override

@@ -53,7 +53,7 @@ public class Map implements Runnable {
         this.mapId = mapId;
         this.mapName = mapName;
         this.planetId = planetId;
-        this.planetName = Service.getInstance().getHanhTinh(planetId);
+        this.planetName = Service.gI().getHanhTinh(planetId);
         this.tileId = tileId;
         this.bgId = bgId;
         this.bgType = bgType;

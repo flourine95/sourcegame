@@ -48,11 +48,11 @@ public class Referee1 extends Player {
     @Override
     public void update() {
         if (Util.canDoWithTime(lastTimeChat, 5000)) {
-            Service.getInstance().chat(this, "Xin Chúc Mừng Top Đại Gia Sever Tabi");
-            Service.getInstance().chat(this, "Danh Sách"
+            Service.gI().chat(this, "Xin Chúc Mừng Top Đại Gia Sever Tabi");
+            Service.gI().chat(this, "Danh Sách"
                                     + "\n|3|Mấy con gà!!!"
                                     );
-            Service.getInstance().chat(this, "Chúc Các Cư Dân Online Vui Vẻ ");
+            Service.gI().chat(this, "Chúc Các Cư Dân Online Vui Vẻ ");
             lastTimeChat = System.currentTimeMillis();
         }
     }

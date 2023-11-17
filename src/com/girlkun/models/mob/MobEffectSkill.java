@@ -57,7 +57,7 @@ public class MobEffectSkill {
             msg.writer().writeByte(1);
             msg.writer().writeByte(40);
             msg.writer().writeByte(mob.id);
-            Service.getInstance().sendMessAllPlayerInMap(mob.zone, msg);
+            Service.gI().sendMessAllPlayerInMap(mob.zone, msg);
             msg.cleanup();
         } catch (Exception e) {
                 System.out.println("loi ne mobeff 1 ");
@@ -82,7 +82,7 @@ public class MobEffectSkill {
             msg.writer().writeByte(1); //b6
             msg.writer().writeByte(41); //num6
             msg.writer().writeByte(mob.id); //b7
-            Service.getInstance().sendMessAllPlayerInMap(mob.zone, msg);
+            Service.gI().sendMessAllPlayerInMap(mob.zone, msg);
             msg.cleanup();
         } catch (Exception e) {
                 System.out.println("loi ne mobeff 2 ");
@@ -108,7 +108,7 @@ public class MobEffectSkill {
             msg.writer().writeByte(1);
             msg.writer().writeByte(40);
             msg.writer().writeByte(mob.id);
-            Service.getInstance().sendMessAllPlayerInMap(mob.zone, msg);
+            Service.gI().sendMessAllPlayerInMap(mob.zone, msg);
             msg.cleanup();
         } catch (Exception e) {
                 System.out.println("loi ne mobeff 3 ");
@@ -134,7 +134,7 @@ public class MobEffectSkill {
             msg.writer().writeByte(1);//b5
             msg.writer().writeByte(32);//num8
             msg.writer().writeByte(mob.id);//b6
-            Service.getInstance().sendMessAllPlayerInMap(mob.zone, msg);
+            Service.gI().sendMessAllPlayerInMap(mob.zone, msg);
             msg.cleanup();
         } catch (Exception e) {
                 System.out.println("loi ne mobeff 3 ");
@@ -155,7 +155,7 @@ public class MobEffectSkill {
             msg = new Message(-112);
             msg.writer().writeByte(0);
             msg.writer().writeByte(mob.id);
-            Service.getInstance().sendMessAllPlayerInMap(mob.zone, msg);
+            Service.gI().sendMessAllPlayerInMap(mob.zone, msg);
             msg.cleanup();
         } catch (Exception e) {
                 System.out.println("loi ne mobeff 4 ");
@@ -168,7 +168,7 @@ public class MobEffectSkill {
             msg = new Message(-112);
             msg.writer().writeByte(0);
             msg.writer().writeByte(mob.id);
-            Service.getInstance().sendMessAllPlayerInMap(mob.zone, msg);
+            Service.gI().sendMessAllPlayerInMap(mob.zone, msg);
             msg.cleanup();
         } catch (Exception e) {
                 System.out.println("loi ne mobeff 5 ");

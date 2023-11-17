@@ -15,11 +15,9 @@ import java.util.List;
 
 public class BanDoKhoBau {
     private static BanDoKhoBau i;
-    public static final long POWER_CAN_GO_TO_BDKB = 2000000000;
+    public static final long POWER_CAN_GO_TO_BDKB = 2_000_000_000;
     public static final List<BanDoKhoBau> BAN_DO_KHO_BAU;
     public static final int MAX_AVAILABLE = 50;
-    public static final int N_PLAYER_CLAN = 5;
-    public static final int N_PLAYER_MAP = 2;
     public static final int TIME_KHI_BAN_DO_KHO_BAU = 1800000;
 
     static {
@@ -65,7 +63,6 @@ public class BanDoKhoBau {
         this.clan.timeOpenbdkb = this.lastTimeOpen;
         this.clan.playerOpenbdkb = plOpen;
         this.clan.banDoKhoBau = this;
-
         resetBanDoKhoBau();
         ChangeMapService.gI().goToDBKB(plOpen);
         sendTextbdkb();

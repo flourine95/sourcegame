@@ -80,31 +80,31 @@ public class GodGK {
 //                    Service.getInstance().sendThongBaoOK(session, "Chi danh cho admin");
 //                }else
                 if(session.version < 225){
-                    Service.getInstance().sendThongBaoOK(session, "Vui lòng vào Game bằng Bản Version 225 Trở lên");
+                    Service.gI().sendThongBaoOK(session, "Vui lòng vào Game bằng Bản Version 225 Trở lên");
                     return null;
                 }
                 if (rs.getBoolean("ban")) {
-                    Service.getInstance().sendThongBaoOK(session, "Tài khoản của bạn đã bị khóa. Lý do : Clone trên 5 acc !!!");
+                    Service.gI().sendThongBaoOK(session, "Tài khoản của bạn đã bị khóa. Lý do : Clone trên 5 acc !!!");
                 } else if (baotri && session.isAdmin) {
-                    Service.getInstance().sendThongBaoOK(session, "Máy chủ đang bảo trì, vui lòng quay lại sau!");
+                    Service.gI().sendThongBaoOK(session, "Máy chủ đang bảo trì, vui lòng quay lại sau!");
                 } else if (secondsPass1 < Manager.secondWaitLogin) {
                     if (secondsPass < secondsPass1) {
-                        Service.getInstance().sendThongBaoOK(session, "Vui lòng chờ " + (Manager.secondWaitLogin - secondsPass) + "s");
+                        Service.gI().sendThongBaoOK(session, "Vui lòng chờ " + (Manager.secondWaitLogin - secondsPass) + "s");
                         return null;
                     }
-                    Service.getInstance().sendThongBaoOK(session, "Vui lòng chờ " + (Manager.secondWaitLogin - secondsPass1) + "s");
+                    Service.gI().sendThongBaoOK(session, "Vui lòng chờ " + (Manager.secondWaitLogin - secondsPass1) + "s");
                     return null;
                 } else if (rs.getTimestamp("last_time_login").getTime() > session.lastTimeLogout) {
                     Player plInGame = Client.gI().getPlayerByUser(session.userId);
                     if (plInGame != null) {
                         Client.gI().kickSession(plInGame.getSession());
-                        Service.getInstance().sendThongBaoOK(session, "Ai đó đã vô acc bạn :3");
+                        Service.gI().sendThongBaoOK(session, "Ai đó đã vô acc bạn :3");
                     } else {
                     }
 //                    Service.getInstance().sendThongBaoOK(session, "Tài khoản đang được đăng nhập tại máy chủ khác");
                 } else {
                     if (secondsPass < Manager.secondWaitLogin) {
-                        Service.getInstance().sendThongBaoOK(session, "Vui lòng chờ " + (Manager.secondWaitLogin - secondsPass) + "s");
+                        Service.gI().sendThongBaoOK(session, "Vui lòng chờ " + (Manager.secondWaitLogin - secondsPass) + "s");
                     } else {//set time logout trước rồi đọc data player
                         rs = GirlkunDB.executeQuery("select * from player where account_id = ? limit 1", session.userId);
                         if (!rs.first()) {
@@ -112,7 +112,7 @@ public class GodGK {
                             DataGame.sendVersionGame(session);
                             //-31 data item background
                             DataGame.sendDataItemBG(session);
-                            Service.getInstance().switchToCreateChar(session);
+                            Service.gI().switchToCreateChar(session);
                         } else {
                             Player plInGame = Client.gI().getPlayerByUser(session.userId);
                             if (plInGame != null) {
@@ -746,7 +746,7 @@ public class GodGK {
                 }
                 al.reset();
             } else {
-                Service.getInstance().sendThongBaoOK(session, "Thông tin tài khoản hoặc mật khẩu không chính xác");
+                Service.gI().sendThongBaoOK(session, "Thông tin tài khoản hoặc mật khẩu không chính xác");
                 al.wrong();
             }
         } catch (Exception e) {

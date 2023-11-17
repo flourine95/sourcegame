@@ -10,6 +10,3 @@ public enum TypeAppear {
     
 }
 
-/**
- * Vui lòng không sao chép mã nguồn này dưới mọi hình thức.
- */

@@ -57,7 +57,7 @@ public class ServerNotify extends Thread {
         try {
             msg = new Message(93);
             msg.writer().writeUTF(text);
-            Service.getInstance().sendMessAllPlayer(msg);
+            Service.gI().sendMessAllPlayer(msg);
             msg.cleanup();
         } catch (Exception e) {
             Logger.logException(ServerNotify.class, e, "Error sendThongBaoBenDuoi: " + text);

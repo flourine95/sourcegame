@@ -25,22 +25,22 @@ public class BossDetuBroly extends Boss {
     @Override
     public void reward(Player plKill) {
         plKill.inventory.event++;
-        Service.getInstance().sendThongBao(plKill, "Bạn đã nhận được 1 điểm săn Boss");
+        Service.gI().sendThongBao(plKill, "Bạn đã nhận được 1 điểm săn Boss");
         ItemMap it = new ItemMap(this.zone, 542, 1, this.location.x, this.zone.map.yPhysicInTop(this.location.x,
                 this.location.y - 24), plKill.id);
         it.options.add(new Item.ItemOption(30, 1));
-        Service.getInstance().dropItemMap(this.zone, it);
+        Service.gI().dropItemMap(this.zone, it);
          int a=0;
                 for (int i=0; i<8; i++)
                 {
                       ItemMap it1 = new ItemMap(this.zone, 722, 5, this.location.x + a, this.zone.map.yPhysicInTop(this.location.x,
                     this.location.y - 24),  plKill.id);
-            Service.getInstance().dropItemMap(this.zone, it1);
+            Service.gI().dropItemMap(this.zone, it1);
             a+=10;
                 }
                 ItemMap it1 = new ItemMap(this.zone, 2030, 5, this.location.x - 10, this.zone.map.yPhysicInTop(this.location.x,
                     this.location.y - 24),  plKill.id);
-            Service.getInstance().dropItemMap(this.zone, it1);
+            Service.gI().dropItemMap(this.zone, it1);
     }
 
     @Override

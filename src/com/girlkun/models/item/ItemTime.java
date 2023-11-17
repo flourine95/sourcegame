@@ -56,13 +56,13 @@ public class ItemTime {
         if (isDuoikhi) {
             if (Util.canDoWithTime(lastTimeDuoikhi, TIME_DUOI_KHI)) {
                 isDuoikhi = false;
-                Service.getInstance().point(player);
+                Service.gI().point(player);
             }
         }
         if (isUseBoHuyet) {
             if (Util.canDoWithTime(lastTimeBoHuyet, TIME_ITEM)) {
                 isUseBoHuyet = false;
-                Service.getInstance().point(player);
+                Service.gI().point(player);
 //                Service.getInstance().Send_Info_NV(this.player);
             }
         }
@@ -70,7 +70,7 @@ public class ItemTime {
         if (isUseBoKhi) {
             if (Util.canDoWithTime(lastTimeBoKhi, TIME_ITEM)) {
                 isUseBoKhi = false;
-                Service.getInstance().point(player);
+                Service.gI().point(player);
             }
         }
        
@@ -82,7 +82,7 @@ public class ItemTime {
         if (isUseCuongNo) {
             if (Util.canDoWithTime(lastTimeCuongNo, TIME_ITEM)) {
                 isUseCuongNo = false;
-                Service.getInstance().point(player);
+                Service.gI().point(player);
             }
         }
         if (isUseAnDanh) {

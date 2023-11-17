@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.logging.Level;
 
-public class panel extends JPanel implements ActionListener {
+public class Panel extends JPanel implements ActionListener {
 
     private final JButton baotri;
     private final JButton thaydoiexp;
@@ -20,7 +20,7 @@ public class panel extends JPanel implements ActionListener {
     private final JButton kickplayer;
     private final JButton doitien;
 
-    public panel() {
+    public Panel() {
         setLayout(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -96,7 +96,7 @@ public class panel extends JPanel implements ActionListener {
                 Manager.suKien = Byte.parseByte(sk);
                 Logger.error("Sự Kiện: " + sk + "\n");
                 if (Manager.suKien == 1) {
-                    Service.getInstance().sendThongBaoAllPlayer("|7|Sự kiện Trung thu đang được diễn ra"
+                    Service.gI().sendThongBaoAllPlayer("|7|Sự kiện Trung thu đang được diễn ra"
                             + "\n|5|Thông tin chi tiết Sự kiện vui lòng xem tại NPC Trung thu tại Làng Aru");
                 }
             }
@@ -107,9 +107,9 @@ public class panel extends JPanel implements ActionListener {
                 try {
                     msg.writer().writeUTF(chat);
                 } catch (IOException ex) {
-                    java.util.logging.Logger.getLogger(Panel.class.getName()).log(Level.SEVERE, null, ex);
+                    java.util.logging.Logger.getLogger(java.awt.Panel.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                Service.getInstance().sendMessAllPlayer(msg);
+                Service.gI().sendMessAllPlayer(msg);
                 msg.cleanup();
                 Logger.error("Thông báo: " + chat + "\n");
             }
@@ -132,7 +132,7 @@ public class panel extends JPanel implements ActionListener {
             JFrame frame = new JFrame("Ngọc rồng Tabi");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setLocationRelativeTo(null);
-            Panel panel = new Panel();
+            java.awt.Panel panel = new java.awt.Panel();
             frame.getContentPane().add(panel);
             frame.setSize(400, 200);
             frame.setVisible(true);

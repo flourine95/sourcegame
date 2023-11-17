@@ -22,7 +22,7 @@ public class BrolyB extends Boss {
     public void reward(Player plKill) {
         ItemMap it = new ItemMap(this.zone, 568, 1, this.location.x, this.zone.map.yPhysicInTop(this.location.x,
                 this.location.y - 24), plKill.id);
-        Service.getInstance().dropItemMap(this.zone, it);
+        Service.gI().dropItemMap(this.zone, it);
     }
     @Override
     public void active() {

@@ -29,7 +29,7 @@ public class PetService {
                     player.pet.nPoint.limitPower = limitPower[0];
                 }
                 Thread.sleep(1000);
-                Service.getInstance().chatJustForMe(player, player.pet, "Xin hãy thu nhận làm đệ tử");
+                Service.gI().chatJustForMe(player, player.pet, "Xin hãy thu nhận làm đệ tử");
             } catch (Exception e) {
                 Logger.logException(PetService.class, e, "Error init Pet: " + player.name);
             }
@@ -44,7 +44,7 @@ public class PetService {
                     player.pet.nPoint.limitPower = limitPower[0];
                 }
                 Thread.sleep(1000);
-                Service.getInstance().chatJustForMe(player, player.pet, "Xin hãy thu nhận làm đệ tử");
+                Service.gI().chatJustForMe(player, player.pet, "Xin hãy thu nhận làm đệ tử");
             } catch (Exception e) {
                 Logger.logException(PetService.class, e, "Error init Pet: " + player.name);
 
@@ -60,7 +60,7 @@ public class PetService {
                     player.pet.nPoint.limitPower = limitPower[0];
                 }
                 Thread.sleep(1000);
-                Service.getInstance().chatJustForMe(player, player.pet, "Oa oa oa...");
+                Service.gI().chatJustForMe(player, player.pet, "Oa oa oa...");
             } catch (Exception e) {
                 Logger.logException(PetService.class, e, "Error init Pet: " + player.name);
 
@@ -76,7 +76,7 @@ public class PetService {
                     player.pet.nPoint.limitPower = limitPower[0];
                 }
                 Thread.sleep(1000);
-                Service.getInstance().chatJustForMe(player, player.pet, "Oa oa oa...");
+                Service.gI().chatJustForMe(player, player.pet, "Oa oa oa...");
             } catch (Exception e) {
                 Logger.logException(PetService.class, e, "Error init Pet: " + player.name);
 
@@ -92,7 +92,7 @@ public class PetService {
                     player.pet.nPoint.limitPower = limitPower[0];
                 }
                 Thread.sleep(1000);
-                Service.getInstance().chatJustForMe(player, player.pet, "Thần hủy diệt hiện thân tất cả quỳ xuống...");
+                Service.gI().chatJustForMe(player, player.pet, "Thần hủy diệt hiện thân tất cả quỳ xuống...");
             } catch (Exception e) {
                 Logger.logException(PetService.class, e, "Error init Pet: " + player.name);
 
@@ -108,7 +108,7 @@ public class PetService {
                     player.pet.nPoint.limitPower = limitPower[0];
                 }
                 Thread.sleep(1000);
-                Service.getInstance().chatJustForMe(player, player.pet, "Thần hủy diệt hiện thân tất cả quỳ xuống...");
+                Service.gI().chatJustForMe(player, player.pet, "Thần hủy diệt hiện thân tất cả quỳ xuống...");
             } catch (Exception e) {
                 Logger.logException(PetService.class, e, "Error init Pet: " + player.name);
 
@@ -124,7 +124,7 @@ public class PetService {
                     player.pet.nPoint.limitPower = limitPower[0];
                 }
                 Thread.sleep(1000);
-                Service.getInstance().chatJustForMe(player, player.pet, "Sư Phụ Broly hiện thân tụi mày quỳ xuống...");
+                Service.gI().chatJustForMe(player, player.pet, "Sư Phụ Broly hiện thân tụi mày quỳ xuống...");
             } catch (Exception e) {
                 Logger.logException(PetService.class, e, "Error init Pet: " + player.name);
 
@@ -140,7 +140,7 @@ public class PetService {
                     player.pet.nPoint.limitPower = limitPower[0];
                 }
                 Thread.sleep(1000);
-                Service.getInstance().chatJustForMe(player, player.pet, "Sư Phụ Broly hiện thân tụi mày quỳ xuống...");
+                Service.gI().chatJustForMe(player, player.pet, "Sư Phụ Broly hiện thân tụi mày quỳ xuống...");
             } catch (Exception e) {
                 Logger.logException(PetService.class, e, "Error init Pet: " + player.name);
 
@@ -239,13 +239,13 @@ public class PetService {
     public void changeNamePet(Player player, String name) {
         try {
             if (InventoryServiceNew.gI().checkNotItemBag(player, 400)) {
-                Service.getInstance().sendThongBao(player, "Bạn cần thẻ đặt tên đệ tử, mua tại Santa");
+                Service.gI().sendThongBao(player, "Bạn cần thẻ đặt tên đệ tử, mua tại Santa");
                 return;
             } else if (Util.haveSpecialCharacter(name)) {
-                Service.getInstance().sendThongBao(player, "Tên không được chứa ký tự đặc biệt");
+                Service.gI().sendThongBao(player, "Tên không được chứa ký tự đặc biệt");
                 return;
             } else if (name.length() > 10) {
-                Service.getInstance().sendThongBao(player, "Tên quá dài");
+                Service.gI().sendThongBao(player, "Tên quá dài");
                 return;
             }
             ChangeMapService.gI().exitMap(player.pet);
@@ -254,7 +254,7 @@ public class PetService {
             new Thread(() -> {
                 try {
                     Thread.sleep(1000);
-                    Service.getInstance().chatJustForMe(player, player.pet, "Cảm ơn sư phụ đã đặt cho con tên " + name);
+                    Service.gI().chatJustForMe(player, player.pet, "Cảm ơn sư phụ đã đặt cho con tên " + name);
                 } catch (Exception e) {
                     Logger.logException(PetService.class, e, "Error change name Pet: " + player.name);
                 }

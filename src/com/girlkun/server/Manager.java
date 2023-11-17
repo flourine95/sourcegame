@@ -387,13 +387,13 @@ public class Manager {
             rs = ps.executeQuery();
             if (rs.next()) {
                 DaiHoiVoThuat dhvt = new DaiHoiVoThuat();
-                dhvt.NameCup = rs.getString(2);
-                dhvt.Time = rs.getString(3).split("\n");
+                dhvt.nameCup = rs.getString(2);
+                dhvt.time = rs.getString(3).split("\n");
                 dhvt.gem = rs.getInt(4);
                 dhvt.gold = rs.getInt(5);
-                dhvt.min_start = rs.getInt(6);
-                dhvt.min_start_temp = rs.getInt(6);
-                dhvt.min_limit = rs.getInt(7);
+                dhvt.minStart = rs.getInt(6);
+                dhvt.minStartTemp = rs.getInt(6);
+                dhvt.minLimit = rs.getInt(7);
                 LIST_DHVT.add(dhvt);
             }
 

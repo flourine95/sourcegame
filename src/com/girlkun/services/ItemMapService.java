@@ -36,7 +36,7 @@ public class ItemMapService {
         try {
             msg = new Message(-21);
             msg.writer().writeShort(itemMap.itemMapId);
-            Service.getInstance().sendMessAllPlayerInMap(itemMap.zone, msg);
+            Service.gI().sendMessAllPlayerInMap(itemMap.zone, msg);
             msg.cleanup();
         } catch (Exception e) {
             Logger.logException(ItemMapService.class, e);

@@ -22,14 +22,14 @@ public class BossMoon extends Boss {
     @Override
     public void reward(Player plKill) {
         plKill.inventory.event++;
-        Service.getInstance().sendThongBao(plKill, "Bạn đã nhận được 1 điểm săn Boss");
+        Service.gI().sendThongBao(plKill, "Bạn đã nhận được 1 điểm săn Boss");
         byte randomDo = (byte) new Random().nextInt(Manager.itemIds_TL.length - 1);
         if (Util.isTrue(80, 100)) {
             int a = 20;
             for (int i = 0; i < 20; i++) {
                 ItemMap it1 = new ItemMap(this.zone, 861, 100, this.location.x + a, this.zone.map.yPhysicInTop(this.location.x,
                         this.location.y - 24), plKill.id);
-                Service.getInstance().dropItemMap(this.zone, it1);
+                Service.gI().dropItemMap(this.zone, it1);
                 a += 10;
             }
         } else {
@@ -37,7 +37,7 @@ public class BossMoon extends Boss {
                     this.location.y - 24), plKill.id);
          
             
-            Service.getInstance().dropItemMap(this.zone, it1);
+            Service.gI().dropItemMap(this.zone, it1);
 
         }
     }

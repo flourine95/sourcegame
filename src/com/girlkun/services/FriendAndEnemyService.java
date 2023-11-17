@@ -60,7 +60,7 @@ public class FriendAndEnemyService {
                     break;
                 case REVENGE:
                     if (true) {
-                        Service.getInstance().sendThongBao(player, "Không thể thực hiện");
+                        Service.gI().sendThongBao(player, "Không thể thực hiện");
                         break;
                     }
                     int id = msg.reader().readInt();
@@ -74,7 +74,7 @@ public class FriendAndEnemyService {
                     if (flag) {
                         PVPService.gI().openSelectRevenge(player, id);
                     } else {
-                        Service.getInstance().sendThongBao(player, "Không thể thực hiện");
+                        Service.gI().sendThongBao(player, "Không thể thực hiện");
                     }
                     break;
                 case REMOVE_ENEMY:
@@ -178,7 +178,7 @@ public class FriendAndEnemyService {
         boolean madeFriend = false;
         for (Friend friend : player.friends) {
             if (friend.id == playerId) {
-                Service.getInstance().sendThongBao(player, "Đã có trong danh sách bạn bè");
+                Service.gI().sendThongBao(player, "Đã có trong danh sách bạn bè");
                 madeFriend = true;
                 break;
             }
@@ -200,7 +200,7 @@ public class FriendAndEnemyService {
     private void removeFriend(Player player, int playerId) {
         for (int i = 0; i < player.friends.size(); i++) {
             if (player.friends.get(i).id == playerId) {
-                Service.getInstance().sendThongBao(player, "Đã xóa thành công "
+                Service.gI().sendThongBao(player, "Đã xóa thành công "
                         + player.friends.get(i).name + " khỏi danh sách bạn");
                 Message msg;
                 try {
@@ -235,9 +235,9 @@ public class FriendAndEnemyService {
                 String text = msg.reader().readUTF();
                 Player pl = Client.gI().getPlayer(playerId);
                 if (pl != null) {
-                    Service.getInstance().chatPrivate(player, pl, text);
+                    Service.gI().chatPrivate(player, pl, text);
                 } else {
-                    Service.getInstance().sendThongBao(player, "Người chơi này hiện không Online");
+                    Service.gI().sendThongBao(player, "Người chơi này hiện không Online");
                 }
             } catch (Exception e) {
             }
@@ -256,11 +256,11 @@ public class FriendAndEnemyService {
             friend.leg = pl.getLeg();
             friend.bag = (byte) pl.getFlagBag();
             player.friends.add(friend);
-            Service.getInstance().sendThongBao(player, "Kết bạn thành công");
-            Service.getInstance().chatPrivate(player, pl, player.name + " vừa mới kết bạn với " + pl.name);
+            Service.gI().sendThongBao(player, "Kết bạn thành công");
+            Service.gI().chatPrivate(player, pl, player.name + " vừa mới kết bạn với " + pl.name);
             TaskService.gI().checkDoneTaskMakeFriend(player, pl);
         } else {
-            Service.getInstance().sendThongBao(player, "Không tìm thấy hoặc đang Offline, vui lòng thử lại sau");
+            Service.gI().sendThongBao(player, "Không tìm thấy hoặc đang Offline, vui lòng thử lại sau");
         }
     }
 
@@ -283,13 +283,13 @@ public class FriendAndEnemyService {
                                 && !MapService.gI().isMapKhiGas(pl.zone.map.mapId)) {
                             ChangeMapService.gI().changeMapYardrat(player, pl.zone, pl.location.x + Util.nextInt(-5, 5), pl.location.y);
                         } else {
-                            Service.getInstance().sendThongBao(player, "Không thể thực hiện");
+                            Service.gI().sendThongBao(player, "Không thể thực hiện");
                         }
                     } else {
-                        Service.getInstance().sendThongBao(player, "Không thể thực hiện");
+                        Service.gI().sendThongBao(player, "Không thể thực hiện");
                     }
                 } else {
-                    Service.getInstance().sendThongBao(player, "Yêu cầu trang bị có khả năng dịch chuyển tức thời");
+                    Service.gI().sendThongBao(player, "Yêu cầu trang bị có khả năng dịch chuyển tức thời");
                 }
             }
         } catch (IOException ex) {

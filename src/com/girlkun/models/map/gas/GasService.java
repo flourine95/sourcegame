@@ -105,16 +105,16 @@ public class GasService {
                             Logger.logException(GasService.class, e, "Lỗi init boss");
                         }
                     } else {
-                        Service.getInstance().sendThongBao(player, "Khí Gas Destroy đã đầy, vui lòng quay lại sau");
+                        Service.gI().sendThongBao(player, "Khí Gas Destroy đã đầy, vui lòng quay lại sau");
                     }
                 } else {
-                    Service.getInstance().sendThongBao(player, "Yêu cầu có Bình Khí gas");
+                    Service.gI().sendThongBao(player, "Yêu cầu có Bình Khí gas");
                 }
             } else {
-                Service.getInstance().sendThongBao(player, "Không thể thực hiện");
+                Service.gI().sendThongBao(player, "Không thể thực hiện");
             }
         } else {
-            Service.getInstance().sendThongBao(player, "Không thể thực hiện");
+            Service.gI().sendThongBao(player, "Không thể thực hiện");
         }
     }
 }

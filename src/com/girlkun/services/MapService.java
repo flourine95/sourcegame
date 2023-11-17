@@ -297,7 +297,7 @@ public class MapService {
             msg.writer().writeInt((int) player.id);
             msg.writer().writeShort(player.location.x);
             msg.writer().writeShort(player.location.y);
-            Service.getInstance().sendMessAllPlayerInMap(player, msg);
+            Service.gI().sendMessAllPlayerInMap(player, msg);
             msg.cleanup();
         } catch (Exception e) {
             Logger.logException(MapService.class, e);

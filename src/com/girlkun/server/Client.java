@@ -89,7 +89,7 @@ public class Client implements Runnable {
             player.mapIdBeforeLogout = player.zone.map.mapId;
             if (player.idNRNM != -1) {
                 ItemMap itemMap = new ItemMap(player.zone, player.idNRNM, 1, player.location.x, player.location.y, -1);
-                Service.getInstance().dropItemMap(player.zone, itemMap);
+                Service.gI().dropItemMap(player.zone, itemMap);
                 NgocRongNamecService.gI().pNrNamec[player.idNRNM - 353] = "";
                 NgocRongNamecService.gI().idpNrNamec[player.idNRNM - 353] = -1;
                 player.idNRNM = -1;
@@ -190,7 +190,7 @@ public class Client implements Runnable {
         txt += "players_userId: " + players_userId.size() + "\n";
         txt += "players_name: " + players_name.size() + "\n";
         txt += "players: " + players.size() + "\n";
-        Service.getInstance().sendThongBaoOK(player, txt);
+        Service.gI().sendThongBaoOK(player, txt);
     }
 
     @Override

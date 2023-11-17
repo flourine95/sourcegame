@@ -188,7 +188,7 @@ public class SummonPet extends Player {
             }
         }
         if (justRevived1 && this.zone == master.zone) {
-            Service.getInstance().chatJustForMe(master, this, "Ta đã sống dậy rồi đây !!");
+            Service.gI().chatJustForMe(master, this, "Ta đã sống dậy rồi đây !!");
             justRevived1 = false;
         }
         if (master != null && (this.zone == null || this.zone != master.zone)) {

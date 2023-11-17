@@ -2,7 +2,6 @@ package com.girlkun.services;
 
 import com.girlkun.consts.ConstPlayer;
 import com.girlkun.models.map.ItemMap;
-import com.girlkun.models.map.Map;
 import com.girlkun.models.map.Zone;
 import com.girlkun.models.player.Player;
 import com.girlkun.server.Client;
@@ -138,14 +137,13 @@ public class NgocRongNamecService implements Runnable {
                     default -> throw new IllegalStateException("Unexpected value: " + listMap.get(index));
                 }
             }
+            ItemMap itemMap;
             if (type == (byte) 0) {
-                ItemMap itemMap = new ItemMap(zone, i + 353, 1, x, y, -1);
-                Service.getInstance().dropItemMap(zone, itemMap);
-                System.out.println(itemMap.itemTemplate.name + "[" + zone.map.mapId + "-" + zone.zoneId + "]");
+                itemMap = new ItemMap(zone, i + 353, 1, x, y, -1);
             } else {
-                ItemMap itemMap = new ItemMap(zone, 362, 1, x, y, -1);
-                Service.getInstance().dropItemMap(zone, itemMap);
+                itemMap = new ItemMap(zone, 362, 1, x, y, -1);
             }
+            Service.gI().dropItemMap(zone, itemMap);
             listMap.remove(index);
         }
     }
@@ -169,7 +167,7 @@ public class NgocRongNamecService implements Runnable {
                 p.idNRNM = -1;
                 pNrNamec[i] = "";
                 idpNrNamec[i] = -1;
-                Service.getInstance().sendFlagBag(p);
+                Service.gI().sendFlagBag(p);
                 PlayerService.gI().changeAndSendTypePK(p, ConstPlayer.NON_PK);
             }
         }

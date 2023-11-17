@@ -272,11 +272,11 @@ public class ItemService {
         if (item != null && InventoryServiceNew.gI().getCountEmptyBag(player) > 0) {
             InventoryServiceNew.gI().addItemBag(player, item);
             InventoryServiceNew.gI().sendItemBags(player);
-            Service.getInstance().sendThongBao(player, "Bạn đã nhận được " + item.template.name);
+            Service.gI().sendThongBao(player, "Bạn đã nhận được " + item.template.name);
             InventoryServiceNew.gI().subQuantityItemsBag(player, itemUse, 1);
             InventoryServiceNew.gI().sendItemBags(player);
         } else {
-            Service.getInstance().sendThongBao(player, "Bạn phải có ít nhất 1 ô trống hành trang");
+            Service.gI().sendThongBao(player, "Bạn phải có ít nhất 1 ô trống hành trang");
         }
     }
 
@@ -319,18 +319,18 @@ public class ItemService {
         if (item != null && InventoryServiceNew.gI().getCountEmptyBag(player) > 0) {
             InventoryServiceNew.gI().addItemBag(player, item);
             InventoryServiceNew.gI().sendItemBags(player);
-            Service.getInstance().sendThongBao(player, "Bạn đã nhận được " + item.template.name);
+            Service.gI().sendThongBao(player, "Bạn đã nhận được " + item.template.name);
             InventoryServiceNew.gI().subQuantityItemsBag(player, itemUse, 1);
             InventoryServiceNew.gI().sendItemBags(player);
         } else {
-            Service.getInstance().sendThongBao(player, "Bạn phải có ít nhất 1 ô trống hành trang");
+            Service.gI().sendThongBao(player, "Bạn phải có ít nhất 1 ô trống hành trang");
         }
     }
 
     public void OpenItem736(Player player, Item itemUse) {
         try {
             if (InventoryServiceNew.gI().getCountEmptyBag(player) <= 1) {
-                Service.getInstance().sendThongBao(player, "Bạn phải có ít nhất 2 ô trống hành trang");
+                Service.gI().sendThongBao(player, "Bạn phải có ít nhất 2 ô trống hành trang");
                 return;
             }
             short[] icon = new short[2];
@@ -364,7 +364,7 @@ public class ItemService {
             InventoryServiceNew.gI().addItemBag(player, item);
             InventoryServiceNew.gI().sendItemBags(player);
             player.inventory.event++;
-            Service.getInstance().sendThongBao(player, "Bạn đã nhận được " + item.template.name);
+            Service.gI().sendThongBao(player, "Bạn đã nhận được " + item.template.name);
             CombineServiceNew.gI().sendEffectOpenItem(player, icon[0], icon[1]);
         } catch (Exception e) {
             System.out.println("zxcv");
@@ -400,11 +400,11 @@ public class ItemService {
             InventoryServiceNew.gI().addItemBag(player, giay);
             InventoryServiceNew.gI().addItemBag(player, nhan);
             InventoryServiceNew.gI().sendItemBags(player);
-            Service.getInstance().sendThongBao(player, "Bạn đã nhận được set thiên sứ ");
+            Service.gI().sendThongBao(player, "Bạn đã nhận được set thiên sứ ");
             InventoryServiceNew.gI().subQuantityItemsBag(player, hq, 1);
             InventoryServiceNew.gI().sendItemBags(player);
         } else {
-            Service.getInstance().sendThongBao(player, "Bạn phải có ít nhất 5 ô trống hành trang");
+            Service.gI().sendThongBao(player, "Bạn phải có ít nhất 5 ô trống hành trang");
         }
     }
     
@@ -437,11 +437,11 @@ public class ItemService {
             InventoryServiceNew.gI().addItemBag(player, giay);
             InventoryServiceNew.gI().addItemBag(player, nhan);
             InventoryServiceNew.gI().sendItemBags(player);
-            Service.getInstance().sendThongBao(player, "Bạn đã nhận được set thiên sứ ");
+            Service.gI().sendThongBao(player, "Bạn đã nhận được set thiên sứ ");
             InventoryServiceNew.gI().subQuantityItemsBag(player, hq, 1);
             InventoryServiceNew.gI().sendItemBags(player);
         } else {
-            Service.getInstance().sendThongBao(player, "Bạn phải có ít nhất 5 ô trống hành trang");
+            Service.gI().sendThongBao(player, "Bạn phải có ít nhất 5 ô trống hành trang");
         }
     }
     
@@ -474,11 +474,11 @@ public class ItemService {
             InventoryServiceNew.gI().addItemBag(player, giay);
             InventoryServiceNew.gI().addItemBag(player, nhan);
             InventoryServiceNew.gI().sendItemBags(player);
-            Service.getInstance().sendThongBao(player, "Bạn đã nhận được set thiên sứ ");
+            Service.gI().sendThongBao(player, "Bạn đã nhận được set thiên sứ ");
             InventoryServiceNew.gI().subQuantityItemsBag(player, hq, 1);
             InventoryServiceNew.gI().sendItemBags(player);
         } else {
-            Service.getInstance().sendThongBao(player, "Bạn phải có ít nhất 5 ô trống hành trang");
+            Service.gI().sendThongBao(player, "Bạn phải có ít nhất 5 ô trống hành trang");
         }
     }
         
@@ -511,11 +511,11 @@ public class ItemService {
             InventoryServiceNew.gI().addItemBag(player, giay);
             InventoryServiceNew.gI().addItemBag(player, nhan);
             InventoryServiceNew.gI().sendItemBags(player);
-            Service.getInstance().sendThongBao(player, "Bạn đã nhận được set thiên sứ ");
+            Service.gI().sendThongBao(player, "Bạn đã nhận được set thiên sứ ");
             InventoryServiceNew.gI().subQuantityItemsBag(player, hq, 1);
             InventoryServiceNew.gI().sendItemBags(player);
         } else {
-            Service.getInstance().sendThongBao(player, "Bạn phải có ít nhất 5 ô trống hành trang");
+            Service.gI().sendThongBao(player, "Bạn phải có ít nhất 5 ô trống hành trang");
         }
     }
     
@@ -548,11 +548,11 @@ public class ItemService {
             InventoryServiceNew.gI().addItemBag(player, giay);
             InventoryServiceNew.gI().addItemBag(player, nhan);
             InventoryServiceNew.gI().sendItemBags(player);
-            Service.getInstance().sendThongBao(player, "Bạn đã nhận được set thiên sứ ");
+            Service.gI().sendThongBao(player, "Bạn đã nhận được set thiên sứ ");
             InventoryServiceNew.gI().subQuantityItemsBag(player, hq, 1);
             InventoryServiceNew.gI().sendItemBags(player);
         } else {
-            Service.getInstance().sendThongBao(player, "Bạn phải có ít nhất 5 ô trống hành trang");
+            Service.gI().sendThongBao(player, "Bạn phải có ít nhất 5 ô trống hành trang");
         }
     }
     
@@ -585,11 +585,11 @@ public class ItemService {
             InventoryServiceNew.gI().addItemBag(player, giay);
             InventoryServiceNew.gI().addItemBag(player, nhan);
             InventoryServiceNew.gI().sendItemBags(player);
-            Service.getInstance().sendThongBao(player, "Bạn đã nhận được set thiên sứ ");
+            Service.gI().sendThongBao(player, "Bạn đã nhận được set thiên sứ ");
             InventoryServiceNew.gI().subQuantityItemsBag(player, hq, 1);
             InventoryServiceNew.gI().sendItemBags(player);
         } else {
-            Service.getInstance().sendThongBao(player, "Bạn phải có ít nhất 5 ô trống hành trang");
+            Service.gI().sendThongBao(player, "Bạn phải có ít nhất 5 ô trống hành trang");
         }
     }
     
@@ -622,11 +622,11 @@ public class ItemService {
             InventoryServiceNew.gI().addItemBag(player, giay);
             InventoryServiceNew.gI().addItemBag(player, nhan);
             InventoryServiceNew.gI().sendItemBags(player);
-            Service.getInstance().sendThongBao(player, "Bạn đã nhận được set thiên sứ ");
+            Service.gI().sendThongBao(player, "Bạn đã nhận được set thiên sứ ");
             InventoryServiceNew.gI().subQuantityItemsBag(player, hq, 1);
             InventoryServiceNew.gI().sendItemBags(player);
         } else {
-            Service.getInstance().sendThongBao(player, "Bạn phải có ít nhất 5 ô trống hành trang");
+            Service.gI().sendThongBao(player, "Bạn phải có ít nhất 5 ô trống hành trang");
         }
     }
         
@@ -661,11 +661,11 @@ public class ItemService {
             InventoryServiceNew.gI().addItemBag(player, giay);
             InventoryServiceNew.gI().addItemBag(player, nhan);
             InventoryServiceNew.gI().sendItemBags(player);
-            Service.getInstance().sendThongBao(player, "Bạn đã nhận được set thiên sứ ");
+            Service.gI().sendThongBao(player, "Bạn đã nhận được set thiên sứ ");
             InventoryServiceNew.gI().subQuantityItemsBag(player, hq, 1);
             InventoryServiceNew.gI().sendItemBags(player);
         } else {
-            Service.getInstance().sendThongBao(player, "Bạn phải có ít nhất 5 ô trống hành trang");
+            Service.gI().sendThongBao(player, "Bạn phải có ít nhất 5 ô trống hành trang");
         }
     }
             
@@ -698,11 +698,11 @@ public class ItemService {
             InventoryServiceNew.gI().addItemBag(player, giay);
             InventoryServiceNew.gI().addItemBag(player, nhan);
             InventoryServiceNew.gI().sendItemBags(player);
-            Service.getInstance().sendThongBao(player, "Bạn đã nhận được set thiên sứ ");
+            Service.gI().sendThongBao(player, "Bạn đã nhận được set thiên sứ ");
             InventoryServiceNew.gI().subQuantityItemsBag(player, hq, 1);
             InventoryServiceNew.gI().sendItemBags(player);
         } else {
-            Service.getInstance().sendThongBao(player, "Bạn phải có ít nhất 5 ô trống hành trang");
+            Service.gI().sendThongBao(player, "Bạn phải có ít nhất 5 ô trống hành trang");
         }
     }
 
@@ -906,11 +906,11 @@ public class ItemService {
 
     public void openBoxVip(Player player) {
         if (InventoryServiceNew.gI().getCountEmptyBag(player) <= 1) {
-            Service.getInstance().sendThongBao(player, "Bạn phải có ít nhất 2 ô trống hành trang");
+            Service.gI().sendThongBao(player, "Bạn phải có ít nhất 2 ô trống hành trang");
             return;
         }
         if (player.inventory.event < 3000) {
-            Service.getInstance().sendThongBao(player, "Bạn không đủ bông...");
+            Service.gI().sendThongBao(player, "Bạn không đủ bông...");
             return;
         }
         Item item;
@@ -925,7 +925,7 @@ public class ItemService {
         InventoryServiceNew.gI().addItemBag(player, item);
         InventoryServiceNew.gI().sendItemBags(player);
         player.inventory.event -= 3000;
-        Service.getInstance().sendThongBao(player, "Bạn đã nhận được " + item.template.name);
+        Service.gI().sendThongBao(player, "Bạn đã nhận được " + item.template.name);
         CombineServiceNew.gI().sendEffectOpenItem(player, icon[0], icon[1]);
     }
 
@@ -934,7 +934,7 @@ public class ItemService {
         try {
             Item itemUse = InventoryServiceNew.gI().findItem(player.inventory.itemsBag, 610);
             if (itemUse.quantity < quantity) {
-                Service.getInstance().sendThongBao(player, "Bạn không đủ bông...");
+                Service.gI().sendThongBao(player, "Bạn không đủ bông...");
                 return;
             }
             InventoryServiceNew.gI().subQuantityItemsBag(player, itemUse, quantity);
@@ -942,9 +942,9 @@ public class ItemService {
             item.itemOptions.add(new Item.ItemOption(30, 1));//ko the gd
             InventoryServiceNew.gI().addItemBag(player, item);
             InventoryServiceNew.gI().sendItemBags(player);
-            Service.getInstance().sendThongBao(player, "Bạn đã nhận được x" + (quantity / 100) + " " + item.template.name);
+            Service.gI().sendThongBao(player, "Bạn đã nhận được x" + (quantity / 100) + " " + item.template.name);
         } catch (Exception e) {
-            Service.getInstance().sendThongBao(player, "Bạn không đủ bông...");
+            Service.gI().sendThongBao(player, "Bạn không đủ bông...");
         }
     }
 
@@ -987,15 +987,15 @@ public class ItemService {
     public void openDTS(Player player) {
         //check sl đồ tl, đồ hd
         if (player.combineNew.itemsCombine.stream().filter(item -> item.template.id >= 555 && item.template.id <= 567).count() < 1) {
-            Service.getInstance().sendThongBao(player, "Thiếu đồ thần linh");
+            Service.gI().sendThongBao(player, "Thiếu đồ thần linh");
             return;
         }
         if (player.combineNew.itemsCombine.stream().filter(item -> item.template.id >= 650 && item.template.id <= 662).count() < 2) {
-            Service.getInstance().sendThongBao(player, "Thiếu đồ hủy diệt");
+            Service.gI().sendThongBao(player, "Thiếu đồ hủy diệt");
             return;
         }
         if (player.combineNew.itemsCombine.size() != 3) {
-            Service.getInstance().sendThongBao(player, "Thiếu đồ");
+            Service.gI().sendThongBao(player, "Thiếu đồ");
             return;
         }
         if (InventoryServiceNew.gI().getCountEmptyBag(player) > 0) {
@@ -1010,9 +1010,9 @@ public class ItemService {
             itemHDs.forEach(item -> InventoryServiceNew.gI().subQuantityItemsBag(player, item, 1));
 
             InventoryServiceNew.gI().sendItemBags(player);
-            Service.getInstance().sendThongBao(player, "Bạn đã nhận được " + itemTS.template.name);
+            Service.gI().sendThongBao(player, "Bạn đã nhận được " + itemTS.template.name);
         } else {
-            Service.getInstance().sendThongBao(player, "Bạn phải có ít nhất 1 ô trống hành trang");
+            Service.gI().sendThongBao(player, "Bạn phải có ít nhất 1 ô trống hành trang");
         }
     }
 

@@ -86,7 +86,7 @@ public class UseItem {
                 player.pet.setClothes.setup();
             }
             player.setClanMember();
-            Service.getInstance().point(player);
+            Service.gI().point(player);
         } catch (Exception e) {
             Logger.logException(UseItem.class, e);
         }
@@ -137,12 +137,12 @@ public class UseItem {
                         msg.writer().writeUTF("Bạn chắc chắn muốn vứt " + item.template.name + "?");
                         player.sendMessage(msg);
                     } else {
-                        Service.getInstance().sendThongBao(player, "Không thể thực hiện");
+                        Service.gI().sendThongBao(player, "Không thể thực hiện");
                     }
                 }
                 case ACCEPT_THROW_ITEM -> {
                     InventoryServiceNew.gI().throwItem(player, where, index);
-                    Service.getInstance().point(player);
+                    Service.gI().point(player);
                     InventoryServiceNew.gI().sendItemBags(player);
                 }
                 case ACCEPT_USE_ITEM -> UseItem.gI().useItem(player, player.inventory.itemsBag.get(index), index);
@@ -159,14 +159,14 @@ public class UseItem {
                 case 7 -> learnSkill(pl, item);
                 case 11 -> {
                     InventoryServiceNew.gI().itemBagToBody(pl, indexBag);
-                    Service.getInstance().sendFlagBag(pl);
+                    Service.gI().sendFlagBag(pl);
                 }
                 case 12 -> controllerCallRongThan(pl, item);
                 case 23, 24 -> InventoryServiceNew.gI().itemBagToBody(pl, indexBag);
                 case 33 -> useCard(pl, item);
                 case 72 -> {
                     InventoryServiceNew.gI().itemBagToBody(pl, indexBag);
-                    Service.getInstance().sendPetFollow(pl, (short) (item.template.iconID - 1));
+                    Service.gI().sendPetFollow(pl, (short) (item.template.iconID - 1));
                 }
                 case 74 -> {
                     InventoryServiceNew.gI().itemBagToBody(pl, indexBag);
@@ -174,13 +174,13 @@ public class UseItem {
                 }
                 case 75 -> {
                     InventoryServiceNew.gI().itemBagToBody(pl, indexBag);
-                    Service.getInstance().sendchienlinh(pl, (short) (item.template.iconID - 1));
+                    Service.gI().sendchienlinh(pl, (short) (item.template.iconID - 1));
                 }
                 default -> {
                     switch (item.template.id) {
                         case 457 -> {
                             pl.inventory.gold += 500000000;
-                            Service.getInstance().sendMoney(pl);
+                            Service.gI().sendMoney(pl);
                             InventoryServiceNew.gI().subQuantityItemsBag(pl, item, 1);
                             InventoryServiceNew.gI().sendItemBags(pl);
                             pl.achievement.plusCount(13);
@@ -189,18 +189,18 @@ public class UseItem {
                         case 992 -> {
                             pl.type = 1;
                             pl.maxTime = 5;
-                            Service.getInstance().Transport(pl);
+                            Service.gI().Transport(pl);
                             Service.gI().clearMap(pl);
                         }
                         case 1322 -> {
                             pl.type = 1;
                             pl.maxTime = 6;
-                            Service.getInstance().Transport(pl);
+                            Service.gI().Transport(pl);
                             Service.gI().clearMap(pl);
                         }
                         case 361 -> {
                             if (pl.idNRNM != -1) {
-                                Service.getInstance().sendThongBao(pl, "Không thể thực hiện");
+                                Service.gI().sendThongBao(pl, "Không thể thực hiện");
                                 return;
                             }
                             pl.idGo = (short) Util.nextInt(0, 6);
@@ -216,7 +216,7 @@ public class UseItem {
                             }
                             InventoryServiceNew.gI().itemBagToBody(pl, indexBag);
                             PetService.Pet2(pl, 966, 967, 968);
-                            Service.getInstance().point(pl);
+                            Service.gI().point(pl);
                         }
                         case 943 -> {
                             if (pl.newpet != null) {
@@ -226,7 +226,7 @@ public class UseItem {
                             }
                             InventoryServiceNew.gI().itemBagToBody(pl, indexBag);
                             PetService.Pet2(pl, 969, 970, 971);
-                            Service.getInstance().point(pl);
+                            Service.gI().point(pl);
                         }
                         case 944 -> {
                             if (pl.newpet != null) {
@@ -236,7 +236,7 @@ public class UseItem {
                             }
                             InventoryServiceNew.gI().itemBagToBody(pl, indexBag);
                             PetService.Pet2(pl, 972, 973, 974);
-                            Service.getInstance().point(pl);
+                            Service.gI().point(pl);
                         }
                         case 967 -> {
                             if (pl.newpet != null) {
@@ -246,7 +246,7 @@ public class UseItem {
                             }
                             InventoryServiceNew.gI().itemBagToBody(pl, indexBag);
                             PetService.Pet2(pl, 1050, 1051, 1052);
-                            Service.getInstance().point(pl);
+                            Service.gI().point(pl);
                         }
                         case 1107 -> {
                             if (pl.newpet != null) {
@@ -256,7 +256,7 @@ public class UseItem {
                             }
                             InventoryServiceNew.gI().itemBagToBody(pl, indexBag);
                             PetService.Pet2(pl, 1183, 1184, 1185);
-                            Service.getInstance().point(pl);
+                            Service.gI().point(pl);
                         }
                         case 1140 -> {
                             if (pl.newpet != null) {
@@ -266,7 +266,7 @@ public class UseItem {
                             }
                             InventoryServiceNew.gI().itemBagToBody(pl, indexBag);
                             PetService.Pet2(pl, 1285, 1286, 1287);
-                            Service.getInstance().point(pl);
+                            Service.gI().point(pl);
                         }
                         case 1133 -> {
                             if (pl.newpet != null) {
@@ -276,7 +276,7 @@ public class UseItem {
                             }
                             InventoryServiceNew.gI().itemBagToBody(pl, indexBag);
                             PetService.Pet2(pl, 1261, 1262, 1263);
-                            Service.getInstance().point(pl);
+                            Service.gI().point(pl);
                         }
                         case 1180 -> {
                             if (pl.newpet != null) {
@@ -286,7 +286,7 @@ public class UseItem {
                             }
                             InventoryServiceNew.gI().itemBagToBody(pl, indexBag);
                             PetService.Pet2(pl, 1270, 1271, 1272);
-                            Service.getInstance().point(pl);
+                            Service.gI().point(pl);
                         }
                         case 1181 -> {
                             if (pl.newpet != null) {
@@ -296,7 +296,7 @@ public class UseItem {
                             }
                             InventoryServiceNew.gI().itemBagToBody(pl, indexBag);
                             PetService.Pet2(pl, 1273, 1274, 1275);
-                            Service.getInstance().point(pl);
+                            Service.gI().point(pl);
                         }
                         case 1196 -> {
                             if (pl.newpet != null) {
@@ -306,7 +306,7 @@ public class UseItem {
                             }
                             InventoryServiceNew.gI().itemBagToBody(pl, indexBag);
                             PetService.Pet2(pl, 1294, 1295, 1296);
-                            Service.getInstance().point(pl);
+                            Service.gI().point(pl);
                         }
                         case 1197 -> {
                             if (pl.newpet != null) {
@@ -316,7 +316,7 @@ public class UseItem {
                             }
                             InventoryServiceNew.gI().itemBagToBody(pl, indexBag);
                             PetService.Pet2(pl, 1297, 1298, 1299);
-                            Service.getInstance().point(pl);
+                            Service.gI().point(pl);
                         }
                         case 1198 -> {
                             if (pl.newpet != null) {
@@ -326,7 +326,7 @@ public class UseItem {
                             }
                             InventoryServiceNew.gI().itemBagToBody(pl, indexBag);
                             PetService.Pet2(pl, 1300, 1301, 1302);
-                            Service.getInstance().point(pl);
+                            Service.gI().point(pl);
                         }
                         case 1221 -> {
                             if (pl.newpet != null) {
@@ -336,7 +336,7 @@ public class UseItem {
                             }
                             InventoryServiceNew.gI().itemBagToBody(pl, indexBag);
                             PetService.Pet2(pl, 1333, 1334, 1335);
-                            Service.getInstance().point(pl);
+                            Service.gI().point(pl);
                         }
                         case 1222 -> {
                             if (pl.newpet != null) {
@@ -346,7 +346,7 @@ public class UseItem {
                             }
                             InventoryServiceNew.gI().itemBagToBody(pl, indexBag);
                             PetService.Pet2(pl, 1336, 1337, 1338);
-                            Service.getInstance().point(pl);
+                            Service.gI().point(pl);
                         }
                         case 1223 -> {
                             if (pl.newpet != null) {
@@ -356,7 +356,7 @@ public class UseItem {
                             }
                             InventoryServiceNew.gI().itemBagToBody(pl, indexBag);
                             PetService.Pet2(pl, 1339, 1340, 1341);
-                            Service.getInstance().point(pl);
+                            Service.gI().point(pl);
                         }
                         case 1229 -> {
                             if (pl.newpet != null) {
@@ -366,7 +366,7 @@ public class UseItem {
                             }
                             InventoryServiceNew.gI().itemBagToBody(pl, indexBag);
                             PetService.Pet2(pl, 1345, 1346, 1347);
-                            Service.getInstance().point(pl);
+                            Service.gI().point(pl);
                         }
                         case 1230 -> {
                             if (pl.newpet != null) {
@@ -376,16 +376,16 @@ public class UseItem {
                             }
                             InventoryServiceNew.gI().itemBagToBody(pl, indexBag);
                             PetService.Pet2(pl, 1348, 1349, 1350);
-                            Service.getInstance().point(pl);
+                            Service.gI().point(pl);
                         }
                         case 211, 212 -> eatGrapes(pl, item);
                         case 1105 -> UseItem.gI().hopTS(pl, item);
                         case 342, 343, 344, 345 -> {
                             if (pl.zone.items.stream().filter(it -> it != null && it.itemTemplate.type == 22).count() < 5) {
-                                Service.getInstance().dropVeTinh(pl, item, pl.zone, pl.location.x, pl.location.y);
+                                Service.gI().dropVeTinh(pl, item, pl.zone, pl.location.x, pl.location.y);
                                 InventoryServiceNew.gI().subQuantityItemsBag(pl, item, 1);
                             } else {
-                                Service.getInstance().sendThongBao(pl, "Đặt ít thôi con");
+                                Service.gI().sendThongBao(pl, "Đặt ít thôi con");
                             }
                         }
                         case 380 -> openCSKB(pl, item);
@@ -412,7 +412,7 @@ public class UseItem {
                         case 1108 -> changePetBerus(pl, item);
                         case 543 -> {
                             if (InventoryServiceNew.gI().getCountEmptyBag(pl) == 0) {
-                                Service.getInstance().sendThongBao(pl, "Hành trang không đủ chỗ trống");
+                                Service.gI().sendThongBao(pl, "Hành trang không đủ chỗ trống");
                             } else {
                                 int[] pet = new int[]{942, 1180, 1181, 1196, 1197, 1198, 1107, 1140};
                                 int randomPet = new Random().nextInt(pet.length);
@@ -429,7 +429,7 @@ public class UseItem {
                                 linhThu.itemOptions.add(new ItemOption(30, 1));
                                 InventoryServiceNew.gI().addItemBag(pl, linhThu);
                                 InventoryServiceNew.gI().sendItemBags(pl);
-                                Service.getInstance().sendThongBao(pl, "Chúc mừng bạn nhận được Pet " + linhThu.template.name);
+                                Service.gI().sendThongBao(pl, "Chúc mừng bạn nhận được Pet " + linhThu.template.name);
                             }
                         }
                         case 542 -> changePetPic(pl, item);
@@ -441,11 +441,11 @@ public class UseItem {
                         case 1335, 1336, 1337 -> banhTrungThu(pl, item);
                         case 1342 -> hopTrungThu(pl, item);
                         case 987 ->
-                                Service.getInstance().sendThongBao(pl, "Bảo vệ trang bị không bị rớt cấp"); //đá bảo vệ
+                                Service.gI().sendThongBao(pl, "Bảo vệ trang bị không bị rớt cấp"); //đá bảo vệ
                         case 2006 -> Input.gI().createFormChangeNameByItem(pl);
                         case 2028 -> {
                             if (InventoryServiceNew.gI().getCountEmptyBag(pl) == 0) {
-                                Service.getInstance().sendThongBao(pl, "Hành trang không đủ chỗ trống");
+                                Service.gI().sendThongBao(pl, "Hành trang không đủ chỗ trống");
                             } else {
                                 int[] pet = new int[]{2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2033, 2034, 2036, 2037, 2038, 2039, 2040};
                                 int randomPet = new Random().nextInt(pet.length);
@@ -458,12 +458,12 @@ public class UseItem {
                                 linhThu.itemOptions.add(new ItemOption(96, Util.nextInt(5, 8)));
                                 InventoryServiceNew.gI().addItemBag(pl, linhThu);
                                 InventoryServiceNew.gI().sendItemBags(pl);
-                                Service.getInstance().sendThongBao(pl, "Chúc mừng bạn nhận được Linh thú " + linhThu.template.name);
+                                Service.gI().sendThongBao(pl, "Chúc mừng bạn nhận được Linh thú " + linhThu.template.name);
                             }
                         }
                         case 2027 -> {
                             if (InventoryServiceNew.gI().getCountEmptyBag(pl) == 0) {
-                                Service.getInstance().sendThongBao(pl, "Hành trang không đủ chỗ trống");
+                                Service.gI().sendThongBao(pl, "Hành trang không đủ chỗ trống");
                             } else {
                                 InventoryServiceNew.gI().subQuantityItemsBag(pl, item, 1);
                                 Item linhThu = ItemService.gI().createNewItem((short) Util.nextInt(1273, 1295));
@@ -475,7 +475,7 @@ public class UseItem {
                                 linhThu.itemOptions.add(new ItemOption(30, 1));
                                 InventoryServiceNew.gI().addItemBag(pl, linhThu);
                                 InventoryServiceNew.gI().sendItemBags(pl);
-                                Service.getInstance().sendThongBao(pl, "Chúc mừng bạn nhận được Linh thú " + linhThu.template.name);
+                                Service.gI().sendThongBao(pl, "Chúc mừng bạn nhận được Linh thú " + linhThu.template.name);
                             }
                         }
                     }
@@ -483,7 +483,7 @@ public class UseItem {
             }
             InventoryServiceNew.gI().sendItemBags(pl);
         } else {
-            Service.getInstance().sendThongBaoOK(pl, "Sức mạnh không đủ yêu cầu");
+            Service.gI().sendThongBaoOK(pl, "Sức mạnh không đủ yêu cầu");
         }
     }
 
@@ -540,10 +540,10 @@ public class UseItem {
                 InventoryServiceNew.gI().subQuantityItemsBag(player, item, 1);
                 InventoryServiceNew.gI().sendItemBags(player);
             } else {
-                Service.getInstance().sendThongBao(player, "Không thể thực hiện");
+                Service.gI().sendThongBao(player, "Không thể thực hiện");
             }
         } else {
-            Service.getInstance().sendThongBao(player, "Vui lòng tháo hết đồ đệ tử");
+            Service.gI().sendThongBao(player, "Vui lòng tháo hết đồ đệ tử");
         }
     }
 
@@ -555,10 +555,10 @@ public class UseItem {
                 InventoryServiceNew.gI().subQuantityItemsBag(player, item, 1);
                 InventoryServiceNew.gI().sendItemBags(player);
             } else {
-                Service.getInstance().sendThongBao(player, "Không thể thực hiện");
+                Service.gI().sendThongBao(player, "Không thể thực hiện");
             }
         } else {
-            Service.getInstance().sendThongBao(player, "Vui lòng tháo hết đồ đệ tử");
+            Service.gI().sendThongBao(player, "Vui lòng tháo hết đồ đệ tử");
         }
     }
 
@@ -568,7 +568,7 @@ public class UseItem {
             PetService.gI().changeMabuPet(player, gender);
             InventoryServiceNew.gI().subQuantityItemsBag(player, item, 1);
         } else {
-            Service.getInstance().sendThongBao(player, "Không thể thực hiện");
+            Service.gI().sendThongBao(player, "Không thể thực hiện");
         }
     }
 
@@ -580,10 +580,10 @@ public class UseItem {
                 InventoryServiceNew.gI().subQuantityItemsBag(player, item, 1);
                 InventoryServiceNew.gI().sendItemBags(player);
             } else {
-                Service.getInstance().sendThongBao(player, "Không thể thực hiện");
+                Service.gI().sendThongBao(player, "Không thể thực hiện");
             }
         } else {
-            Service.getInstance().sendThongBao(player, "Vui lòng tháo hết đồ đệ tử");
+            Service.gI().sendThongBao(player, "Vui lòng tháo hết đồ đệ tử");
         }
     }
 
@@ -604,21 +604,21 @@ public class UseItem {
             InventoryServiceNew.gI().sendItemBags(pl);
             CombineServiceNew.gI().sendEffectOpenItem(pl, item.template.iconID, ct.template.iconID);
         } else {
-            Service.getInstance().sendThongBao(pl, "Hàng trang đã đầy");
+            Service.gI().sendThongBao(pl, "Hàng trang đã đầy");
         }
     }
 
     private void eatGrapes(Player pl, Item item) {
         int percentCurrentStatima = pl.nPoint.stamina * 100 / pl.nPoint.maxStamina;
         if (percentCurrentStatima > 50) {
-            Service.getInstance().sendThongBao(pl, "Thể lực vẫn còn trên 50%");
+            Service.gI().sendThongBao(pl, "Thể lực vẫn còn trên 50%");
             return;
         } else if (item.template.id == 211) {
             pl.nPoint.stamina = pl.nPoint.maxStamina;
-            Service.getInstance().sendThongBao(pl, "Thể lực của bạn đã được hồi phục 100%");
+            Service.gI().sendThongBao(pl, "Thể lực của bạn đã được hồi phục 100%");
         } else if (item.template.id == 212) {
             pl.nPoint.stamina += (short) (pl.nPoint.maxStamina * 20 / 100);
-            Service.getInstance().sendThongBao(pl, "Thể lực của bạn đã được hồi phục 20%");
+            Service.gI().sendThongBao(pl, "Thể lực của bạn đã được hồi phục 20%");
         }
         InventoryServiceNew.gI().subQuantityItemsBag(pl, item, 1);
         InventoryServiceNew.gI().sendItemBags(pl);
@@ -650,7 +650,7 @@ public class UseItem {
 
             CombineServiceNew.gI().sendEffectOpenItem(pl, icon[0], icon[1]);
         } else {
-            Service.getInstance().sendThongBao(pl, "Hàng trang đã đầy");
+            Service.gI().sendThongBao(pl, "Hàng trang đã đầy");
         }
     }
 
@@ -669,17 +669,17 @@ public class UseItem {
             if (pl.pet.nPoint.power > 20000000000L) {
                 if (pl.pet.playerSkill.skills.get(2).skillId != -1) {
                     pl.pet.openSkill4();
-                    Service.getInstance().chatJustForMe(pl, pl.pet, "Cảm ơn sư phụ");
+                    Service.gI().chatJustForMe(pl, pl.pet, "Cảm ơn sư phụ");
                     InventoryServiceNew.gI().subQuantityItemsBag(pl, item, 1);
                     InventoryServiceNew.gI().sendItemBags(pl);
                 } else {
-                    Service.getInstance().sendThongBao(pl, "Ít nhất đệ tử ngươi phải có chiêu 3 chứ!");
+                    Service.gI().sendThongBao(pl, "Ít nhất đệ tử ngươi phải có chiêu 3 chứ!");
                 }
             } else {
-                Service.getInstance().sendThongBao(pl, "Yêu cầu đệ tử có skill 4");
+                Service.gI().sendThongBao(pl, "Yêu cầu đệ tử có skill 4");
             }
         } else {
-            Service.getInstance().sendThongBao(pl, "Ngươi làm gì có đệ tử?");
+            Service.gI().sendThongBao(pl, "Ngươi làm gì có đệ tử?");
         }
     }
 
@@ -698,31 +698,31 @@ public class UseItem {
                 it.itemOptions.add(new ItemOption(73, 0));
                 InventoryServiceNew.gI().addItemBag(pl, it);
                 icon[1] = it.template.iconID;
-                Service.getInstance().sendThongBao(pl, "Bạn đã nhận được " + it.template.name);
+                Service.gI().sendThongBao(pl, "Bạn đã nhận được " + it.template.name);
             } else if (Util.isTrue(13, 100)) {
                 Item it = ItemService.gI().createNewItem(da);
                 it.itemOptions.add(new ItemOption(73, 0));
                 InventoryServiceNew.gI().addItemBag(pl, it);
                 icon[1] = it.template.iconID;
-                Service.getInstance().sendThongBao(pl, "Bạn đã nhận được " + it.template.name);
+                Service.gI().sendThongBao(pl, "Bạn đã nhận được " + it.template.name);
             } else if (Util.isTrue(3, 100)) {
                 Item it = ItemService.gI().createNewItem(bua);
                 it.itemOptions.add(new ItemOption(73, 0));
                 InventoryServiceNew.gI().addItemBag(pl, it);
                 icon[1] = it.template.iconID;
-                Service.getInstance().sendThongBao(pl, "Bạn đã nhận được " + it.template.name);
+                Service.gI().sendThongBao(pl, "Bạn đã nhận được " + it.template.name);
             } else {
                 Item it = ItemService.gI().createNewItem(manh[index]);
                 it.itemOptions.add(new ItemOption(73, 0));
                 InventoryServiceNew.gI().addItemBag(pl, it);
                 icon[1] = it.template.iconID;
-                Service.getInstance().sendThongBao(pl, "Bạn đã nhận được " + it.template.name);
+                Service.gI().sendThongBao(pl, "Bạn đã nhận được " + it.template.name);
             }
             InventoryServiceNew.gI().subQuantityItemsBag(pl, item, 1);
             InventoryServiceNew.gI().sendItemBags(pl);
             CombineServiceNew.gI().sendEffectOpenItem(pl, icon[0], icon[1]);
         } else {
-            Service.getInstance().sendThongBao(pl, "Hàng trang đã đầy");
+            Service.gI().sendThongBao(pl, "Hàng trang đã đầy");
         }
     }
 
@@ -740,15 +740,15 @@ public class UseItem {
                     pl.inventory.gold = Inventory.LIMIT_GOLD;
                 }
                 icon[1] = 930;
-                Service.getInstance().sendThongBao(pl, "Bạn đã nhận được " + Util.format(vang) + " Vàng");
+                Service.gI().sendThongBao(pl, "Bạn đã nhận được " + Util.format(vang) + " Vàng");
                 if (item.template.id == 1335 || item.template.id == 1336) {
                     pl.nhsPoint += 2;
                     Service.gI().sendMoney(pl);
-                    Service.getInstance().sendThongBao(pl, "|4|Bạn nhận được 2 Điểm Sự kiện");
+                    Service.gI().sendThongBao(pl, "|4|Bạn nhận được 2 Điểm Sự kiện");
                 } else {
                     pl.nhsPoint += 5;
                     Service.gI().sendMoney(pl);
-                    Service.getInstance().sendThongBao(pl, "|4|Bạn nhận được 5 Điểm Sự kiện");
+                    Service.gI().sendThongBao(pl, "|4|Bạn nhận được 5 Điểm Sự kiện");
                 }
             } else {
                 Item it = ItemService.gI().createNewItem(rac[index2]);
@@ -758,22 +758,22 @@ public class UseItem {
                 it.itemOptions.add(new ItemOption(73, 0));
                 InventoryServiceNew.gI().addItemBag(pl, it);
                 icon[1] = it.template.iconID;
-                Service.getInstance().sendThongBao(pl, "Bạn đã nhận được " + it.template.name);
+                Service.gI().sendThongBao(pl, "Bạn đã nhận được " + it.template.name);
                 if (item.template.id == 1335 || item.template.id == 1336) {
                     pl.nhsPoint += 2;
                     Service.gI().sendMoney(pl);
-                    Service.getInstance().sendThongBao(pl, "|4|Bạn nhận được 2 Điểm Sự kiện");
+                    Service.gI().sendThongBao(pl, "|4|Bạn nhận được 2 Điểm Sự kiện");
                 } else {
                     pl.nhsPoint += 5;
                     Service.gI().sendMoney(pl);
-                    Service.getInstance().sendThongBao(pl, "|4|Bạn nhận được 5 Điểm Sự kiện");
+                    Service.gI().sendThongBao(pl, "|4|Bạn nhận được 5 Điểm Sự kiện");
                 }
             }
             InventoryServiceNew.gI().subQuantityItemsBag(pl, item, 1);
             InventoryServiceNew.gI().sendItemBags(pl);
             CombineServiceNew.gI().sendEffectOpenItem(pl, icon[0], icon[1]);
         } else {
-            Service.getInstance().sendThongBao(pl, "Hàng trang đã đầy");
+            Service.gI().sendThongBao(pl, "Hàng trang đã đầy");
         }
     }
 
@@ -808,12 +808,12 @@ public class UseItem {
             it.itemOptions.add(new ItemOption(30, 0));
             InventoryServiceNew.gI().addItemBag(pl, it);
             icon[1] = it.template.iconID;
-            Service.getInstance().sendThongBao(pl, "Bạn đã nhận được " + it.template.name);
+            Service.gI().sendThongBao(pl, "Bạn đã nhận được " + it.template.name);
             InventoryServiceNew.gI().subQuantityItemsBag(pl, item, 1);
             InventoryServiceNew.gI().sendItemBags(pl);
             CombineServiceNew.gI().sendEffectOpenItem(pl, icon[0], icon[1]);
         } else {
-            Service.getInstance().sendThongBao(pl, "Hàng trang đã đầy");
+            Service.gI().sendThongBao(pl, "Hàng trang đã đầy");
         }
     }
 
@@ -855,11 +855,11 @@ public class UseItem {
                 InventoryServiceNew.gI().addItemBag(player, itemReward3);
                 InventoryServiceNew.gI().addItemBag(player, itemReward4);
 
-                Service.getInstance().sendThongBao(player, "Bạn đã nhận được set đồ 10 sao !");
+                Service.gI().sendThongBao(player, "Bạn đã nhận được set đồ 10 sao !");
                 InventoryServiceNew.gI().subQuantityItemsBag(player, item, 1);
                 InventoryServiceNew.gI().sendItemBags(player);
             } else {
-                Service.getInstance().sendThongBao(player, "Bạn phải có ít nhất 5 ô trống hành trang");
+                Service.gI().sendThongBao(player, "Bạn phải có ít nhất 5 ô trống hành trang");
             }
         } else if (player.gender == 1) {
             Item itemReward = ItemService.gI().createNewItem((short) 1);
@@ -898,11 +898,11 @@ public class UseItem {
                 InventoryServiceNew.gI().addItemBag(player, itemReward3);
                 InventoryServiceNew.gI().addItemBag(player, itemReward4);
 
-                Service.getInstance().sendThongBao(player, "Bạn đã nhận được set đồ 10 sao !");
+                Service.gI().sendThongBao(player, "Bạn đã nhận được set đồ 10 sao !");
                 InventoryServiceNew.gI().subQuantityItemsBag(player, item, 1);
                 InventoryServiceNew.gI().sendItemBags(player);
             } else {
-                Service.getInstance().sendThongBao(player, "Bạn phải có ít nhất 5 ô trống hành trang");
+                Service.gI().sendThongBao(player, "Bạn phải có ít nhất 5 ô trống hành trang");
             }
         } else {
             Item itemReward = ItemService.gI().createNewItem((short) 2);
@@ -940,11 +940,11 @@ public class UseItem {
                 InventoryServiceNew.gI().addItemBag(player, itemReward3);
                 InventoryServiceNew.gI().addItemBag(player, itemReward4);
 
-                Service.getInstance().sendThongBao(player, "Bạn đã nhận được set đồ 10 sao !");
+                Service.gI().sendThongBao(player, "Bạn đã nhận được set đồ 10 sao !");
                 InventoryServiceNew.gI().subQuantityItemsBag(player, item, 1);
                 InventoryServiceNew.gI().sendItemBags(player);
             } else {
-                Service.getInstance().sendThongBao(player, "Bạn phải có ít nhất 5 ô trống hành trang");
+                Service.gI().sendThongBao(player, "Bạn phải có ít nhất 5 ô trống hành trang");
             }
         }
 
@@ -957,13 +957,13 @@ public class UseItem {
         icon[0] = item.template.iconID;
         if (InventoryServiceNew.gI().getCountEmptyBag(player) > 1) {
             InventoryServiceNew.gI().addItemBag(player, thanlinh);
-            Service.getInstance().sendThongBao(player, "Bạn đã nhận được " + thanlinh.template.name);
+            Service.gI().sendThongBao(player, "Bạn đã nhận được " + thanlinh.template.name);
             InventoryServiceNew.gI().subQuantityItemsBag(player, item, 1);
             icon[1] = thanlinh.template.iconID;
             InventoryServiceNew.gI().sendItemBags(player);
             CombineServiceNew.gI().sendEffectOpenItem(player, icon[0], icon[1]);
         } else {
-            Service.getInstance().sendThongBao(player, "Bạn phải có ít nhất 1 ô trống hành trang");
+            Service.gI().sendThongBao(player, "Bạn phải có ít nhất 1 ô trống hành trang");
         }
     }
 
@@ -981,7 +981,7 @@ public class UseItem {
             InventoryServiceNew.gI().sendItemBags(pl);
             CombineServiceNew.gI().sendEffectOpenItem(pl, icon[0], icon[1]);
         } else {
-            Service.getInstance().sendThongBao(pl, "Hàng trang đã đầy");
+            Service.gI().sendThongBao(pl, "Hàng trang đã đầy");
         }
     }
 
@@ -1022,7 +1022,7 @@ public class UseItem {
             CombineServiceNew.gI().sendEffectOpenItem(pl, icon[0], icon[1]);
 
         } else {
-            Service.getInstance().sendThongBao(pl, "Vui lòng đợi 24h");
+            Service.gI().sendThongBao(pl, "Vui lòng đợi 24h");
         }
     }
 
@@ -1047,7 +1047,7 @@ public class UseItem {
             case 381 -> {
                 pl.itemTime.lastTimeCuongNo = System.currentTimeMillis();
                 pl.itemTime.isUseCuongNo = true;
-                Service.getInstance().point(pl);
+                Service.gI().point(pl);
             }
             case 385 -> {
                 pl.itemTime.lastTimeAnDanh = System.currentTimeMillis();
@@ -1060,12 +1060,12 @@ public class UseItem {
             case 1317 -> {
                 pl.itemTimesieucap.lastTimeUseXiMuoi = System.currentTimeMillis();
                 pl.itemTimesieucap.isUseXiMuoi = true;
-                Service.getInstance().point(pl);
+                Service.gI().point(pl);
             }
             case 1099 -> {
                 pl.itemTimesieucap.lastTimeCuongNo3 = System.currentTimeMillis();
                 pl.itemTimesieucap.isUseCuongNo3 = true;
-                Service.getInstance().point(pl);
+                Service.gI().point(pl);
             }
             case 1100 -> {
                 pl.itemTimesieucap.lastTimeBoHuyet3 = System.currentTimeMillis();
@@ -1110,7 +1110,7 @@ public class UseItem {
                 pl.itemTime.isUseMayDo2 = true;
             }
         }
-        Service.getInstance().point(pl);
+        Service.gI().point(pl);
         ItemTimeService.gI().sendAllItemTime(pl);
         InventoryServiceNew.gI().subQuantityItemsBag(pl, item, 1);
         InventoryServiceNew.gI().sendItemBags(pl);
@@ -1146,42 +1146,42 @@ public class UseItem {
                 byte level = Byte.parseByte(subName[subName.length - 1]);
                 Skill curSkill = SkillUtil.getSkillByItemID(pl, item.template.id);
                 if (curSkill == null) {
-                    Service.getInstance().sendThongBao(pl, "Đã xảy ra lỗi, không tìm thấy kỹ năng");
+                    Service.gI().sendThongBao(pl, "Đã xảy ra lỗi, không tìm thấy kỹ năng");
                     return;
                 }
                 if (curSkill.point == 7) {
-                    Service.getInstance().sendThongBao(pl, "Kỹ năng đã đạt tối đa!");
+                    Service.gI().sendThongBao(pl, "Kỹ năng đã đạt tối đa!");
                 } else {
                     if (curSkill.point == 0) {
                         if (level == 1) {
                             curSkill = SkillUtil.createSkill(SkillUtil.getTempSkillSkillByItemID(item.template.id), level);
                             SkillUtil.setSkill(pl, curSkill);
                             InventoryServiceNew.gI().subQuantityItemsBag(pl, item, 1);
-                            msg = Service.getInstance().messageSubCommand((byte) 23);
+                            msg = Service.gI().messageSubCommand((byte) 23);
                             msg.writer().writeShort(curSkill.skillId);
                             pl.sendMessage(msg);
                             msg.cleanup();
                         } else {
                             Skill skillNeed = SkillUtil.createSkill(SkillUtil.getTempSkillSkillByItemID(item.template.id), level);
-                            Service.getInstance().sendThongBao(pl, "Vui lòng học " + skillNeed.template.name + " cấp " + skillNeed.point + " trước!");
+                            Service.gI().sendThongBao(pl, "Vui lòng học " + skillNeed.template.name + " cấp " + skillNeed.point + " trước!");
                         }
                     } else {
                         if (curSkill.point + 1 == level) {
                             curSkill = SkillUtil.createSkill(SkillUtil.getTempSkillSkillByItemID(item.template.id), level);
                             SkillUtil.setSkill(pl, curSkill);
                             InventoryServiceNew.gI().subQuantityItemsBag(pl, item, 1);
-                            msg = Service.getInstance().messageSubCommand((byte) 62);
+                            msg = Service.gI().messageSubCommand((byte) 62);
                             msg.writer().writeShort(curSkill.skillId);
                             pl.sendMessage(msg);
                             msg.cleanup();
                         } else {
-                            Service.getInstance().sendThongBao(pl, "Vui lòng học " + curSkill.template.name + " cấp " + (curSkill.point + 1) + " trước!");
+                            Service.gI().sendThongBao(pl, "Vui lòng học " + curSkill.template.name + " cấp " + (curSkill.point + 1) + " trước!");
                         }
                     }
                     InventoryServiceNew.gI().sendItemBags(pl);
                 }
             } else {
-                Service.getInstance().sendThongBao(pl, "Không thể thực hiện");
+                Service.gI().sendThongBao(pl, "Không thể thực hiện");
             }
         } catch (Exception e) {
             Logger.logException(UseItem.class, e);
@@ -1198,7 +1198,7 @@ public class UseItem {
 
     private void usePorata2(Player pl) {
         if (pl.pet == null || pl.fusion.typeFusion == 4) {
-            Service.getInstance().sendThongBao(pl, "Không thể thực hiện");
+            Service.gI().sendThongBao(pl, "Không thể thực hiện");
         } else {
             if (pl.fusion.typeFusion == ConstPlayer.NON_FUSION) {
                 pl.pet.fusion2(true);
@@ -1210,7 +1210,7 @@ public class UseItem {
 
     private void usePorata3(Player pl) {
         if (pl.pet == null || pl.fusion.typeFusion == 4) {
-            Service.getInstance().sendThongBao(pl, "Không thể thực hiện");
+            Service.gI().sendThongBao(pl, "Không thể thực hiện");
         } else {
             if (pl.fusion.typeFusion == ConstPlayer.NON_FUSION) {
                 pl.pet.fusion3(true);
@@ -1222,7 +1222,7 @@ public class UseItem {
 
     private void usePorata4(Player pl) {
         if (pl.pet == null || pl.fusion.typeFusion == 4) {
-            Service.getInstance().sendThongBao(pl, "Không thể thực hiện");
+            Service.gI().sendThongBao(pl, "Không thể thực hiện");
         } else {
             if (pl.fusion.typeFusion == ConstPlayer.NON_FUSION) {
                 pl.pet.fusion4(true);
@@ -1234,7 +1234,7 @@ public class UseItem {
 
     private void usePorata(Player pl) {
         if (pl.pet == null || pl.fusion.typeFusion == 4) {
-            Service.getInstance().sendThongBao(pl, "Không thể thực hiện");
+            Service.gI().sendThongBao(pl, "Không thể thực hiện");
         } else {
             if (pl.fusion.typeFusion == ConstPlayer.NON_FUSION) {
                 pl.pet.fusion(true);
@@ -1263,7 +1263,7 @@ public class UseItem {
                 || MapService.gI().isMapHuyDiet(zoneChose.map.mapId)
                 || MapService.gI().isMapBanDoKhoBau(zoneChose.map.mapId)
                 || MapService.gI().isMapKhiGas(zoneChose.map.mapId)) {
-            Service.getInstance().sendThongBao(pl, "Hiện tại không thể vào được khu!");
+            Service.gI().sendThongBao(pl, "Hiện tại không thể vào được khu!");
             return;
         }
         if (index != 0 || zoneChose.map.mapId == 21
@@ -1301,7 +1301,7 @@ public class UseItem {
             player.nPoint.setHp(player.nPoint.hp + hpKiHoiPhuc);
             player.nPoint.setMp(player.nPoint.mp + hpKiHoiPhuc);
             PlayerService.gI().sendInfoHpMp(player);
-            Service.getInstance().sendInfoPlayerEatPea(player);
+            Service.gI().sendInfoPlayerEatPea(player);
             if (player.pet != null && player.zone.equals(player.pet.zone) && !player.pet.isDie()) {
                 int statima = 100 * lvPea;
                 player.pet.nPoint.stamina += (short) statima;
@@ -1310,14 +1310,14 @@ public class UseItem {
                 }
                 player.pet.nPoint.setHp(player.pet.nPoint.hp + hpKiHoiPhuc);
                 player.pet.nPoint.setMp(player.pet.nPoint.mp + hpKiHoiPhuc);
-                Service.getInstance().sendInfoPlayerEatPea(player.pet);
-                Service.getInstance().chatJustForMe(player, player.pet, "Cảm ơn sư phụ đã cho con đậu thần");
+                Service.gI().sendInfoPlayerEatPea(player.pet);
+                Service.gI().chatJustForMe(player, player.pet, "Cảm ơn sư phụ đã cho con đậu thần");
             }
             if (player.thuTrieuHoi != null && player.zone.equals(player.thuTrieuHoi.zone) && !player.thuTrieuHoi.isDie()) {
                 player.thuTrieuHoi.nPoint.setHp(player.thuTrieuHoi.nPoint.hp + hpKiHoiPhuc);
                 player.thuTrieuHoi.nPoint.setMp(player.thuTrieuHoi.nPoint.mp + hpKiHoiPhuc);
-                Service.getInstance().sendInfoPlayerEatPea(player.thuTrieuHoi);
-                Service.getInstance().chatJustForMe(player, player.thuTrieuHoi, "Đa tạ Chủ Thượng");
+                Service.gI().sendInfoPlayerEatPea(player.thuTrieuHoi);
+                Service.gI().chatJustForMe(player, player.thuTrieuHoi, "Đa tạ Chủ Thượng");
             }
 
             InventoryServiceNew.gI().subQuantityItemsBag(player, pea, 1);
@@ -1327,46 +1327,46 @@ public class UseItem {
 
     private void upSkillPet(Player pl, Item item) {
         if (pl.pet == null) {
-            Service.getInstance().sendThongBao(pl, "Không thể thực hiện");
+            Service.gI().sendThongBao(pl, "Không thể thực hiện");
             return;
         }
         try {
             switch (item.template.id) {
                 case 402 -> {
                     if (SkillUtil.upSkillPet(pl.pet.playerSkill.skills, 0)) {
-                        Service.getInstance().chatJustForMe(pl, pl.pet, "Cảm ơn sư phụ");
+                        Service.gI().chatJustForMe(pl, pl.pet, "Cảm ơn sư phụ");
                         InventoryServiceNew.gI().subQuantityItemsBag(pl, item, 1);
                     } else {
-                        Service.getInstance().sendThongBao(pl, "Không thể thực hiện");
+                        Service.gI().sendThongBao(pl, "Không thể thực hiện");
                     }
                 }
                 case 403 -> {
                     if (SkillUtil.upSkillPet(pl.pet.playerSkill.skills, 1)) {
-                        Service.getInstance().chatJustForMe(pl, pl.pet, "Cảm ơn sư phụ");
+                        Service.gI().chatJustForMe(pl, pl.pet, "Cảm ơn sư phụ");
                         InventoryServiceNew.gI().subQuantityItemsBag(pl, item, 1);
                     } else {
-                        Service.getInstance().sendThongBao(pl, "Không thể thực hiện");
+                        Service.gI().sendThongBao(pl, "Không thể thực hiện");
                     }
                 }
                 case 404 -> {
                     if (SkillUtil.upSkillPet(pl.pet.playerSkill.skills, 2)) {
-                        Service.getInstance().chatJustForMe(pl, pl.pet, "Cảm ơn sư phụ");
+                        Service.gI().chatJustForMe(pl, pl.pet, "Cảm ơn sư phụ");
                         InventoryServiceNew.gI().subQuantityItemsBag(pl, item, 1);
                     } else {
-                        Service.getInstance().sendThongBao(pl, "Không thể thực hiện");
+                        Service.gI().sendThongBao(pl, "Không thể thực hiện");
                     }
                 }
                 case 759 -> {
                     if (SkillUtil.upSkillPet(pl.pet.playerSkill.skills, 3)) {
-                        Service.getInstance().chatJustForMe(pl, pl.pet, "Cảm ơn sư phụ");
+                        Service.gI().chatJustForMe(pl, pl.pet, "Cảm ơn sư phụ");
                         InventoryServiceNew.gI().subQuantityItemsBag(pl, item, 1);
                     } else {
-                        Service.getInstance().sendThongBao(pl, "Không thể thực hiện");
+                        Service.gI().sendThongBao(pl, "Không thể thực hiện");
                     }
                 }
             }
         } catch (Exception e) {
-            Service.getInstance().sendThongBao(pl, "Không thể thực hiện");
+            Service.gI().sendThongBao(pl, "Không thể thực hiện");
         }
     }
 

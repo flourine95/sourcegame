@@ -187,7 +187,7 @@ public class MagicTree {
         short gold = PEA_UPGRADE[this.level - 1][3];
         int goldRequire = gold * (this.level <= 3 ? 1000 : 1000000);
         if (this.player.inventory.gold < goldRequire) {
-            Service.getInstance().sendThongBao(player, "Bạn không đủ vàng để nâng cấp, còn thiếu "
+            Service.gI().sendThongBao(player, "Bạn không đủ vàng để nâng cấp, còn thiếu "
                     + (goldRequire - this.player.inventory.gold) + " vàng nữa");
         } else {
             this.player.inventory.gold -= goldRequire;
@@ -280,7 +280,7 @@ public class MagicTree {
             InventoryServiceNew.gI().addItemBox(player, pea);
         }
         if (pea.quantity < quantity) {
-            Service.getInstance().sendThongBao(player, "Bạn vừa thu hoạch được " + (quantity - pea.quantity) + " hạt " + pea.template.name);
+            Service.gI().sendThongBao(player, "Bạn vừa thu hoạch được " + (quantity - pea.quantity) + " hạt " + pea.template.name);
         }
         return pea.quantity;
     }

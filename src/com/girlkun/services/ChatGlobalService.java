@@ -39,7 +39,7 @@ public class ChatGlobalService implements Runnable {
 //            return;
 //        }
         if (waitingChat.size() >= COUNT_WAIT) {
-            Service.getInstance().sendThongBao(player, "Kênh thế giới hiện đang quá tải, không thể chat lúc này");
+            Service.gI().sendThongBao(player, "Kênh thế giới hiện đang quá tải, không thể chat lúc này");
             return;
         }
         boolean haveInChatting = false;
@@ -57,18 +57,18 @@ public class ChatGlobalService implements Runnable {
             if (player.isAdmin() || Util.canDoWithTime(player.iDMark.getLastTimeChatGlobal(), 30000)) {
                 if (player.isAdmin() || player.nPoint.power > 2000000000) {
                     player.inventory.ruby -=5; 
-                    Service.getInstance().sendMoney(player);
+                    Service.gI().sendMoney(player);
                     player.iDMark.setLastTimeChatGlobal(System.currentTimeMillis());
                     waitingChat.add(new ChatGlobal(player, text.length() > 100 ? text.substring(0, 100) : text));
                 } else {
-                    Service.getInstance().sendThongBao(player, "Sức mạnh phải ít nhất 2tỷ mới có thể chat thế giới");
+                    Service.gI().sendThongBao(player, "Sức mạnh phải ít nhất 2tỷ mới có thể chat thế giới");
                 }
             } else {
-                Service.getInstance().sendThongBao(player, "Không thể chat thế giới lúc này, vui lòng đợi 30 giây");
+                Service.gI().sendThongBao(player, "Không thể chat thế giới lúc này, vui lòng đợi 30 giây");
 //                        + TimeUtil.getTimeLeft(player.iDMark.getLastTimeChatGlobal(), 240));
             }
         } else {
-            Service.getInstance().sendThongBao(player, "Không đủ hồng ngọc chat thế giới");
+            Service.gI().sendThongBao(player, "Không đủ hồng ngọc chat thế giới");
         }
     }
 
@@ -112,7 +112,7 @@ public class ChatGlobalService implements Runnable {
             msg.writer().writeShort(chat.bag); //bag
             msg.writer().writeShort(chat.leg);
             msg.writer().writeByte(0);
-            Service.getInstance().sendMessAllPlayer(msg);
+            Service.gI().sendMessAllPlayer(msg);
             msg.cleanup();
         } catch (Exception e) {
         }

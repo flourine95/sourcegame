@@ -18,7 +18,7 @@ public class Rong2Sao extends Boss {
     @Override
     public void reward(Player plKill) {
         ItemMap it = new ItemMap(this.zone, 373, 1, this.location.x, this.location.y, -1);
-        Service.getInstance().dropItemMap(this.zone, it);
+        Service.gI().dropItemMap(this.zone, it);
     }
 @Override
     public double injured(Player plAtt, double damage, boolean piercing, boolean isMobAttack) {

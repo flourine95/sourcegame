@@ -87,10 +87,10 @@ public class Input {
                         item.itemOptions.add(new Item.ItemOption(op, pr));
                         InventoryServiceNew.gI().addItemBag(Client.gI().getPlayer(name), item);
                         InventoryServiceNew.gI().sendItemBags(Client.gI().getPlayer(name));
-                        Service.getInstance().sendThongBao(Client.gI().getPlayer(name), "Nhận được " + item.template.name + " từ " + player.name);
+                        Service.gI().sendThongBao(Client.gI().getPlayer(name), "Nhận được " + item.template.name + " từ " + player.name);
 
                     } else {
-                        Service.getInstance().sendThongBao(player, "Không online");
+                        Service.gI().sendThongBao(player, "Không online");
                     }
                     break;
                 case VE_HONG_NGOC:
@@ -107,18 +107,18 @@ public class Input {
                             InventoryServiceNew.gI().sendItemBags(Client.gI().getPlayer(namee));
                             Service.gI().sendMoney(Client.gI().getPlayer(namee));
                             Service.gI().sendMoney(player);
-                            Service.getInstance().sendThongBao(Client.gI().getPlayer(namee), "|1|Nhận được " + Util.format(hongngoc) + " Hồng ngọc từ " + player.name);
+                            Service.gI().sendThongBao(Client.gI().getPlayer(namee), "|1|Nhận được " + Util.format(hongngoc) + " Hồng ngọc từ " + player.name);
                         } else {
-                            Service.getInstance().sendThongBao(player, "|7|Số Hồng ngọc vượt quá Hồng ngọc của bạn");
+                            Service.gI().sendThongBao(player, "|7|Số Hồng ngọc vượt quá Hồng ngọc của bạn");
                         }
                     } else {
-                        Service.getInstance().sendThongBao(player, "Không online");
+                        Service.gI().sendThongBao(player, "Không online");
                     }
                     break;
                 case MUA_NHIEU_VP:
                     player.highPurchaseCount = Integer.parseInt(text[0]);
                     if (player.highPurchaseCount > 1000) {
-                        Service.getInstance().sendThongBao(player, "|7|Quá giới hạn mua. Tối đa 1000 Vật phẩm");
+                        Service.gI().sendThongBao(player, "|7|Quá giới hạn mua. Tối đa 1000 Vật phẩm");
                         player.highPurchaseCount = 0;
                         player.idItemHighPurchase = -1;
                     } else {
@@ -126,12 +126,12 @@ public class Input {
                             try {
                                 for (int i = 0; i < player.highPurchaseCount; i++) {
                                     ShopServiceNew.gI().buyItem(player, player.idItemHighPurchase);
-                                    Service.getInstance().sendMoney(player);
+                                    Service.gI().sendMoney(player);
                                     InventoryServiceNew.gI().sendItemBags(player);
                                     Thread.sleep(100);
                                 }
-                                Service.getInstance().sendThongBao(player, "|1|Đã mua xong " + player.highPurchaseCount + " vật phẩm");
-                                Service.getInstance().sendMoney(player);
+                                Service.gI().sendThongBao(player, "|1|Đã mua xong " + player.highPurchaseCount + " vật phẩm");
+                                Service.gI().sendMoney(player);
                                 InventoryServiceNew.gI().sendItemBags(player);
                                 player.highPurchaseCount = 0;
                                 player.idItemHighPurchase = -1;
@@ -143,7 +143,7 @@ public class Input {
                     }
                     break;
                 case CHANGE_PASSWORD:
-                    Service.getInstance().changePassword(player, text[0], text[1], text[2]);
+                    Service.gI().changePassword(player, text[0], text[1], text[2]);
                     break;
                 case GIFT_CODE:
                     Giftcode.gI().giftCode(player, text[0]);
@@ -155,24 +155,24 @@ public class Input {
                                 new String[]{"Đi tới\n" + pl.name, "Gọi " + pl.name + "\ntới đây", "Đổi tên", "Ban", "Kick"},
                                 pl);
                     } else {
-                        Service.getInstance().sendThongBao(player, "Người chơi không tồn tại hoặc đang offline");
+                        Service.gI().sendThongBao(player, "Người chơi không tồn tại hoặc đang offline");
                     }
                     break;
                 case CHANGE_NAME: {
                     Player plChanged = (Player) PLAYER_ID_OBJECT.get((int) player.id);
                     if (plChanged != null) {
                         if (GirlkunDB.executeQuery("select * from player where name = ?", text[0]).next()) {
-                            Service.getInstance().sendThongBao(player, "Tên nhân vật đã tồn tại");
+                            Service.gI().sendThongBao(player, "Tên nhân vật đã tồn tại");
                         } else {
                             plChanged.name = text[0];
                             GirlkunDB.executeUpdate("update player set name = ? where id = ?", plChanged.name, plChanged.id);
-                            Service.getInstance().player(plChanged);
-                            Service.getInstance().Send_Caitrang(plChanged);
-                            Service.getInstance().sendFlagBag(plChanged);
+                            Service.gI().player(plChanged);
+                            Service.gI().Send_Caitrang(plChanged);
+                            Service.gI().sendFlagBag(plChanged);
                             Zone zone = plChanged.zone;
                             ChangeMapService.gI().changeMap(plChanged, zone, plChanged.location.x, plChanged.location.y);
-                            Service.getInstance().sendThongBao(plChanged, "Chúc mừng bạn đã có cái tên mới đẹp đẽ hơn tên ban đầu");
-                            Service.getInstance().sendThongBao(player, "Đổi tên người chơi thành công");
+                            Service.gI().sendThongBao(plChanged, "Chúc mừng bạn đã có cái tên mới đẹp đẽ hơn tên ban đầu");
+                            Service.gI().sendThongBao(player, "Đổi tên người chơi thành công");
                         }
                     }
                 }
@@ -180,22 +180,22 @@ public class Input {
                 case CHANGE_NAME_BY_ITEM: {
                     if (player != null) {
                         if (GirlkunDB.executeQuery("select * from player where name = ?", text[0]).next()) {
-                            Service.getInstance().sendThongBao(player, "Tên nhân vật đã tồn tại");
+                            Service.gI().sendThongBao(player, "Tên nhân vật đã tồn tại");
                             createFormChangeNameByItem(player);
                         } else {
                             Item theDoiTen = InventoryServiceNew.gI().findItem(player.inventory.itemsBag, 2006);
                             if (theDoiTen == null) {
-                                Service.getInstance().sendThongBao(player, "Không tìm thấy thẻ đổi tên");
+                                Service.gI().sendThongBao(player, "Không tìm thấy thẻ đổi tên");
                             } else {
                                 InventoryServiceNew.gI().subQuantityItemsBag(player, theDoiTen, 1);
                                 player.name = text[0];
                                 GirlkunDB.executeUpdate("update player set name = ? where id = ?", player.name, player.id);
-                                Service.getInstance().player(player);
-                                Service.getInstance().Send_Caitrang(player);
-                                Service.getInstance().sendFlagBag(player);
+                                Service.gI().player(player);
+                                Service.gI().Send_Caitrang(player);
+                                Service.gI().sendFlagBag(player);
                                 Zone zone = player.zone;
                                 ChangeMapService.gI().changeMap(player, zone, player.location.x, player.location.y);
-                                Service.getInstance().sendThongBao(player, "Chúc mừng bạn đã có cái tên mới đẹp đẽ hơn tên ban đầu");
+                                Service.gI().sendThongBao(player, "Chúc mừng bạn đã có cái tên mới đẹp đẽ hơn tên ban đầu");
                             }
                         }
                     }
@@ -227,7 +227,7 @@ public class Input {
                             if (player.inventory.ruby >= sotvxiu) {
                                 player.inventory.ruby -= sotvxiu;
                                 InventoryServiceNew.gI().sendItemBags(player);
-                                Service.getInstance().sendMoney(player);
+                                Service.gI().sendMoney(player);
 
                                 new Thread(() -> {
                                     Timer timer = new Timer();
@@ -251,7 +251,7 @@ public class Input {
                                                 if (player != null) {
                                                     player.inventory.ruby += sotvxiu * 1.8;
                                                     InventoryServiceNew.gI().sendItemBags(player);
-                                                    Service.getInstance().sendMoney(player);
+                                                    Service.gI().sendMoney(player);
                                                     Service.gI().sendThongBaoOK(player, "KẾT QUẢ" + "\nSố hệ thống quay ra : " + x + " "
                                                             + y + " " + z + "\nTổng là : " + tong + "\n\nBạn đã cược : " + sotvxiu
                                                             + " Hồng ngọc vào Xỉu" + "\nKẾT QUẢ : Xỉu" + "\n\nVề bờ");
@@ -312,7 +312,7 @@ public class Input {
                             if (player.inventory.ruby >= sotvtai) {
                                 player.inventory.ruby -= sotvtai;
                                 InventoryServiceNew.gI().sendItemBags(player);
-                                Service.getInstance().sendMoney(player);
+                                Service.gI().sendMoney(player);
                                 new Thread(() -> {
                                     Timer timer = new Timer();
                                     timer.schedule(new TimerTask() {
@@ -347,7 +347,7 @@ public class Input {
                                                 if (player != null) {
                                                     player.inventory.ruby += sotvtai * 1.8;
                                                     InventoryServiceNew.gI().sendItemBags(player);
-                                                    Service.getInstance().sendMoney(player);
+                                                    Service.gI().sendMoney(player);
                                                     Service.gI().sendThongBaoOK(player, "KẾT QUẢ" + "\nSố hệ thống quay ra : " + x + " "
                                                             + y + " " + z + "\nTổng là : " + tong + "\n\nBạn đã cược : " + sotvtai
                                                             + " Hồng ngọc vào Tài" + "\nKẾT QUẢ : Tài" + "\n\nVề bờ");
@@ -402,7 +402,7 @@ public class Input {
                                 Service.gI().sendThongBao(player, "Bạn đã đặt " + Util.format(sotvxiu1) + " Hồng ngọc vào TÀI");
                                 TaiXiu.gI().addPlayerTai(player);
                                 InventoryServiceNew.gI().sendItemBags(player);
-                                Service.getInstance().sendMoney(player);
+                                Service.gI().sendMoney(player);
                                 PlayerDAO.updatePlayer(player);
                             } else {
                                 Service.gI().sendThongBao(player, "Bạn không đủ Hồng ngọc để chơi.");
@@ -429,7 +429,7 @@ public class Input {
                                 Service.gI().sendThongBao(player, "Bạn đã đặt " + Util.format(sotvxiu2) + " Hồng ngọc vào XỈU");
                                 TaiXiu.gI().addPlayerXiu(player);
                                 InventoryServiceNew.gI().sendItemBags(player);
-                                Service.getInstance().sendMoney(player);
+                                Service.gI().sendMoney(player);
                                 PlayerDAO.updatePlayer(player);
                             } else {
                                 Service.gI().sendThongBao(player, "Bạn không đủ Hồng ngọc để chơi.");
@@ -475,10 +475,10 @@ public class Input {
                                     NpcService.gI().createTutorial(pBuffItem, 24, txtBuff);
                                 }
                             } else {
-                                Service.getInstance().sendThongBao(player, "Player không online");
+                                Service.gI().sendThongBao(player, "Player không online");
                             }
                         } catch (Exception e) {
-                            Service.getInstance().sendThongBao(player, "Đã có lỗi xảy ra vui lòng thử lại");
+                            Service.gI().sendThongBao(player, "Đã có lỗi xảy ra vui lòng thử lại");
                         }
 
                     }
@@ -493,7 +493,7 @@ public class Input {
                                     new String[]{"Đồng ý, Let's Go", "Từ chối"}, levele);
                         }
                     } else {
-                        Service.getInstance().sendThongBao(player, "Không thể thực hiện");
+                        Service.gI().sendThongBao(player, "Không thể thực hiện");
                     }
 
                     break;
@@ -507,7 +507,7 @@ public class Input {
                                     new String[]{"Đồng ý", "Từ chối"}, level);
                         }
                     } else {
-                        Service.getInstance().sendThongBao(player, "Không thể thực hiện");
+                        Service.gI().sendThongBao(player, "Không thể thực hiện");
                     }
 
                     break;
@@ -516,7 +516,7 @@ public class Input {
                     if (Manager.khuyenMaiNap != 1) {
                         if (goldTrade % 1000 == 0) {
                             if (goldTrade <= 0 || goldTrade >= 1000001) {
-                                Service.getInstance().sendThongBao(player, "|7|Quá giới hạn mỗi lần tối đa 1.000.000");
+                                Service.gI().sendThongBao(player, "|7|Quá giới hạn mỗi lần tối đa 1.000.000");
                             } else if (player.getSession().vnd >= goldTrade) {//* coinGold
                                 if (goldTrade >= 500000) {
                                     PlayerDAO.subvnd(player, goldTrade);//* coinGold
@@ -528,13 +528,13 @@ public class Input {
                                     Item thoiVang = ItemService.gI().createNewItem((short) 861, goldTrade * Manager.khuyenMaiNap);// x3
                                     InventoryServiceNew.gI().addItemBag(player, thoiVang);
                                     if (thehongngoc != null) {
-                                        Service.getInstance().sendThongBao(player, "|3|Bạn đã có Vé tặng ngọc rồi nên không nhận được nữa !!");
-                                        Service.getInstance().sendThongBao(player, "Bạn nhận được " + Util.format(goldTrade * Manager.khuyenMaiNap)//* ratioGold * 2
+                                        Service.gI().sendThongBao(player, "|3|Bạn đã có Vé tặng ngọc rồi nên không nhận được nữa !!");
+                                        Service.gI().sendThongBao(player, "Bạn nhận được " + Util.format(goldTrade * Manager.khuyenMaiNap)//* ratioGold * 2
                                                 + " " + (thoiVang.template.name));
                                     } else {
                                         Item thehn = ItemService.gI().createNewItem((short) 1132, 1);
                                         InventoryServiceNew.gI().addItemBag(player, thehn);
-                                        Service.getInstance().sendThongBao(player, "Bạn nhận được " + Util.format(goldTrade * Manager.khuyenMaiNap)//* ratioGold * 2
+                                        Service.gI().sendThongBao(player, "Bạn nhận được " + Util.format(goldTrade * Manager.khuyenMaiNap)//* ratioGold * 2
                                                 + " " + (thoiVang.template.name) + " và 1 Vé tặng hồng ngọc");
                                     }
                                     InventoryServiceNew.gI().sendItemBags(player);
@@ -547,27 +547,27 @@ public class Input {
                                     InventoryServiceNew.gI().addItemBag(player, thoiVang);
                                     InventoryServiceNew.gI().sendItemBags(player);
                                     player.achievement.numPayMoney += goldTrade;
-                                    Service.getInstance().sendThongBao(player, "Bạn nhận được " + Util.format(goldTrade * Manager.khuyenMaiNap)//* ratioGold * 2
+                                    Service.gI().sendThongBao(player, "Bạn nhận được " + Util.format(goldTrade * Manager.khuyenMaiNap)//* ratioGold * 2
                                             + " " + thoiVang.template.name);
                                     GirlkunDB.executeUpdate("update player set vnd = (vnd + " + goldTrade //* coinGold
                                             + ") where id = " + player.id);
                                 }
                                 if (Manager.suKien == 1) {
                                     player.nhsPoint += goldTrade / 1000; //Skien trung thu
-                                    Service.getInstance().sendThongBao(player, "|4|Bạn nhận được " + Util.format(goldTrade / 1000)//* ratioGold * 2
+                                    Service.gI().sendThongBao(player, "|4|Bạn nhận được " + Util.format(goldTrade / 1000)//* ratioGold * 2
                                             + " Điểm sự kiện Trung thu");
                                 }
                             } else {
-                                Service.getInstance().sendThongBao(player, "|7|Số tiền của bạn là " + player.getSession().vnd + " không đủ để quy "
+                                Service.gI().sendThongBao(player, "|7|Số tiền của bạn là " + player.getSession().vnd + " không đủ để quy "
                                         + " đổi " + goldTrade + " Hồng ngọc " + " " + "bạn cần thêm " + (player.getSession().vnd - goldTrade));
                             }
                         } else {
-                            Service.getInstance().sendThongBao(player, "|7|Số tiền nhập phải là bội số của 1000");
+                            Service.gI().sendThongBao(player, "|7|Số tiền nhập phải là bội số của 1000");
                         }
                     } else {
                         if (goldTrade % 1000 == 0) {
                             if (goldTrade <= 0 || goldTrade >= 1000001) {
-                                Service.getInstance().sendThongBao(player, "|7|Quá giới hạn mỗi lần tối đa 1.000.000");
+                                Service.gI().sendThongBao(player, "|7|Quá giới hạn mỗi lần tối đa 1.000.000");
                             } else if (player.getSession().vnd >= goldTrade) {//* coinGold
                                 if (goldTrade >= 500000) {
                                     PlayerDAO.subvnd(player, goldTrade);//* coinGold
@@ -579,13 +579,13 @@ public class Input {
                                     Item thoiVang = ItemService.gI().createNewItem((short) 861, Manager.suKien != 1 ? (goldTrade * 2) : goldTrade);// x3
                                     InventoryServiceNew.gI().addItemBag(player, thoiVang);
                                     if (thehongngoc != null) {
-                                        Service.getInstance().sendThongBao(player, "|3|Bạn đã có Vé tặng ngọc rồi nên không nhận được nữa !!");
-                                        Service.getInstance().sendThongBao(player, "Bạn nhận được " + (Manager.suKien != 1 ? Util.format(goldTrade * 2) : Util.format(goldTrade))//* ratioGold * 2
+                                        Service.gI().sendThongBao(player, "|3|Bạn đã có Vé tặng ngọc rồi nên không nhận được nữa !!");
+                                        Service.gI().sendThongBao(player, "Bạn nhận được " + (Manager.suKien != 1 ? Util.format(goldTrade * 2) : Util.format(goldTrade))//* ratioGold * 2
                                                 + " " + (thoiVang.template.name));
                                     } else {
                                         Item thehn = ItemService.gI().createNewItem((short) 1132, 1);
                                         InventoryServiceNew.gI().addItemBag(player, thehn);
-                                        Service.getInstance().sendThongBao(player, "Bạn nhận được " + (Manager.suKien != 1 ? Util.format(goldTrade * 2) : Util.format(goldTrade))//* ratioGold * 2
+                                        Service.gI().sendThongBao(player, "Bạn nhận được " + (Manager.suKien != 1 ? Util.format(goldTrade * 2) : Util.format(goldTrade))//* ratioGold * 2
                                                 + " " + (thoiVang.template.name) + " và 1 Vé tặng hồng ngọc");
                                     }
                                     InventoryServiceNew.gI().sendItemBags(player);
@@ -598,7 +598,7 @@ public class Input {
                                     InventoryServiceNew.gI().addItemBag(player, thoiVang);
                                     InventoryServiceNew.gI().sendItemBags(player);
                                     player.achievement.numPayMoney += goldTrade;
-                                    Service.getInstance().sendThongBao(player, "Bạn nhận được " + Util.format(goldTrade)//* ratioGold * 2
+                                    Service.gI().sendThongBao(player, "Bạn nhận được " + Util.format(goldTrade)//* ratioGold * 2
                                             + " " + thoiVang.template.name);
                                     GirlkunDB.executeUpdate("update player set vnd = (vnd + " + goldTrade //* coinGold
                                             + ") where id = " + player.id);
@@ -609,11 +609,11 @@ public class Input {
 //                                            + " Điểm sự kiện Trung thu");
 //                                }
                             } else {
-                                Service.getInstance().sendThongBao(player, "|7|Số tiền của bạn là " + player.getSession().vnd + " không đủ để quy "
+                                Service.gI().sendThongBao(player, "|7|Số tiền của bạn là " + player.getSession().vnd + " không đủ để quy "
                                         + " đổi " + goldTrade + " Hồng ngọc " + " " + "bạn cần thêm " + (player.getSession().vnd - goldTrade));
                             }
                         } else {
-                            Service.getInstance().sendThongBao(player, "|7|Số tiền nhập phải là bội số của 1000");
+                            Service.gI().sendThongBao(player, "|7|Số tiền nhập phải là bội số của 1000");
                         }
                     }
                     break;
@@ -623,7 +623,7 @@ public class Input {
                     if (Manager.khuyenMaiNap != 1) {
                         if (goldTrade1 % 1000 == 0) {
                             if (goldTrade1 <= 0 || goldTrade1 >= 1000001) {
-                                Service.getInstance().sendThongBao(player, "|7|Quá giới hạn mỗi lần tối đa 1.000.000");
+                                Service.gI().sendThongBao(player, "|7|Quá giới hạn mỗi lần tối đa 1.000.000");
                             } else if (player.getSession().vnd >= goldTrade1) {//* coinGold
                                 if (goldTrade1 >= 1000000) {
                                     Item thehongngoc = null;
@@ -637,13 +637,13 @@ public class Input {
                                     InventoryServiceNew.gI().sendItemBags(player);
                                     player.achievement.numPayMoney += goldTrade1;
                                     if (thehongngoc != null) {
-                                        Service.getInstance().sendThongBao(player, "|3|Bạn đã có Vé tặng ngọc rồi nên không nhận được nữa !!");
-                                        Service.getInstance().sendThongBao(player, "Bạn nhận được " + Util.format((Manager.khuyenMaiNap * (goldTrade1 / 50)))//* ratioGold * 2
+                                        Service.gI().sendThongBao(player, "|3|Bạn đã có Vé tặng ngọc rồi nên không nhận được nữa !!");
+                                        Service.gI().sendThongBao(player, "Bạn nhận được " + Util.format((Manager.khuyenMaiNap * (goldTrade1 / 50)))//* ratioGold * 2
                                                 + " " + (thoiVang.template.name));
                                     } else {
                                         Item thehn = ItemService.gI().createNewItem((short) 1132, 1);
                                         InventoryServiceNew.gI().addItemBag(player, thehn);
-                                        Service.getInstance().sendThongBao(player, "Bạn nhận được " + Util.format((Manager.khuyenMaiNap * (goldTrade1 / 50)))//* ratioGold * 2
+                                        Service.gI().sendThongBao(player, "Bạn nhận được " + Util.format((Manager.khuyenMaiNap * (goldTrade1 / 50)))//* ratioGold * 2
                                                 + " " + (thoiVang.template.name) + " và 1 Vé tặng hồng ngọc");
                                     }
                                     GirlkunDB.executeUpdate("update player set vnd = (vnd + " + goldTrade1 //* coinGold
@@ -654,7 +654,7 @@ public class Input {
                                     InventoryServiceNew.gI().addItemBag(player, thoiVang);
                                     InventoryServiceNew.gI().sendItemBags(player);
                                     player.achievement.numPayMoney += goldTrade1;
-                                    Service.getInstance().sendThongBao(player, "Bạn nhận được " + Util.format((Manager.khuyenMaiNap * (goldTrade1 / 50)))//* ratioGold * 2
+                                    Service.gI().sendThongBao(player, "Bạn nhận được " + Util.format((Manager.khuyenMaiNap * (goldTrade1 / 50)))//* ratioGold * 2
                                             + " " + thoiVang.template.name);
                                     GirlkunDB.executeUpdate("update player set vnd = (vnd + " + goldTrade1 //* coinGold
                                             + ") where id = " + player.id);
@@ -665,16 +665,16 @@ public class Input {
 //                                            + " Điểm sự kiện Trung thu");
 //                                }
                             } else {
-                                Service.getInstance().sendThongBao(player, "|7|Số tiền của bạn là " + player.getSession().vnd + " không đủ để quy "
+                                Service.gI().sendThongBao(player, "|7|Số tiền của bạn là " + player.getSession().vnd + " không đủ để quy "
                                         + " đổi " + goldTrade1 / 1000 + " Thỏi vàng" + " " + "bạn cần thêm " + (player.getSession().vnd - goldTrade1));
                             }
                         } else {
-                            Service.getInstance().sendThongBao(player, "|7|Số tiền nhập phải là bội số của 1000");
+                            Service.gI().sendThongBao(player, "|7|Số tiền nhập phải là bội số của 1000");
                         }
                     } else {
                         if (goldTrade1 % 1000 == 0) {
                             if (goldTrade1 <= 0 || goldTrade1 >= 1000001) {
-                                Service.getInstance().sendThongBao(player, "|7|Quá giới hạn mỗi lần tối đa 1.000.000");
+                                Service.gI().sendThongBao(player, "|7|Quá giới hạn mỗi lần tối đa 1.000.000");
                             } else if (player.getSession().vnd >= goldTrade1) {//* coinGold
                                 if (goldTrade1 >= 500000) {
                                     Item thehongngoc = null;
@@ -688,13 +688,13 @@ public class Input {
                                     InventoryServiceNew.gI().sendItemBags(player);
                                     player.achievement.numPayMoney += goldTrade1;
                                     if (thehongngoc != null) {
-                                        Service.getInstance().sendThongBao(player, "|3|Bạn đã có Vé tặng ngọc rồi nên không nhận được nữa !!");
-                                        Service.getInstance().sendThongBao(player, "Bạn nhận được " + (Manager.suKien != 1 ? Util.format((2 * (goldTrade1 / 100))) : Util.format((goldTrade1 / 100)))//* ratioGold * 2
+                                        Service.gI().sendThongBao(player, "|3|Bạn đã có Vé tặng ngọc rồi nên không nhận được nữa !!");
+                                        Service.gI().sendThongBao(player, "Bạn nhận được " + (Manager.suKien != 1 ? Util.format((2 * (goldTrade1 / 100))) : Util.format((goldTrade1 / 100)))//* ratioGold * 2
                                                 + " " + (thoiVang.template.name));
                                     } else {
                                         Item thehn = ItemService.gI().createNewItem((short) 1132, 1);
                                         InventoryServiceNew.gI().addItemBag(player, thehn);
-                                        Service.getInstance().sendThongBao(player, "Bạn nhận được " + (Manager.suKien != 1 ? Util.format((2 * (goldTrade1 / 100))) : Util.format((goldTrade1 / 100)))//* ratioGold * 2
+                                        Service.gI().sendThongBao(player, "Bạn nhận được " + (Manager.suKien != 1 ? Util.format((2 * (goldTrade1 / 100))) : Util.format((goldTrade1 / 100)))//* ratioGold * 2
                                                 + " " + (thoiVang.template.name) + " và 1 Vé tặng hồng ngọc");
                                     }
                                     GirlkunDB.executeUpdate("update player set vnd = (vnd + " + goldTrade1 //* coinGold
@@ -705,7 +705,7 @@ public class Input {
                                     InventoryServiceNew.gI().addItemBag(player, thoiVang);
                                     InventoryServiceNew.gI().sendItemBags(player);
                                     player.achievement.numPayMoney += goldTrade1;
-                                    Service.getInstance().sendThongBao(player, "Bạn nhận được " + Util.format(((goldTrade1 / 100)))//* ratioGold * 2
+                                    Service.gI().sendThongBao(player, "Bạn nhận được " + Util.format(((goldTrade1 / 100)))//* ratioGold * 2
                                             + " " + thoiVang.template.name);
                                     GirlkunDB.executeUpdate("update player set vnd = (vnd + " + goldTrade1 //* coinGold
                                             + ") where id = " + player.id);
@@ -716,11 +716,11 @@ public class Input {
 //                                            + " Điểm sự kiện Trung thu");
 //                                }
                             } else {
-                                Service.getInstance().sendThongBao(player, "|7|Số tiền của bạn là " + player.getSession().vnd + " không đủ để quy "
+                                Service.gI().sendThongBao(player, "|7|Số tiền của bạn là " + player.getSession().vnd + " không đủ để quy "
                                         + " đổi " + goldTrade1 / 1000 + " Thỏi vàng" + " " + "bạn cần thêm " + (player.getSession().vnd - goldTrade1));
                             }
                         } else {
-                            Service.getInstance().sendThongBao(player, "|7|Số tiền nhập phải là bội số của 1000");
+                            Service.gI().sendThongBao(player, "|7|Số tiền nhập phải là bội số của 1000");
                         }
                     }
                     break;
@@ -728,18 +728,18 @@ public class Input {
                     int soxu = Integer.parseInt(text[0]);
 
                     if (soxu <= 0 || soxu > 10000) {
-                        Service.getInstance().sendThongBao(player, "|7|Quá giới hạn mỗi lần tối đa 10.000");
+                        Service.gI().sendThongBao(player, "|7|Quá giới hạn mỗi lần tối đa 10.000");
                     } else if (player.getSession().vnd >= soxu * 1000) {//* coinGold
                         PlayerDAO.subvnd(player, soxu * 1000);//* coinGold
                         Item thoiVang = ItemService.gI().createNewItem((short) 1312, soxu);// x3   * 2
                         InventoryServiceNew.gI().addItemBag(player, thoiVang);
                         InventoryServiceNew.gI().sendItemBags(player);
-                        Service.getInstance().sendThongBao(player, "Bạn nhận được " + soxu//* ratioGold * 2
+                        Service.gI().sendThongBao(player, "Bạn nhận được " + soxu//* ratioGold * 2
                                 + " " + thoiVang.template.name);
                         GirlkunDB.executeUpdate("update player set vnd = (vnd + " + soxu * 1000 //* coinGold
                                 + ") where id = " + player.id);
                     } else {
-                        Service.getInstance().sendThongBao(player, "|7|Số tiền của bạn là " + player.getSession().vnd + " không đủ để quy "
+                        Service.gI().sendThongBao(player, "|7|Số tiền của bạn là " + player.getSession().vnd + " không đủ để quy "
                                 + " đổi " + soxu + " XU\nBạn cần thêm " + (player.getSession().vnd - soxu * 1000));
                     }
                     break;
@@ -787,7 +787,8 @@ public class Input {
     }
 
     public void createFormChangePassword(Player pl) {
-        createForm(pl, CHANGE_PASSWORD, "Đổi mật khẩu", new SubInput("Mật khẩu cũ", PASSWORD),
+        createForm(pl, CHANGE_PASSWORD, "Đổi mật khẩu",
+                new SubInput("Mật khẩu hiện tại", PASSWORD),
                 new SubInput("Mật khẩu mới", PASSWORD),
                 new SubInput("Nhập lại mật khẩu mới", PASSWORD));
     }

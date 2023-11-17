@@ -5,10 +5,6 @@
  */
 package com.girlkun.models.boss;
 
-/**
- *
- * @Stole By Hoàng Việt
- */
 public enum BossStatus {
     REST,
     RESPAWN,

@@ -26,6 +26,7 @@ import com.girlkun.server.ServerManager;
 import com.girlkun.services.ItemMapService;
 import com.girlkun.services.MapService;
 import com.girlkun.utils.Logger;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,14 +48,11 @@ public class BossManager implements Runnable {
     }
 
     private boolean loadedBoss;
-    private final List<Boss> bosses;
+    @Getter
+    private List<Boss> bosses;
 
     public void addBoss(Boss boss) {
         this.bosses.add(boss);
-    }
-
-    public List<Boss> getBosses() {
-        return this.bosses;
     }
 
     public void removeBoss(Boss boss) {
@@ -66,7 +64,6 @@ public class BossManager implements Runnable {
             return;
         }
         try {
-//            Thread.sleep(10000);
             this.createBoss(BossID.TDST);
             this.createBoss(BossID.BROLY);
             this.createBoss(BossID.BROLYA);
@@ -111,7 +108,6 @@ public class BossManager implements Runnable {
             this.createBoss(BossID.AN_TROM);
 //            this.createBoss(BossID.BOSS_THOTRANG);
         } catch (Exception ex) {
-            ex.printStackTrace();
             System.out.println("loi ne  33      ClassCastException ");
         }
         this.loadedBoss = true;
@@ -362,13 +358,13 @@ public class BossManager implements Runnable {
             try {
                 long st = System.currentTimeMillis();
                 synchronized (this) {
-                    wait(Math.max(150 - (System.currentTimeMillis() - st), 0));
-                    for (Boss boss : this.bosses) {
-                        boss.update();
+                    wait(Math.max(1000 - (System.currentTimeMillis() - st), 0));
+                    for (Boss boss : bosses) {
+                                boss.update();
                     }
                 }
             } catch (Exception e) {
-                Logger.logException(BossManager.class, e, "Boss error");
+                Logger.logException(BossManager.class, e);
             }
         }
     }

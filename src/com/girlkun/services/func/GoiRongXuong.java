@@ -120,7 +120,7 @@ public class GoiRongXuong {
         if (pl.zone.map.mapId == 5) {
             if (checkRongxuongBall(pl)) {
                 if (isRongxuongAppear == true) {
-                    Service.getInstance().sendThongBao(pl, "Không thể thực hiện");
+                    Service.gI().sendThongBao(pl, "Không thể thực hiện");
                     return;
                 }
                 long currentTimeMillis = System.currentTimeMillis();
@@ -130,7 +130,7 @@ public class GoiRongXuong {
                 if (timeSinceLastRongxuongAppeared < timeReRongXuong) {
                     int timeLeftInSeconds = (int) (timeLeftUntilResummon / 1000);
                     String timeLeftString = (timeLeftInSeconds < 7200) ? (timeLeftInSeconds + " giây") : ((timeLeftInSeconds / 60) + " phút");
-                    Service.getInstance().sendThongBao(pl, "Vui lòng đợi " + timeLeftString + " để gọi rồng");
+                    Service.gI().sendThongBao(pl, "Vui lòng đợi " + timeLeftString + " để gọi rồng");
                     return;
                 }
 
@@ -153,7 +153,7 @@ public class GoiRongXuong {
                 sendWhishesRongxuong(pl);
             }
         } else {
-            Service.getInstance().sendThongBao(pl, "Chỉ được gọi Rồng Xương ở Đảo Kame");
+            Service.gI().sendThongBao(pl, "Chỉ được gọi Rồng Xương ở Đảo Kame");
         }
     }
 
@@ -188,7 +188,7 @@ public class GoiRongXuong {
                 msg.writer().writeByte(1);
                 lastTimeRongxuongWait = System.currentTimeMillis();
             }
-            Service.getInstance().sendMessAllPlayer(msg);
+            Service.gI().sendMessAllPlayer(msg);
         } catch (Exception e) {
         }
     }
@@ -202,33 +202,33 @@ public class GoiRongXuong {
         byte dragonStar = (byte) this.pl_dragonStar.get(pl);
         if (dragonStar == 1) {
             if (InventoryServiceNew.gI().checkNotItemBag(pl, XUONG_2_SAO)) {
-                Service.getInstance().sendThongBao(pl, "Bạn còn thiếu 1 Bí ngô 2 sao");
+                Service.gI().sendThongBao(pl, "Bạn còn thiếu 1 Bí ngô 2 sao");
                 return false;
             }
             if (InventoryServiceNew.gI().checkNotItemBag(pl, XUONG_3_SAO)) {
-                Service.getInstance().sendThongBao(pl, "Bạn còn thiếu 1 Bí ngô 3 sao");
+                Service.gI().sendThongBao(pl, "Bạn còn thiếu 1 Bí ngô 3 sao");
                 return false;
             }
         } else if (dragonStar == 2) {
             if (InventoryServiceNew.gI().checkNotItemBag(pl, XUONG_3_SAO)) {
-                Service.getInstance().sendThongBao(pl, "Bạn còn thiếu 1 Bí ngô 3 sao");
+                Service.gI().sendThongBao(pl, "Bạn còn thiếu 1 Bí ngô 3 sao");
                 return false;
             }
         }
         if (InventoryServiceNew.gI().checkNotItemBag(pl, XUONG_4_SAO)) {
-            Service.getInstance().sendThongBao(pl, "Bạn còn thiếu 1 Bí ngô 4 sao");
+            Service.gI().sendThongBao(pl, "Bạn còn thiếu 1 Bí ngô 4 sao");
             return false;
         }
         if (InventoryServiceNew.gI().checkNotItemBag(pl, XUONG_5_SAO)) {
-            Service.getInstance().sendThongBao(pl, "Bạn còn thiếu 1 Bí ngô 5 sao");
+            Service.gI().sendThongBao(pl, "Bạn còn thiếu 1 Bí ngô 5 sao");
             return false;
         }
         if (InventoryServiceNew.gI().checkNotItemBag(pl, XUONG_6_SAO)) {
-            Service.getInstance().sendThongBao(pl, "Bạn còn thiếu 1 Bí ngô 6 sao");
+            Service.gI().sendThongBao(pl, "Bạn còn thiếu 1 Bí ngô 6 sao");
             return false;
         }
         if (InventoryServiceNew.gI().checkNotItemBag(pl, XUONG_7_SAO)) {
-            Service.getInstance().sendThongBao(pl, "Bạn còn thiếu 1 Bí ngô 7 sao");
+            Service.gI().sendThongBao(pl, "Bạn còn thiếu 1 Bí ngô 7 sao");
             return false;
         }
         return true;
@@ -240,7 +240,7 @@ public class GoiRongXuong {
             msg = new Message(-25);
             msg.writer().writeUTF(playerRongXuong.name + " vừa gọi Rồng Xương tại "
                     + playerRongXuong.zone.map.mapName + " khu vực " + playerRongXuong.zone.zoneId);
-            Service.getInstance().sendMessAllPlayerIgnoreMe(playerRongXuong, msg);
+            Service.gI().sendMessAllPlayerIgnoreMe(playerRongXuong, msg);
             msg.cleanup();
         } catch (Exception e) {
         }
@@ -257,7 +257,7 @@ public class GoiRongXuong {
                     case 1: //20% HP,KI,SD 30 phút
                         this.playerRongXuong.itemTime.lastTimeBiNgo = System.currentTimeMillis();
                         this.playerRongXuong.itemTime.isBiNgo = true;
-                        Service.getInstance().point(this.playerRongXuong);
+                        Service.gI().point(this.playerRongXuong);
                         ItemTimeService.gI().sendAllItemTime(this.playerRongXuong);
                         break;
                     case 2: //100 Thỏi vàng
@@ -267,7 +267,7 @@ public class GoiRongXuong {
                             InventoryServiceNew.gI().addItemBag(playerRongXuong, thoivang);
                             InventoryServiceNew.gI().sendItemBags(playerRongXuong);
                         } else {
-                            Service.getInstance().sendThongBao(playerRongXuong, "Hành trang không đủ chổ trống");
+                            Service.gI().sendThongBao(playerRongXuong, "Hành trang không đủ chổ trống");
                             reOpenRongxuongWishes(playerRongXuong);
                             return;
                         }
@@ -277,19 +277,19 @@ public class GoiRongXuong {
                             if (playerRongXuong.pet != null) {
                                 if (playerRongXuong.pet.playerSkill.skills.get(2).skillId != -1) {
                                     playerRongXuong.pet.openSkill4();
-                                    Service.getInstance().chatJustForMe(playerRongXuong, playerRongXuong.pet, "Cảm ơn sư phụ");
+                                    Service.gI().chatJustForMe(playerRongXuong, playerRongXuong.pet, "Cảm ơn sư phụ");
                                 } else {
-                                    Service.getInstance().sendThongBao(playerRongXuong, "Ít nhất đệ tử ngươi phải có chiêu 3 chứ!");
+                                    Service.gI().sendThongBao(playerRongXuong, "Ít nhất đệ tử ngươi phải có chiêu 3 chứ!");
                                     reOpenRongxuongWishes(playerRongXuong);
                                     return;
                                 }
                             } else {
-                                Service.getInstance().sendThongBao(playerRongXuong, "Ngươi làm gì có đệ tử?");
+                                Service.gI().sendThongBao(playerRongXuong, "Ngươi làm gì có đệ tử?");
                                 reOpenRongxuongWishes(playerRongXuong);
                                 return;
                             }
                         } else {
-                            Service.getInstance().sendThongBao(playerRongXuong, "Yêu cầu đệ tử có skill 4");
+                            Service.gI().sendThongBao(playerRongXuong, "Yêu cầu đệ tử có skill 4");
                             reOpenRongxuongWishes(playerRongXuong);
                             return;
                         }
@@ -352,7 +352,7 @@ public class GoiRongXuong {
                 msg.writer().writeShort(pl.location.y);
                 msg.writer().writeByte(0);
             }
-            Service.getInstance().sendMessAllPlayer(msg);
+            Service.gI().sendMessAllPlayer(msg);
         } catch (Exception e) {
         }
     }

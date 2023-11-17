@@ -47,7 +47,7 @@ public class EffectMapService {
             msg.writer().writeShort(x);
             msg.writer().writeShort(y);
             msg.writer().writeShort(delay);
-            Service.getInstance().sendMessAllPlayerInMap(zone, msg);
+            Service.gI().sendMessAllPlayerInMap(zone, msg);
             msg.cleanup();
         } catch (Exception e) {
         }

@@ -248,8 +248,8 @@ public class Player {
         this.TrieuHoiLevel = 0;
         this.TrieuHoiExpThanThu = 0;
         this.TrieuHoiCapBac = 0; //Util.nextInt(0, Util.nextInt(3, 10));
-        this.TrieuHoiDame = Util.GioiHannext(10000, 10000L + ((this.TrieuHoiCapBac + 1) * 10000L));
-        this.TrieuHoiHP = Util.GioiHannext(100000, 100000L + ((this.TrieuHoiCapBac + 1) * 50000L));
+        this.TrieuHoiDame = Util.limitDame(10000, 10000L + ((this.TrieuHoiCapBac + 1) * 10000L));
+        this.TrieuHoiHP = Util.limitDame(100000, 100000L + ((this.TrieuHoiCapBac + 1) * 50000L));
     }
 
     public boolean isPl() {
@@ -355,7 +355,7 @@ public class Player {
                                 case 1229 -> PetService.Pet2(this, 1345, 1346, 1347);
                                 case 1230 -> PetService.Pet2(this, 1348, 1349, 1350);
                             }
-                            Service.getInstance().point(this);
+                            Service.gI().point(this);
                         }
                     } else if (this.isPl() && newpet != null && !this.inventory.itemsBody.get(7).isNotNullItem()) {// && newpet1 != null
                         newpet.dispose();
@@ -400,7 +400,7 @@ public class Player {
                     if (it != null && !it.isBuy && it.player_sell == this.id && this.session != null
                             && it.thoigian <= System.currentTimeMillis() - 172800000) {
                         if (InventoryServiceNew.gI().getCountEmptyBag(this) < countit) {
-                            Service.getInstance().sendThongBao(this, "Hành trang không đủ chỗ trống để hoàn trả vật phẩm kí gửi");
+                            Service.gI().sendThongBao(this, "Hành trang không đủ chỗ trống để hoàn trả vật phẩm kí gửi");
                         } else {
                             Item item = ItemService.gI().createNewItem(it.itemId);
                             item.quantity = it.quantity;
@@ -408,8 +408,8 @@ public class Player {
                             iterator.remove();
                             InventoryServiceNew.gI().addItemBag(this, item);
                             InventoryServiceNew.gI().sendItemBags(this);
-                            Service.getInstance().sendMoney(this);
-                            Service.getInstance().sendThongBao(this, "Vật phẩm kí đã quá 2 ngày. Vật phẩm đã được hoàn trả");
+                            Service.gI().sendMoney(this);
+                            Service.gI().sendThongBao(this, "Vật phẩm kí đã quá 2 ngày. Vật phẩm đã được hoàn trả");
                         }
                     }
                 }
@@ -774,7 +774,7 @@ public class Player {
         //xóa phù
         if (this.effectSkin.xHPKI > 1) {
             this.effectSkin.xHPKI = 1;
-            Service.getInstance().point(this);
+            Service.gI().point(this);
         }
         //xóa tụ skill đặc biệt
         this.playerSkill.prepareQCKK = false;
@@ -789,7 +789,7 @@ public class Player {
         if (this.mobMe != null) {
             this.mobMe.mobMeDie();
         }
-        Service.getInstance().charDie(this);
+        Service.gI().charDie(this);
         //add kẻ thù
         if (!this.isPet && !this.isNewPet && !this.isTrieuHoiPet && !this.isBoss
                 && plAtt != null && !plAtt.isPet && !plAtt.isNewPet && !plAtt.isTrieuHoiPet && !plAtt.isBoss) {// && !this.isNewPet1 && !plAtt.isNewPet1

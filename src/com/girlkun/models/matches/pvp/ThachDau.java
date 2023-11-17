@@ -23,8 +23,8 @@ public class ThachDau extends PVP {
     public void start() {
         this.p1.inventory.gold -= this.goldThachDau;
         this.p2.inventory.gold -= this.goldThachDau;
-        Service.getInstance().sendMoney(this.p1);
-        Service.getInstance().sendMoney(this.p2);
+        Service.gI().sendMoney(this.p1);
+        Service.gI().sendMoney(this.p2);
         super.start();
     }
 
@@ -45,21 +45,21 @@ public class ThachDau extends PVP {
     @Override
     public void reward(Player plWin) {
         plWin.inventory.gold += this.goldReward;
-        Service.getInstance().sendMoney(plWin);
+        Service.gI().sendMoney(plWin);
     }
 
     @Override
     public void sendResult(Player plLose, TYPE_LOSE_PVP typeLose) {
         if (typeLose == TYPE_LOSE_PVP.RUNS_AWAY) {
-            Service.getInstance().sendThongBao(p1.equals(plLose) ? p2 : p1, "Đối thủ sợ quá bỏ chạy. Bạn thắng nhận được " + Util.numberToMoney(this.goldReward) + " vàng");
-            Service.getInstance().sendThongBao(p1.equals(plLose) ? p1 : p2, "Bạn bị xử thua vì bỏ chạy");
+            Service.gI().sendThongBao(p1.equals(plLose) ? p2 : p1, "Đối thủ sợ quá bỏ chạy. Bạn thắng nhận được " + Util.numberToMoney(this.goldReward) + " vàng");
+            Service.gI().sendThongBao(p1.equals(plLose) ? p1 : p2, "Bạn bị xử thua vì bỏ chạy");
             (p1.equals(plLose) ? p1 : p2).inventory.gold -= this.goldThachDau;
         } else if (typeLose == TYPE_LOSE_PVP.DEAD) {
-            Service.getInstance().sendThongBao(p1.equals(plLose) ? p2 : p1, "Đối thủ kiệt sức. Bạn thắng nhận được " + Util.numberToMoney(this.goldReward) + " vàng");
-            Service.getInstance().sendThongBao(p1.equals(plLose) ? p1 : p2, "Bạn bị xử thua vì kiệt sức");
+            Service.gI().sendThongBao(p1.equals(plLose) ? p2 : p1, "Đối thủ kiệt sức. Bạn thắng nhận được " + Util.numberToMoney(this.goldReward) + " vàng");
+            Service.gI().sendThongBao(p1.equals(plLose) ? p1 : p2, "Bạn bị xử thua vì kiệt sức");
             (p1.equals(plLose) ? p1 : p2).inventory.gold -= this.goldThachDau;
         }
-        Service.getInstance().sendMoney(p1.equals(plLose) ? p1 : p2);
+        Service.gI().sendMoney(p1.equals(plLose) ? p1 : p2);
     }
 
 }

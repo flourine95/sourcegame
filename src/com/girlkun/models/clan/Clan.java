@@ -111,7 +111,7 @@ public class Clan {
     public void addSMTNClan(Player plOri, double param) {
         for (Player pl : this.membersInGame) {
             if (!plOri.equals(pl) && plOri.zone.equals(pl.zone)) {
-                Service.getInstance().addSMTN(pl, (byte) 1, param, false);
+                Service.gI().addSMTN(pl, (byte) 1, param, false);
             }
         }
     }
@@ -188,7 +188,7 @@ public class Clan {
     public void sendFlagBagForAllMember() {
         for (Player pl : this.membersInGame) {
             if (pl != null) {
-                Service.getInstance().sendFlagBag(pl);
+                Service.gI().sendFlagBag(pl);
             }
         }
     }

@@ -58,7 +58,7 @@ public class DrLyChee extends Boss {
 //                {
                       ItemMap it = new ItemMap(this.zone, 1201, 20, this.location.x, this.zone.map.yPhysicInTop(this.location.x,
                     this.location.y - 24), plKill.id);
-            Service.getInstance().dropItemMap(this.zone, it);
+            Service.gI().dropItemMap(this.zone, it);
 //            a+=10;
 //                }
             }
@@ -69,7 +69,7 @@ public class DrLyChee extends Boss {
 //                {
                       ItemMap it = new ItemMap(this.zone, 1201, 15, this.location.x, this.zone.map.yPhysicInTop(this.location.x,
                     this.location.y - 24), plKill.id);
-            Service.getInstance().dropItemMap(this.zone, it);
+            Service.gI().dropItemMap(this.zone, it);
 //            a+=10;
 //                }
             }
@@ -80,7 +80,7 @@ public class DrLyChee extends Boss {
 //                {
                       ItemMap it = new ItemMap(this.zone, 1201, 6, this.location.x, this.zone.map.yPhysicInTop(this.location.x,
                     this.location.y - 24), plKill.id);
-            Service.getInstance().dropItemMap(this.zone, it);
+            Service.gI().dropItemMap(this.zone, it);
 //            a+=10;
 //                }
             }  
